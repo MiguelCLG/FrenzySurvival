@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgxub8yjvhnxn"]
+
+[ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
+[ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
+[ext_resource type="SpriteFrames" uid="uid://dbalvik0upa2g" path="res://Assets/CharacterAssets/Hunter/AnimaterdHunter.tres" id="3_bnd36"]
+[ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_21k5k"]
+[ext_resource type="Script" path="res://Scenes/Abilities/Punch/Punch.cs" id="5_nprnf"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="6_s8fup"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
+
+[sub_resource type="Resource" id="Resource_4vupb"]
+script = ExtResource("6_s8fup")
+Name = "Punch"
+Cooldown = 1
+Value = 30
+Damage = 30
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+disable_mode = 2
+script = ExtResource("1_bia2f")
+playerResource = ExtResource("2_1em62")
+
+[node name="Portrait" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_bnd36")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_vyyvv")
+
+[node name="Healthbar" parent="." instance=ExtResource("4_21k5k")]
+offset_left = -11.0
+offset_top = -21.0
+offset_right = 11.0
+offset_bottom = -17.0
+
+[node name="Abilities" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Punch" type="Node2D" parent="Abilities"]
+script = ExtResource("5_nprnf")
+punchResource = SubResource("Resource_4vupb")

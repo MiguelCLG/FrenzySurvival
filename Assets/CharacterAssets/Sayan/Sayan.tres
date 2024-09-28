@@ -1,0 +1,38 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://d2firu6pqdskc"]
+
+[ext_resource type="Texture2D" uid="uid://bt4tergubmseq" path="res://Assets/CharacterAssets/Sayan/Sayan_stand.png" id="1_8j14k"]
+[ext_resource type="Texture2D" uid="uid://cyuluysed8p2n" path="res://Assets/CharacterAssets/Sayan/sayan_punch.png" id="2_em3yx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fllfq"]
+atlas = ExtResource("1_8j14k")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4cya"]
+atlas = ExtResource("1_8j14k")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w2rcq"]
+atlas = ExtResource("2_em3yx")
+region = Rect2(0, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fllfq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h4cya")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w2rcq")
+}],
+"loop": true,
+"name": &"punch",
+"speed": 5.0
+}]

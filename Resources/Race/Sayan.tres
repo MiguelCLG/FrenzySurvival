@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="RaceResource" load_steps=2 format=3 uid="uid://crqcas6d8c3aq"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/RaceResource.cs" id="1_v1rxl"]
+
+[resource]
+script = ExtResource("1_v1rxl")
+Name = "Sayan"
+Description = "The monkey race"

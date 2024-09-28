@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://bwjqu87xqhr2o"]
+
+[ext_resource type="SpriteFrames" uid="uid://csdii2cvv44pf" path="res://Assets/CharacterAssets/Yadrat/Yadrat.tres" id="1_6qyp5"]
+[ext_resource type="Texture2D" uid="uid://sphceeatgn3v" path="res://Assets/CharacterAssets/Yadrat/Yadrat_stand.png" id="2_pocac"]
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="3_gqgq7"]
+
+[resource]
+script = ExtResource("3_gqgq7")
+HP = 70
+MaxHP = 70
+Speed = 30
+Shield = 100
+MaxShield = 100
+AnimatedFrames = ExtResource("1_6qyp5")
+Portrait = ExtResource("2_pocac")
+Abilities = null

@@ -1,0 +1,19 @@
+using Godot;
+
+[GlobalClass]
+public partial class AbilityResource : Resource
+{
+  [Export]
+  public string Name { get; set; }
+
+  [Export]
+  public int Cooldown { get; set; }
+
+  [Export]
+  public int Value { get; set; }
+  [Export]
+  public int Damage { get; set; }
+  [Export]
+  public Texture2D Icon { get; set; }
+
+}

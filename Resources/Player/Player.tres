@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PlayerResource" load_steps=6 format=3 uid="uid://s4myc45rkqu2"]
+
+[ext_resource type="Resource" uid="uid://bf0v7h5midfbe" path="res://Resources/Abilities/Fireball.tres" id="1_8qq6q"]
+[ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
+[ext_resource type="Texture2D" uid="uid://lly3bp403umx" path="res://Assets/CharacterAssets/Hunter/hunter_simplified_01.png" id="2_t30l2"]
+[ext_resource type="SpriteFrames" uid="uid://dbalvik0upa2g" path="res://Assets/CharacterAssets/Hunter/AnimaterdHunter.tres" id="2_yrmja"]
+[ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
+
+[resource]
+script = ExtResource("3_byggt")
+Race = ExtResource("2_a2w3a")
+HP = 100
+MaxHP = 100
+Speed = 100
+Shield = 0
+MaxShield = 50
+AnimatedFrames = ExtResource("2_yrmja")
+Portrait = ExtResource("2_t30l2")
+Abilities = Array[Object]([ExtResource("1_8qq6q")])

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=6 format=3 uid="uid://1revbepq1drt"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_f5oid"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_mw3vw"]
+[ext_resource type="SpriteFrames" uid="uid://bq5l07jlroepc" path="res://Assets/CharacterAssets/Namekian/Namekian.tres" id="2_mdr1l"]
+[ext_resource type="Texture2D" uid="uid://blaxkg48ba1ts" path="res://Assets/CharacterAssets/Namekian/Namekian_stand.png" id="3_ksr0n"]
+
+[sub_resource type="Resource" id="Resource_yfgwj"]
+script = ExtResource("1_mw3vw")
+Name = "Punch"
+Cooldown = 1
+Value = 30
+Damage = 0
+
+[resource]
+script = ExtResource("1_f5oid")
+HP = 100
+MaxHP = 100
+Speed = 80
+Shield = 50
+MaxShield = 50
+AnimatedFrames = ExtResource("2_mdr1l")
+Portrait = ExtResource("3_ksr0n")
+Abilities = Array[Object]([SubResource("Resource_yfgwj")])
