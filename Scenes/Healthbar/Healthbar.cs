@@ -5,11 +5,11 @@ public partial class Healthbar : ProgressBar
 {
   [Export] public float Health { get; set; } = 100;
   [Export] public float MaxHealth { get; set; } = 100;
-  [Export] public AnimationPlayer AnimationPlayer { get; set; }
   public bool IsAlive { get; set; } = true;
   public override void _Ready()
   {
     Value = ConvertHealthToPercentage();
+
   }
 
   public void SetInitialValues(BaseCharacterResource resource)
@@ -49,5 +49,7 @@ public partial class Healthbar : ProgressBar
     GD.Print("Died");
     IsAlive = false;
   }
+
+
 
 }

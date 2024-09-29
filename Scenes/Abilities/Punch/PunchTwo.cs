@@ -1,9 +1,8 @@
 using Algos;
 using Godot;
 using System;
-using System.Threading.Tasks;
 
-public partial class Punch : Ability
+public partial class PunchTwo : Ability
 {
   [Export] public AbilityResource punchResource;
 
@@ -24,8 +23,8 @@ public partial class Punch : Ability
     query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
 
     var results = spaceState.IntersectShape(query);
-    AnimationPlayer.Play("punch");
 
+    AnimationPlayer.Play("punch_2");
     foreach (var result in results)
     {
       if (result["collider"] is Variant body)
@@ -47,7 +46,11 @@ public partial class Punch : Ability
           // Call Take Damage
           TimerUtils.CreateTimer(() =>
         {
-          EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] { body.As<Node2D>().GetNode<Healthbar>("Healthbar"), punchResource.Damage });
+          var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
+          EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+            healthbar,
+            punchResource.Damage
+          });
 
         }, this, 1f);
         }
@@ -55,24 +58,11 @@ public partial class Punch : Ability
     }
     TimerUtils.CreateTimer(() =>
     AnimationPlayer.Play("default"),
-     this, .1f);
-
+    this, .1f);
     TimerUtils.CreateTimer(() =>
-    {
-      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
-    }, this, 1f);
-  }
-
-  public override void _Process(double delta)
-  {
-    /* timer += delta;
-    if (timer > punchResource.Cooldown)
-    {
-      DoPunch();
-      timer = 0;
-    } */
-    QueueRedraw();  // Redraw the cone when the punch is initiated
-
+        {
+          EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        }, this, 1f);
   }
 
   public override void Action()
@@ -80,28 +70,5 @@ public partial class Punch : Ability
     DetectInCone();  // Perform the cone detection
   }
 
-  public override void _Draw()
-  {
-    base._Draw();
-    // Use the character's movement direction to determine the forward direction
-    Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
-    if (forward == Vector2.Zero)
-      return;  // Avoid drawing the cone if there is no movement
-
-    // Calculate the left and right cone directions
-    float angleRad = Mathf.DegToRad(coneAngleDegrees);
-    Vector2 leftDir = forward.Rotated(-angleRad) * coneRange;
-    Vector2 rightDir = forward.Rotated(angleRad) * coneRange;
-
-    // Draw the cone as a triangle
-    DrawLine(Vector2.Zero, leftDir, Colors.Red, 2);  // Left line of the cone
-    DrawLine(Vector2.Zero, rightDir, Colors.Red, 2); // Right line of the cone
-    DrawLine(leftDir, rightDir, Colors.Red, 2);      // Closing the cone
-
-    Color color = new(122, 122, 122, 0.5f);
-    // Optionally fill the cone area (create a filled shape)
-    Vector2[] points = { Vector2.Zero, leftDir, rightDir };
-    DrawPolygon(points, new Color[] { color });
-  }
 }

@@ -10,12 +10,15 @@ public partial class Mob : CharacterBody2D
   Node2D target;
   Healthbar healthbar;
   double timer = 0;
+  [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
+
 
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
     healthbar = GetNode<Healthbar>("Healthbar");
     mobResource ??= ResourceLoader.Load<BaseCharacterResource>("res://Resources/BaseCharacter/Mob_Level_1.tres");
+    AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
 
     GetNode<AnimatedSprite2D>("Portrait").SpriteFrames = mobResource.AnimatedFrames;
   }
@@ -48,6 +51,7 @@ public partial class Mob : CharacterBody2D
         timer = 0;
       }
     }
+    AnimationPlayer.FlipH = direction.X < 0;
 
     MoveAndSlide();
   }
