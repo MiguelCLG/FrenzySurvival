@@ -54,5 +54,4 @@ public partial class AbilityManager : Node2D
     }
   }
 
-  //TODO: Make a chain of events wait for each other, try to have a NextAction function
 }

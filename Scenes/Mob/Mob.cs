@@ -8,10 +8,10 @@ public partial class Mob : CharacterBody2D
 {
   [Export] public BaseCharacterResource mobResource;
   Node2D target;
-  Healthbar healthbar;
+  public Healthbar healthbar;
   double timer = 0;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
-
+  private float stopDistance = 30f;
 
   public override void _Ready()
   {
@@ -19,31 +19,51 @@ public partial class Mob : CharacterBody2D
     healthbar = GetNode<Healthbar>("Healthbar");
     mobResource ??= ResourceLoader.Load<BaseCharacterResource>("res://Resources/BaseCharacter/Mob_Level_1.tres");
     AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
+    AnimationPlayer.SpriteFrames = mobResource.AnimatedFrames;
+    //Need an event to change the hp values in the resource
+    healthbar.SetInitialValues(mobResource);
+    EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
 
-    GetNode<AnimatedSprite2D>("Portrait").SpriteFrames = mobResource.AnimatedFrames;
   }
 
   public override void _Process(double delta)
   {
-    if (!healthbar.IsAlive)
+    if (healthbar.IsAlive)
     {
-      TimerUtils.CreateTimer(() => QueueFree(), this, 2f);
-      SetProcess(false);
-      return;
+      UpdateTarget();
+      Movement(delta);
     }
-    UpdateTarget();
-    Movement(delta);
   }
 
   private void Movement(double delta)
   {
+    // Calculate direction towards the target
+    Vector2 direction = (target.Position - Position).Normalized();
 
-    var direction = (target.Position - Position).Normalized();
+    // Calculate the distance between the enemy and the player
+    float distanceToTarget = Position.DistanceTo(target.Position);
 
-    Position += new Vector2((float)(direction.X * delta * mobResource.Speed), (float)(direction.Y * delta * mobResource.Speed));
-
-    if (MathF.Abs(target.Position.X - Position.X) < 20f && MathF.Abs(target.Position.Y - Position.Y) < 20f)
+    // Only move if the distance is greater than the stop distance
+    if (distanceToTarget > stopDistance)
     {
+      // Move towards the player, but maintain the offset (stopDistance)
+      Position += direction * (float)(mobResource.Speed * delta);
+
+      // Play the move animation
+      if (AnimationPlayer.Animation == "default")
+      {
+        AnimationPlayer.Play("move");
+      }
+    }
+    else
+    {
+      // Stop moving and play default animation
+      if (AnimationPlayer.Animation == "move")
+      {
+        AnimationPlayer.Play("default");
+      }
+
+      // Optionally perform other actions like attacking when close enough
       timer += delta;
       if (timer > mobResource.Abilities[0].Cooldown)
       {
@@ -51,9 +71,12 @@ public partial class Mob : CharacterBody2D
         timer = 0;
       }
     }
+
+    // Flip sprite based on direction
     AnimationPlayer.FlipH = direction.X < 0;
 
-    MoveAndSlide();
+    // Optionally, you can also use MoveAndSlide for collisions, depending on the physics of your game
+    // MoveAndSlide();
   }
 
   public void Attack()
@@ -63,13 +86,16 @@ public partial class Mob : CharacterBody2D
     // 2. Call Take Damage
     if (target.HasNode("Healthbar"))
     {
-      Callable callable = Callable.From(() =>
-        target.GetNode<Healthbar>("Healthbar").TakeDamage(mobResource.Abilities[0].Damage)
-      );
+      var targetHealthbar = target.GetNode<Healthbar>("Healthbar");
       GetNode<AnimatedSprite2D>("Portrait").Play("punch");
       TimerUtils.CreateTimer(() =>
         {
-          target.GetNode<Healthbar>("Healthbar").TakeDamage(mobResource.Abilities[0].Damage);
+          if (!targetHealthbar.IsQueuedForDeletion())
+            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+              targetHealthbar,
+              mobResource.Abilities[0].Damage
+            });
+          //targetHealthbar.TakeDamage(mobResource.Abilities[0].Damage);
           GetNode<AnimatedSprite2D>("Portrait").Play("default");
 
         }, this, .1f);
@@ -80,6 +106,60 @@ public partial class Mob : CharacterBody2D
   public void UpdateTarget()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
+
+  }
+
+  /* public void TakeDamage(object sender, object[] args)
+  {
+    // AnimationPlayer.Play("Hurt");
+    if (args[0] is Healthbar healthbar)
+    {
+      if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
+      {
+        if (!healthbar.IsAlive)
+        {
+          EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+          return;
+        }
+        healthbar.TakeDamage(float.Parse(args[1].ToString()));
+        AnimationPlayer.Play("hurt");
+      }
+    }
+  } */
+
+  public async void TakeDamage(object sender, object[] args)
+  {
+    if (args[0] is Healthbar healthbar)
+    {
+      if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
+      {
+        SetProcess(false);
+        void action()
+        {
+          if (AnimationPlayer.Frame == 6)
+            healthbar.TakeDamage(float.Parse(args[1].ToString()));
+        }
+        AnimationPlayer.FrameChanged += action;
+        AnimationPlayer.Play("hurt");
+        await ToSignal(AnimationPlayer, "animation_finished");
+        AnimationPlayer.FrameChanged -= action;
+
+        if (!healthbar.IsAlive)
+        {
+          EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+          return;
+        }
+
+
+        AnimationPlayer.Play("default");
+        SetProcess(true);
+      }
+    }
+  }
+
+  public override void _ExitTree()
+  {
+    EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
 
   }
 }

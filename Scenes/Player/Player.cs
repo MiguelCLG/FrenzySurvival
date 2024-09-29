@@ -25,16 +25,30 @@ public partial class Player : CharacterBody2D
   }
 
 
-  public void TakeDamage(object sender, object[] args)
+  public async void TakeDamage(object sender, object[] args)
   {
-    // AnimationPlayer.Play("Hurt");
-    GD.Print($"ARGS: {args[1]}");
     if (args[0] is Healthbar healthbar)
-      healthbar.TakeDamage(float.Parse(args[1].ToString()));
+    {
+      if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
+      {
+        if (IsInstanceValid(healthbar))
+        {
+          AnimationPlayer.Play("hurt");
+          await ToSignal(AnimationPlayer, "animation_finished");
+          healthbar.TakeDamage(float.Parse(args[1].ToString()));
+          if (!healthbar.IsAlive)
+          {
+            EventRegistry.GetEventPublisher("OnPlayerDeath").RaiseEvent(new object[] { this });
+            return;
+          }
+        }
+      }
+    }
   }
 
   public override void _PhysicsProcess(double delta)
   {
+    if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
     Movement(delta);
     if (!isDoingCombo)
     {
@@ -45,7 +59,6 @@ public partial class Player : CharacterBody2D
 
   public void OnComboFinished(object sender, object[] args)
   {
-    GD.Print("Player: TERMINOU");
 
     isDoingCombo = false;
     timer = 0;
@@ -67,19 +80,20 @@ public partial class Player : CharacterBody2D
     {
       // If there's input, set the velocity towards the new direction
       Velocity = direction;
+      if (AnimationPlayer.Animation == "default") AnimationPlayer.Play("move");
     }
     else
     {
       // Apply friction/damping when there is no input
       float friction = 10f; // Adjust this value to change how fast the character slows down
       Velocity = Velocity.Lerp(Vector2.Zero, friction * (float)delta);
+      if (AnimationPlayer.Animation == "move") AnimationPlayer.Play("default");
     }
 
     // Optionally, use MoveAndSlide to handle movement with collisions
     AnimationPlayer.FlipH = Velocity.X < 0;
     MoveAndSlide();
 
-    // Debugging information
   }
   public override void _ExitTree()
   {

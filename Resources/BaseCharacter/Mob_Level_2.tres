@@ -1,17 +1,26 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://cckvc2yvvfj3o"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://cckvc2yvvfj3o"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_3pdoh"]
-[ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="1_7406i"]
-[ext_resource type="SpriteFrames" uid="uid://d2firu6pqdskc" path="res://Assets/CharacterAssets/Sayan/Sayan.tres" id="1_aie0a"]
+[ext_resource type="Texture2D" uid="uid://cyuluysed8p2n" path="res://Assets/CharacterAssets/Sayan/sayan_punch.png" id="1_d2044"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_meekj"]
 [ext_resource type="Texture2D" uid="uid://bt4tergubmseq" path="res://Assets/CharacterAssets/Sayan/Sayan_stand.png" id="2_ptymd"]
+[ext_resource type="SpriteFrames" uid="uid://7aoet3rsyt51" path="res://Assets/CharacterAssets/Sayan/Sayan.tres" id="3_qhc5k"]
+
+[sub_resource type="Resource" id="Resource_sefrc"]
+script = ExtResource("2_meekj")
+Name = "SayanPunch"
+Cooldown = 1
+Value = 30
+Damage = 30
+Icon = ExtResource("1_d2044")
 
 [resource]
 script = ExtResource("1_3pdoh")
 HP = 200
 MaxHP = 200
-Speed = 90
+Speed = 60
 Shield = 50
 MaxShield = 50
-AnimatedFrames = ExtResource("1_aie0a")
+AnimatedFrames = ExtResource("3_qhc5k")
 Portrait = ExtResource("2_ptymd")
-Abilities = Array[Object]([ExtResource("1_7406i")])
+Abilities = Array[Object]([SubResource("Resource_sefrc")])

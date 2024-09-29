@@ -32,7 +32,7 @@ public partial class PunchTwo : Ability
         // The object is within the cone, call its method
         if (!body.As<Node2D>().IsInGroup("Enemies"))
           continue;
-
+        var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
         // Vector from the character to the object
         Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
 
@@ -41,16 +41,15 @@ public partial class PunchTwo : Ability
 
         if (Math.Abs(angleToBody) <= coneAngleDegrees)
         {
-          GD.Print("Punching");
 
           // Call Take Damage
           TimerUtils.CreateTimer(() =>
         {
-          var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
-          EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
-            healthbar,
-            punchResource.Damage
-          });
+          if (healthbar.IsAlive)
+            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+              healthbar,
+              punchResource.Damage
+            });
 
         }, this, 1f);
         }
@@ -58,7 +57,7 @@ public partial class PunchTwo : Ability
     }
     TimerUtils.CreateTimer(() =>
     AnimationPlayer.Play("default"),
-    this, .1f);
+    this, .3f);
     TimerUtils.CreateTimer(() =>
         {
           EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });

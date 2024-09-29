@@ -20,10 +20,12 @@ public partial class Healthbar : ProgressBar
   }
   public void TakeDamage(float value)
   {
+    if (!IsAlive) return;
     Health -= value;
     if (Health <= 0)
       Die();
     UpdateUI();
+    //TODO: This is not updating the resource, send event to change to new stats
     //     AnimationPlayer.Play("hurt");
   }
 
@@ -46,7 +48,6 @@ public partial class Healthbar : ProgressBar
 
   public void Die()
   {
-    GD.Print("Died");
     IsAlive = false;
   }
 

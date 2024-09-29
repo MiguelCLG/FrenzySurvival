@@ -24,8 +24,8 @@ public partial class Punch : Ability
     query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
 
     var results = spaceState.IntersectShape(query);
-    AnimationPlayer.Play("punch");
 
+    AnimationPlayer.Play("punch");
     foreach (var result in results)
     {
       if (result["collider"] is Variant body)
@@ -33,7 +33,7 @@ public partial class Punch : Ability
         // The object is within the cone, call its method
         if (!body.As<Node2D>().IsInGroup("Enemies"))
           continue;
-
+        var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
         // Vector from the character to the object
         Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
 
@@ -42,12 +42,14 @@ public partial class Punch : Ability
 
         if (Math.Abs(angleToBody) <= coneAngleDegrees)
         {
-          GD.Print("Punching");
-
           // Call Take Damage
           TimerUtils.CreateTimer(() =>
         {
-          EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] { body.As<Node2D>().GetNode<Healthbar>("Healthbar"), punchResource.Damage });
+          if (healthbar.IsAlive)
+            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+              healthbar,
+              punchResource.Damage
+            });
 
         }, this, 1f);
         }
@@ -55,12 +57,11 @@ public partial class Punch : Ability
     }
     TimerUtils.CreateTimer(() =>
     AnimationPlayer.Play("default"),
-     this, .1f);
-
+    this, .3f);
     TimerUtils.CreateTimer(() =>
-    {
-      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
-    }, this, 1f);
+        {
+          EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        }, this, 1f);
   }
 
   public override void _Process(double delta)
@@ -80,7 +81,7 @@ public partial class Punch : Ability
     DetectInCone();  // Perform the cone detection
   }
 
-  public override void _Draw()
+  /* public override void _Draw()
   {
     base._Draw();
     // Use the character's movement direction to determine the forward direction
@@ -94,14 +95,84 @@ public partial class Punch : Ability
     Vector2 leftDir = forward.Rotated(-angleRad) * coneRange;
     Vector2 rightDir = forward.Rotated(angleRad) * coneRange;
 
-    // Draw the cone as a triangle
-    DrawLine(Vector2.Zero, leftDir, Colors.Red, 2);  // Left line of the cone
-    DrawLine(Vector2.Zero, rightDir, Colors.Red, 2); // Right line of the cone
-    DrawLine(leftDir, rightDir, Colors.Red, 2);      // Closing the cone
+    Color lineColor = new(0, 0, 0, 0.2f);
 
-    Color color = new(122, 122, 122, 0.5f);
+    // Draw the cone as a triangle
+    DrawLine(Vector2.Zero, leftDir, lineColor, 2);  // Left line of the cone
+    DrawLine(Vector2.Zero, rightDir, lineColor, 2); // Right line of the cone
+    DrawLine(leftDir, rightDir, lineColor, 2);      // Closing the cone
+
+    Color color = new(122, 122, 122, 0.2f);
     // Optionally fill the cone area (create a filled shape)
     Vector2[] points = { Vector2.Zero, leftDir, rightDir };
     DrawPolygon(points, new Color[] { color });
+  } */
+
+  public override void _Draw()
+  {
+    base._Draw();
+
+    // Get the forward direction based on movement velocity
+    Vector2 forward = CurrentVelocity.Normalized();
+
+    // Calculate the cone's half-angle in radians
+    float halfAngleRad = Mathf.DegToRad(coneAngleDegrees);
+
+    // Calculate the left and right boundaries of the cone
+    Vector2 leftDir = forward.Rotated(-halfAngleRad) * coneRange;
+    Vector2 rightDir = forward.Rotated(halfAngleRad) * coneRange;
+
+    Color lineColor = new(0, 0, 0, 0.1f);
+    // Draw the cone as lines
+    DrawLine(Position, Position + leftDir, lineColor, 2);  // Left line of the cone
+    DrawLine(Position, Position + rightDir, lineColor, 2); // Right line of the cone
+    DrawLine(Position + leftDir, Position + rightDir, lineColor, 2);  // Closing line of the cone
+
+    Color color = new(122, 122, 122, 0.1f);
+
+    // Optionally fill the cone area (as a polygon)
+    Vector2[] points = { Position, Position + leftDir, Position + rightDir };
+    DrawPolygon(points, new Color[] { color });
+
+    // Debugging: Draw circles on the detected enemies within the cone
+    DetectInConeVisual();
   }
+
+  // Helper method to visualize enemies detected in the cone
+  private void DetectInConeVisual()
+  {
+    // Get the forward direction based on the player's movement
+    Vector2 forward = CurrentVelocity.Normalized();
+
+    // Set up the query to find objects in the circular range
+    var spaceState = GetWorld2D().DirectSpaceState;
+    var query = new PhysicsShapeQueryParameters2D();
+    query.Shape = new CircleShape2D { Radius = coneRange };
+    query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
+
+    var results = spaceState.IntersectShape(query);
+
+    foreach (var result in results)
+    {
+      if (result["collider"] is Variant body)
+      {
+        if (!body.As<Node2D>().IsInGroup("Enemies"))
+          continue;
+
+        // Vector from the character to the object
+        Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
+
+        // Check if the object is within the cone
+        float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
+
+        if (Math.Abs(angleToBody) <= coneAngleDegrees)
+        {
+          // Visual indicator: Draw a circle at the enemy's position to show it's detected in the cone
+          DrawCircle(body.As<Node2D>().Position, 10, Colors.Green);
+        }
+      }
+    }
+  }
+
+
 }

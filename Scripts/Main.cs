@@ -1,0 +1,121 @@
+using Algos;
+using Godot;
+using System;
+
+public partial class Main : Node2D
+{
+  [Export] BaseCharacterResource[] mobsResourceReference;
+  Node2D playerReference;
+  PackedScene mobScene;
+  CanvasLayer UI;
+  Node2D mobContainer;
+  double spawnCooldown, time;
+  int level = 1;
+  double maxEnemies = 10;
+  double currentEnemies = 0;
+  double enemiesKilled = 0;
+  public override void _Ready()
+  {
+    mobScene = GD.Load<PackedScene>("res://Scenes/Mob/Mob.tscn");
+    mobContainer = GetNode<Node2D>("%MobContainer");
+    playerReference = GetNode<Player>("Player");
+    spawnCooldown = time = 0;
+    UI = GetNode<CanvasLayer>("%UI");
+    EventRegistry.RegisterEvent("OnMobDeath");
+    EventSubscriber.SubscribeToEvent("OnMobDeath", OnMobDeath);
+    EventRegistry.RegisterEvent("OnPlayerDeath");
+    EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
+  }
+
+  public override void _Process(double delta)
+  {
+    spawnCooldown += delta;
+    time += delta;
+    if (currentEnemies < maxEnemies && spawnCooldown > 1)
+    {
+      CreateMob();
+      spawnCooldown = 0;
+    }
+    currentEnemies = mobContainer.GetChildren().Count;
+
+    UI.GetNode<Label>("%EnemyCountLabel").Text = $"Enemies: {currentEnemies}";
+    // Convert 'time' to minutes and seconds
+    int minutes = (int)(time / 60);  // Divide by 60 to get minutes
+    int seconds = (int)(time % 60);  // Modulus 60 to get remaining seconds
+
+    // Format the time as "mm:ss"
+    string formattedTime = $"{minutes:D2}:{seconds:D2}";
+    UI.GetNode<Label>("%TimerLabel").Text = formattedTime;
+    UI.GetNode<Label>("%EnemiesKilledLabel").Text = $"Kills: {enemiesKilled}";
+
+    if (time > 1800)
+    {
+      GD.Print("Jogo Terminado");
+      GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
+
+    }
+
+
+  }
+
+  public void CreateMob()
+  {
+    var mob = mobScene.Instantiate<Mob>();
+    mobContainer.AddChild(mob);
+    mob.mobResource = mobsResourceReference[level - 1];
+    mob.healthbar.SetInitialValues(mob.mobResource);
+    mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
+
+
+    Vector2 randomPositionPositive = new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
+    Vector2 randomPositionNegative = new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
+    mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+
+
+    // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
+  }
+
+  public void OnPlayerDeath(object sender, object[] args)
+  {
+    GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
+
+    GD.Print("Jogo Terminado");
+    PauseGame();
+  }
+
+  public void PauseGame()
+  {
+    GetTree().CallGroup("Enemies", "SetProcess", false);
+  }
+  public void OnMobDeath(object sender, object[] args)
+  {
+    if (args[0] is Mob mob)
+    {
+      if (IsInstanceValid(mob) && !mob.IsQueuedForDeletion())
+      {
+        enemiesKilled++;
+
+        mob.GetParent().RemoveChild(mob);
+        mob.QueueFree();
+      }
+    }
+  }
+
+  public void Restart()
+  {
+    GetTree().ReloadCurrentScene();
+  }
+  public void Exit()
+  {
+    GetTree().Quit();
+  }
+
+  public override void _ExitTree()
+  {
+    EventSubscriber.UnsubscribeFromEvent("OnMobDeath", OnMobDeath);
+    EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
+    EventRegistry.UnregisterEvent("OnMobDeath");
+    EventRegistry.UnregisterEvent("OnPlayerDeath");
+
+  }
+}
