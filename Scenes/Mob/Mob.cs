@@ -81,13 +81,10 @@ public partial class Mob : CharacterBody2D
 
   public void Attack()
   {
-    //TODO:
-    // 1. Find player
-    // 2. Call Take Damage
     if (target.HasNode("Healthbar"))
     {
       var targetHealthbar = target.GetNode<Healthbar>("Healthbar");
-      GetNode<AnimatedSprite2D>("Portrait").Play("punch");
+      AnimationPlayer.Play("punch");
       TimerUtils.CreateTimer(() =>
         {
           if (!targetHealthbar.IsQueuedForDeletion())
@@ -96,7 +93,7 @@ public partial class Mob : CharacterBody2D
               mobResource.Abilities[0].Damage
             });
           //targetHealthbar.TakeDamage(mobResource.Abilities[0].Damage);
-          GetNode<AnimatedSprite2D>("Portrait").Play("default");
+          AnimationPlayer.Play("default");
 
         }, this, .1f);
 

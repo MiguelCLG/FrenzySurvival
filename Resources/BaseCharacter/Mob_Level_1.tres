@@ -10,7 +10,7 @@ script = ExtResource("1_mw3vw")
 Name = "Punch"
 Cooldown = 1
 Value = 30
-Damage = 0
+Damage = 30
 
 [resource]
 script = ExtResource("1_f5oid")

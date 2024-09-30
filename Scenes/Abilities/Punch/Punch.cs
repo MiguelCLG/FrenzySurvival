@@ -8,7 +8,7 @@ public partial class Punch : Ability
   [Export] public AbilityResource punchResource;
 
   double timer = 0;
-  [Export] private float coneAngleDegrees = 45.0f;  // Cone's half-angle in degrees
+  [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
 
   // Call this function to detect objects in the cone
@@ -66,12 +66,6 @@ public partial class Punch : Ability
 
   public override void _Process(double delta)
   {
-    /* timer += delta;
-    if (timer > punchResource.Cooldown)
-    {
-      DoPunch();
-      timer = 0;
-    } */
     QueueRedraw();  // Redraw the cone when the punch is initiated
 
   }
@@ -80,33 +74,6 @@ public partial class Punch : Ability
   {
     DetectInCone();  // Perform the cone detection
   }
-
-  /* public override void _Draw()
-  {
-    base._Draw();
-    // Use the character's movement direction to determine the forward direction
-    Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
-
-    if (forward == Vector2.Zero)
-      return;  // Avoid drawing the cone if there is no movement
-
-    // Calculate the left and right cone directions
-    float angleRad = Mathf.DegToRad(coneAngleDegrees);
-    Vector2 leftDir = forward.Rotated(-angleRad) * coneRange;
-    Vector2 rightDir = forward.Rotated(angleRad) * coneRange;
-
-    Color lineColor = new(0, 0, 0, 0.2f);
-
-    // Draw the cone as a triangle
-    DrawLine(Vector2.Zero, leftDir, lineColor, 2);  // Left line of the cone
-    DrawLine(Vector2.Zero, rightDir, lineColor, 2); // Right line of the cone
-    DrawLine(leftDir, rightDir, lineColor, 2);      // Closing the cone
-
-    Color color = new(122, 122, 122, 0.2f);
-    // Optionally fill the cone area (create a filled shape)
-    Vector2[] points = { Vector2.Zero, leftDir, rightDir };
-    DrawPolygon(points, new Color[] { color });
-  } */
 
   public override void _Draw()
   {

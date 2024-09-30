@@ -42,22 +42,6 @@ script = ExtResource("5_60arm")
 script = ExtResource("5_nprnf")
 punchResource = ExtResource("7_7n8hf")
 
-[node name="Punch2" type="Node2D" parent="Abilities"]
-script = ExtResource("8_op483")
-punchResource = ExtResource("9_xlf1f")
-
-[node name="Punch1" type="Node2D" parent="Abilities"]
-script = ExtResource("5_nprnf")
-punchResource = ExtResource("7_7n8hf")
-
-[node name="Punch3" type="Node2D" parent="Abilities"]
-script = ExtResource("8_op483")
-punchResource = ExtResource("9_xlf1f")
-
-[node name="Punch4" type="Node2D" parent="Abilities"]
-script = ExtResource("5_nprnf")
-punchResource = ExtResource("7_7n8hf")
-
-[node name="Punch5" type="Node2D" parent="Abilities"]
+[node name="Node2D" type="Node2D" parent="Abilities"]
 script = ExtResource("8_op483")
 punchResource = ExtResource("9_xlf1f")
