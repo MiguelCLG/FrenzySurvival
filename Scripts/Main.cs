@@ -75,8 +75,10 @@ public partial class Main : Node2D
     // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
   }
 
-  public void OnPlayerDeath(object sender, object[] args)
+  public async void OnPlayerDeath(object sender, object[] args)
   {
+    await ToSignal(GetTree().CreateTimer(10f), "timeout");
+
     GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
 
     GD.Print("Jogo Terminado");

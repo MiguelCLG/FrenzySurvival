@@ -1,11 +1,28 @@
-[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://d2firu6pqdskc"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://d2firu6pqdskc"]
 
 [ext_resource type="Texture2D" uid="uid://bpst8o0ila1gn" path="res://Assets/CharacterAssets/Sayan/Sayanp_stand.png" id="1_gn8gp"]
+[ext_resource type="Texture2D" uid="uid://clgu0kcic5lmh" path="res://Assets/CharacterAssets/Sayan/sayanP_ko.png" id="1_l4r3w"]
 [ext_resource type="Texture2D" uid="uid://bdjup6i3wu50k" path="res://Assets/CharacterAssets/Sayan/sayanp_hurt.png" id="2_5hddc"]
 [ext_resource type="Texture2D" uid="uid://g3ppk5ebr723" path="res://Assets/CharacterAssets/Sayan/sayanp_kick.png" id="3_bfwhg"]
 [ext_resource type="Texture2D" uid="uid://dt34a4tmkkj62" path="res://Assets/CharacterAssets/Sayan/sayanp_move.png" id="4_4am5c"]
 [ext_resource type="Texture2D" uid="uid://btt1s3n87is20" path="res://Assets/CharacterAssets/Sayan/sayanp_punch.png" id="5_5vptd"]
 [ext_resource type="Texture2D" uid="uid://cgv73f8ngcrwc" path="res://Assets/CharacterAssets/Sayan/sayanp_punch2.png" id="6_mod6c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8e325"]
+atlas = ExtResource("1_l4r3w")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6er8d"]
+atlas = ExtResource("1_l4r3w")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hfnr"]
+atlas = ExtResource("1_l4r3w")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3y5m"]
+atlas = ExtResource("1_l4r3w")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_71jl6"]
 atlas = ExtResource("1_gn8gp")
@@ -61,6 +78,23 @@ region = Rect2(0, 0, 32, 32)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8e325")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6er8d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hfnr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3y5m")
+}],
+"loop": true,
+"name": &"death",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_71jl6")

@@ -10,6 +10,7 @@ public partial class Mob : CharacterBody2D
   Node2D target;
   public Healthbar healthbar;
   double timer = 0;
+  bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
   private float stopDistance = 30f;
 
@@ -23,12 +24,13 @@ public partial class Mob : CharacterBody2D
     //Need an event to change the hp values in the resource
     healthbar.SetInitialValues(mobResource);
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
+    EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
 
   }
 
   public override void _Process(double delta)
   {
-    if (healthbar.IsAlive)
+    if (healthbar.IsAlive && isTargetAlive)
     {
       UpdateTarget();
       Movement(delta);
@@ -154,8 +156,14 @@ public partial class Mob : CharacterBody2D
     }
   }
 
+  public void OnPlayerDeath(object sender, object[] args)
+  {
+    isTargetAlive = false;
+  }
+
   public override void _ExitTree()
   {
+    EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
 
   }

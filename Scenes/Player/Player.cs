@@ -36,11 +36,15 @@ public partial class Player : CharacterBody2D
         if (IsInstanceValid(healthbar))
         {
           isGettingHurt = true;
+
           AnimationPlayer.Play("hurt");
           await ToSignal(AnimationPlayer, "animation_finished");
           healthbar.TakeDamage(float.Parse(args[1].ToString()));
           if (!healthbar.IsAlive)
           {
+            // Corre animacao de morte
+            AnimationPlayer.Play("death");
+            // Espera x segundos para a morte
             EventRegistry.GetEventPublisher("OnPlayerDeath").RaiseEvent(new object[] { this });
             return;
           }
