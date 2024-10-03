@@ -20,12 +20,12 @@ public partial class AbilityManager : Node2D
       array.Add(child);
     }
     EventRegistry.RegisterEvent("ActionFinished");
-    EventSubscriber.SubscribeToEvent("ActionFinished", DoNextAction);
+    EventSubscriber.SubscribeToEvent("ActionFinished", DoNextActionAsync);
 
 
   }
 
-  public void DoNextAction()
+  public void DoNextActionAsync()
   {
     if (actionindex > array.Count - 1)
     {
@@ -35,11 +35,12 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      array.ElementAt(actionindex).Action();
+      array[actionindex].Action();
       actionindex++;
     }
   }
-  public void DoNextAction(object sender, object[] args)
+
+  public void DoNextActionAsync(object sender, object[] args)
   {
     if (actionindex > array.Count - 1)
     {
@@ -49,9 +50,13 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      array.ElementAt(actionindex).Action();
+      array[actionindex].Action();
       actionindex++;
     }
   }
 
+  public override void _ExitTree()
+  {
+    EventSubscriber.UnsubscribeFromEvent("ActionFinished", DoNextActionAsync);
+  }
 }

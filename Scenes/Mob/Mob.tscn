@@ -18,7 +18,6 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_peidu")
-animation = &"hurt"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

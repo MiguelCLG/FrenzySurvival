@@ -44,10 +44,12 @@ namespace Algos
 
         public static void CreateTimer(Action action, Node node, float waitTime)
         {
+            if (node.GetTree().IsQueuedForDeletion()) return;
             Timer timer = new()
             {
                 WaitTime = waitTime
             };
+            timer.AddToGroup("Timers");
             timer.Timeout += () => OnTimerTimeout(timer, action, node);
             node.AddChild(timer);
             timer.Start();
@@ -55,6 +57,7 @@ namespace Algos
 
         public static void OnTimerTimeout(Timer timer, Action action, Node node)
         {
+            if (node.IsQueuedForDeletion()) return;
             action();
             timer.Stop();
             node.RemoveChild(timer);

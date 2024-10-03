@@ -13,7 +13,6 @@ public partial class Ability : Node2D
   public virtual void Action()
   {
     EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
-    GD.Print("TERMINOU");
   }
 
 

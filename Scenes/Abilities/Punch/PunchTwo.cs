@@ -1,6 +1,7 @@
 using Algos;
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class PunchTwo : Ability
 {
@@ -11,7 +12,7 @@ public partial class PunchTwo : Ability
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
 
   // Call this function to detect objects in the cone
-  public void DetectInCone()
+  public async void DetectInCone()
   {
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
@@ -41,27 +42,21 @@ public partial class PunchTwo : Ability
 
         if (Math.Abs(angleToBody) <= coneAngleDegrees)
         {
-
           // Call Take Damage
-          TimerUtils.CreateTimer(() =>
-        {
           if (healthbar.IsAlive)
             EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,
               punchResource.Damage
             });
-
-        }, this, 1f);
         }
       }
     }
-    TimerUtils.CreateTimer(() =>
-    AnimationPlayer.Play("default"),
-    this, .3f);
-    TimerUtils.CreateTimer(() =>
-        {
-          EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
-        }, this, 1f);
+
+    await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
+    AnimationPlayer.Play("default");
+    await ToSignal(GetTree().CreateTimer(punchResource.Cooldown, false, true), "timeout");
+
+    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }
 
   public override void Action()

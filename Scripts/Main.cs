@@ -85,8 +85,9 @@ public partial class Main : Node2D
 
   public void PauseGame()
   {
-    GetTree().CallGroup("Enemies", "SetProcess", false);
+    GetTree().Paused = true;
   }
+
   public void OnMobDeath(object sender, object[] args)
   {
     if (args[0] is Mob mob)
@@ -103,10 +104,18 @@ public partial class Main : Node2D
 
   public void Restart()
   {
-    GetTree().ReloadCurrentScene();
+    GetTree().Paused = false;
+    foreach (Timer timer in GetTree().GetNodesInGroup("Timers"))
+    {
+      timer.Stop();
+      timer.GetParent().RemoveChild(timer);
+      timer.QueueFree();
+    }
+    GetTree().CallDeferred("reload_current_scene");
   }
   public void Exit()
   {
+    GetTree().Paused = false;
     GetTree().Quit();
   }
 
@@ -116,6 +125,9 @@ public partial class Main : Node2D
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
     EventRegistry.UnregisterEvent("OnMobDeath");
     EventRegistry.UnregisterEvent("OnPlayerDeath");
+    EventRegistry.UnregisterEvent("ActionFinished");
+    EventRegistry.UnregisterEvent("TakeDamage");
+    EventRegistry.UnregisterEvent("OnComboFinished");
 
   }
 }

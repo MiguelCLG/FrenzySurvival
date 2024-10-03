@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
 {
@@ -12,6 +13,7 @@ public partial class Player : CharacterBody2D
   AbilityManager abilityManager;
   double timer = 5;
   bool isDoingCombo = false;
+  bool isGettingHurt = false;
 
   public override void _Ready()
   {
@@ -33,6 +35,7 @@ public partial class Player : CharacterBody2D
       {
         if (IsInstanceValid(healthbar))
         {
+          isGettingHurt = true;
           AnimationPlayer.Play("hurt");
           await ToSignal(AnimationPlayer, "animation_finished");
           healthbar.TakeDamage(float.Parse(args[1].ToString()));
@@ -41,6 +44,8 @@ public partial class Player : CharacterBody2D
             EventRegistry.GetEventPublisher("OnPlayerDeath").RaiseEvent(new object[] { this });
             return;
           }
+          isGettingHurt = false;
+
         }
       }
     }
@@ -50,10 +55,10 @@ public partial class Player : CharacterBody2D
   {
     if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
     Movement(delta);
-    if (!isDoingCombo)
+    if (!isDoingCombo && !isGettingHurt)
     {
       isDoingCombo = true;
-      abilityManager.DoNextAction();
+      abilityManager.DoNextActionAsync();
     }
   }
 
