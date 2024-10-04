@@ -118,7 +118,7 @@ public partial class Main : Node2D
   public void Exit()
   {
     GetTree().Paused = false;
-    GetTree().Quit();
+    GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
   }
 
   public override void _ExitTree()

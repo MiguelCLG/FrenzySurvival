@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuf0vlh06gcps"]
+
+[ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_cdah4"]
+[ext_resource type="Script" path="res://Scenes/UI/Menu/Menu.cs" id="2_r5yip"]
+
+[node name="Base" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cdah4")
+script = ExtResource("2_r5yip")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainVertical" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Game Title" type="Label" parent="PanelContainer/MainVertical"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.2
+theme_type_variation = &"HeaderLarge"
+text = "Frenzy Survival"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MainVertical"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+alignment = 1
+
+[node name="StartGameButton" type="Button" parent="PanelContainer/MainVertical/VBoxContainer"]
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+text = "START GAME"
+
+[node name="OptionsButton" type="Button" parent="PanelContainer/MainVertical/VBoxContainer"]
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+text = "Options"
+
+[node name="QuitGameButton" type="Button" parent="PanelContainer/MainVertical/VBoxContainer"]
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+text = "Quit"
+
+[node name="Spacer" type="VBoxContainer" parent="PanelContainer/MainVertical"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
+alignment = 1
+
+[connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnStartPressed"]
+[connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
+[connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnQuitPressed"]
