@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 public partial class PunchTwo : Ability
 {
   [Export] public AbilityResource punchResource;
-
+  private bool isDoingAction = false;   
   double timer = 0;
   [Export] private float coneAngleDegrees = 45.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
@@ -14,6 +14,8 @@ public partial class PunchTwo : Ability
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
+    
+    GD.Print("Punch two!");
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -55,13 +57,81 @@ public partial class PunchTwo : Ability
     await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(punchResource.Cooldown, false, true), "timeout");
-
+    isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+  }
+
+  public override void _Process(double delta)
+  {
+    QueueRedraw();  // Redraw the cone when the punch is initiated    
   }
 
   public override void Action()
   {
+    isDoingAction = true;
     CallDeferred("DetectInCone");  // Perform the cone detection
+  }
+
+  public override void _Draw()
+  {
+    if(isDoingAction)
+    {
+      // Use character's movement direction as forward direction
+      Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
+      // Calculate the cone's half-angle in radians
+      float halfAngleRad = Mathf.DegToRad(coneAngleDegrees / 2);
+      // Calculate the left and right boundaries of the cone based on playerPosition
+      Vector2 leftDir = Position + forward.Rotated(-halfAngleRad) * coneRange;
+      Vector2 rightDir = Position + forward.Rotated(halfAngleRad) * coneRange;
+
+      // Draw the cone boundaries, anchored to the player's position
+      Color lineColor = new Color(0, 0, 0, 0.1f);
+      DrawLine(Position, leftDir, lineColor, 2);   // Left boundary
+      DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
+      DrawLine(leftDir, rightDir, lineColor, 2);         // Closing line
+
+      // Optionally fill the cone area (as a polygon)
+      Color fillColor = new Color(1f, 0.0f, 0.8f, 0.1f);  // Light gray with transparency
+      Vector2[] points = { Position, leftDir, rightDir };
+      DrawPolygon(points, new Color[] { fillColor });
+    }
+      // Visualize enemies detected within the cone
+      DetectInConeVisual();
+  }
+  // Helper method to visualize enemies detected in the cone
+  private void DetectInConeVisual()
+  {
+    // Get the forward direction based on the player's movement
+    Vector2 forward = CurrentVelocity.Normalized();
+
+    // Set up the query to find objects in the circular range
+    var spaceState = GetWorld2D().DirectSpaceState;
+    var query = new PhysicsShapeQueryParameters2D();
+    query.Shape = new CircleShape2D { Radius = coneRange };
+    query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
+
+    var results = spaceState.IntersectShape(query);
+
+    foreach (var result in results)
+    {
+      if (result["collider"] is Variant body)
+      {
+        if (!body.As<Node2D>().IsInGroup("Enemies"))
+          continue;
+
+        // Vector from the character to the object
+        Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
+
+        // Check if the object is within the cone
+        float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
+
+        if (Math.Abs(angleToBody) <= coneAngleDegrees)
+        {
+          // Visual indicator: Draw a circle at the enemy's position to show it's detected in the cone
+          DrawCircle(body.As<Node2D>().Position, 10, Colors.Green);
+        }
+      }
+    }
   }
 
 
