@@ -130,7 +130,6 @@ public partial class Mob : CharacterBody2D
 
         AnimationPlayer.Play("hurt");
         await ToSignal(AnimationPlayer, "animation_finished");
-
         if (!healthbar.IsAlive)
         {
           Die();
