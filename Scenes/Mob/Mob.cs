@@ -128,6 +128,7 @@ public partial class Mob : CharacterBody2D
 
   public async void TakeDamage(object sender, object[] args)
   {
+    if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Healthbar healthbar)
     {
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
@@ -145,6 +146,7 @@ public partial class Mob : CharacterBody2D
 
         if (!healthbar.IsAlive)
         {
+          AnimationPlayer.Play("death");
           EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
           return;
         }

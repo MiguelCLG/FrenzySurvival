@@ -10,12 +10,12 @@ public partial class Menu : Control
 
   public override void _Ready()
   {
-    Tween tween;
+    /* Tween tween;
     tween = CreateTween();
     tween.TweenProperty(Title, "position", new Vector2(450, 30), .2f);
     tween.TweenProperty(StartButton, "position", new Vector2(500, 100), .2f);
     tween.TweenProperty(OptionsButton, "position", new Vector2(500, 180), .2f);
-    tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f);
+    tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f); */
   }
   public void OnStartPressed() { GetTree().ChangeSceneToFile("res://Scenes/Main.tscn"); }
   public void OnOptionsPressed() { GD.Print("NOT IMPLEMENTED"); }

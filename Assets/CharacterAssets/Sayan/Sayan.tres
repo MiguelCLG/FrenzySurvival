@@ -1,11 +1,28 @@
-[gd_resource type="SpriteFrames" load_steps=20 format=3 uid="uid://7aoet3rsyt51"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://7aoet3rsyt51"]
 
 [ext_resource type="Texture2D" uid="uid://bt4tergubmseq" path="res://Assets/CharacterAssets/Sayan/Sayan_stand.png" id="1_unb3t"]
+[ext_resource type="Texture2D" uid="uid://b8fyu42fspxwi" path="res://Assets/CharacterAssets/Sayan/sayan_ko.png" id="1_wg7bp"]
 [ext_resource type="Texture2D" uid="uid://pwkeba4x6vag" path="res://Assets/CharacterAssets/Sayan/sayan_hurt.png" id="2_gij2o"]
 [ext_resource type="Texture2D" uid="uid://c4fyo0muyhqve" path="res://Assets/CharacterAssets/Sayan/sayan_kick.png" id="3_0op1m"]
 [ext_resource type="Texture2D" uid="uid://cgepubvi30p1l" path="res://Assets/CharacterAssets/Sayan/sayan_move.png" id="4_eqg7x"]
 [ext_resource type="Texture2D" uid="uid://cyuluysed8p2n" path="res://Assets/CharacterAssets/Sayan/sayan_punch.png" id="5_dux62"]
 [ext_resource type="Texture2D" uid="uid://cklkvmbix7ity" path="res://Assets/CharacterAssets/Sayan/sayan_punch2.png" id="6_2qqka"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sma7n"]
+atlas = ExtResource("1_wg7bp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx0wp"]
+atlas = ExtResource("1_wg7bp")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lud06"]
+atlas = ExtResource("1_wg7bp")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h10gt"]
+atlas = ExtResource("1_wg7bp")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fllfq"]
 atlas = ExtResource("1_unb3t")
@@ -61,6 +78,23 @@ region = Rect2(0, 0, 32, 32)
 
 [resource]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sma7n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gx0wp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lud06")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h10gt")
+}],
+"loop": true,
+"name": &"death",
+"speed": 2.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fllfq")

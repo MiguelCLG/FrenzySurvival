@@ -77,7 +77,7 @@ public partial class Main : Node2D
 
   public async void OnPlayerDeath(object sender, object[] args)
   {
-    await ToSignal(GetTree().CreateTimer(10f), "timeout");
+    await ToSignal(GetTree().CreateTimer(5f), "timeout");
 
     GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
 
@@ -90,12 +90,14 @@ public partial class Main : Node2D
     GetTree().Paused = true;
   }
 
-  public void OnMobDeath(object sender, object[] args)
+  public async void OnMobDeath(object sender, object[] args)
   {
     if (args[0] is Mob mob)
     {
+      await ToSignal(GetTree().CreateTimer(2f), "timeout");
       if (IsInstanceValid(mob) && !mob.IsQueuedForDeletion())
       {
+
         enemiesKilled++;
 
         mob.GetParent().RemoveChild(mob);

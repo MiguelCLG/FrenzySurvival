@@ -11,7 +11,7 @@
 [ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="9_xlf1f"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Kick/Kick.cs" id="10_u5utv"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="11_2rrdx"]
-[ext_resource type="Resource" path="res://Resources/Abilities/SayanKamehameha.tres" id="12_b1g64"]
+[ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="12_b1g64"]
 [ext_resource type="PackedScene" uid="uid://dihogff886yg0" path="res://Scenes/Abilities/Laser/Laser.tscn" id="13_g8owy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
@@ -27,7 +27,7 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_ay4ky")
-animation = &"punch_2"
+animation = &"death"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -18,7 +18,9 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_peidu")
+animation = &"death"
 autoplay = "default"
+frame_progress = 0.38354
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_oxruw")

@@ -26,7 +26,7 @@ layout_mode = 2
 
 [node name="Game Title" type="Label" parent="PanelContainer/MainVertical"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 0.2
 theme_type_variation = &"HeaderLarge"
@@ -35,7 +35,7 @@ horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MainVertical"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 3
 alignment = 1
 
