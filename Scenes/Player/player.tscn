@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgxub8yjvhnxn"]
+[gd_scene load_steps=15 format=3 uid="uid://dgxub8yjvhnxn"]
 
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
@@ -9,6 +9,10 @@
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="7_7n8hf"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Punch/PunchTwo.cs" id="8_op483"]
 [ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="9_xlf1f"]
+[ext_resource type="Script" path="res://Scenes/Abilities/Kick/Kick.cs" id="10_u5utv"]
+[ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="11_2rrdx"]
+[ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="12_b1g64"]
+[ext_resource type="PackedScene" uid="uid://dihogff886yg0" path="res://Scenes/Abilities/Laser/Laser.tscn" id="13_g8owy"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
 radius = 3.0
@@ -23,9 +27,8 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_ay4ky")
-animation = &"death"
+animation = &"punch_2"
 autoplay = "default"
-frame_progress = 0.613429
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_vyyvv")
@@ -44,6 +47,17 @@ script = ExtResource("5_60arm")
 script = ExtResource("5_nprnf")
 punchResource = ExtResource("7_7n8hf")
 
-[node name="Node2D" type="Node2D" parent="Abilities"]
+[node name="Punch2" type="Node2D" parent="Abilities"]
 script = ExtResource("8_op483")
 punchResource = ExtResource("9_xlf1f")
+
+[node name="Kick" type="Node2D" parent="Abilities"]
+script = ExtResource("10_u5utv")
+
+[node name="Kamehameha" type="Node2D" parent="Abilities"]
+script = ExtResource("11_2rrdx")
+LaserResource = ExtResource("12_b1g64")
+
+[node name="LaserRaycast" parent="Abilities/Kamehameha" instance=ExtResource("13_g8owy")]
+unique_name_in_owner = true
+position = Vector2(12, -3)

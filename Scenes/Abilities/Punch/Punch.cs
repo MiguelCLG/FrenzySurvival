@@ -62,7 +62,6 @@ public partial class Punch : Ability
   public override void _Process(double delta)
   {
     QueueRedraw();  // Redraw the cone when the punch is initiated
-
   }
 
   public override void Action()

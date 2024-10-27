@@ -61,7 +61,7 @@ public partial class PunchTwo : Ability
 
   public override void Action()
   {
-    DetectInCone();  // Perform the cone detection
+    CallDeferred("DetectInCone");  // Perform the cone detection
   }
 
 
