@@ -6,7 +6,7 @@ using Godot.Collections;
 public partial class AbilityManager : Node2D
 {
   public AnimatedSprite2D AnimationPlayer;
-  public Array<Ability> array = new Array<Ability>();
+  public Array<Ability> abilityArray = new Array<Ability>();
 
   public int actionindex = 0;
 
@@ -17,7 +17,7 @@ public partial class AbilityManager : Node2D
     foreach (Ability child in GetChildren())
     {
       child.AnimationPlayer = AnimationPlayer;
-      array.Add(child);
+      abilityArray.Add(child);
     }
     EventRegistry.RegisterEvent("ActionFinished");
     EventSubscriber.SubscribeToEvent("ActionFinished", DoNextActionAsync);
@@ -27,7 +27,7 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync()
   {
-    if (actionindex > array.Count - 1)
+    if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
 
@@ -35,14 +35,14 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      array[actionindex].Action();
+      abilityArray[actionindex].Action();
       actionindex++;
     }
   }
 
   public void DoNextActionAsync(object sender, object[] args)
   {
-    if (actionindex > array.Count - 1)
+    if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
       EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
@@ -50,7 +50,7 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      array[actionindex].Action();
+      abilityArray[actionindex].Action();
       actionindex++;
     }
   }

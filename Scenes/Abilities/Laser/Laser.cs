@@ -7,6 +7,7 @@ public partial class Laser : RayCast2D
   bool IsCasting { get; set; }
   Vector2 maxPosition = new(500, 0);
   Vector2 collisionPoint;
+  Vector2 initialPos;
   [Export] float beamSpeed = 2000f;
   [Export] float beamWidth = 50f;
   [Export] int direction = 1;
@@ -25,7 +26,12 @@ public partial class Laser : RayCast2D
     beamParticles = GetNode<GpuParticles2D>("%BeamParticles");
     beamLine.Width = 0;
     collisionPoint = beamLine.Points[1];
+    initialPos = Position;
+  }
 
+  public void SetDirection(int newValue)
+  {
+    direction = newValue;
   }
 
   public override void _PhysicsProcess(double delta)
@@ -40,11 +46,13 @@ public partial class Laser : RayCast2D
     collisionParticles.Position = collisionPoint;
     if (IsColliding())
     {
-      if (MathF.Abs(collisionPoint.X) < GetCollisionPoint().X * direction)
-        collisionPoint += Vector2.Right * (float)delta * beamSpeed;
-      collisionParticles.GlobalRotation = GetCollisionNormal().Angle();
-      collisionParticles.Position = collisionPoint;
+      //if (MathF.Abs(collisionPoint.X) < GetCollisionPoint().X * direction)
+      //  collisionPoint += Vector2.Right * (float)delta * beamSpeed;
+      //collisionParticles.GlobalRotation = GetCollisionNormal().Angle();
+      //collisionParticles.Position = collisionPoint;
     }
+    Position = new Vector2(initialPos.X * direction, initialPos.Y);
+    //GD.Print(beamLine.Points[0]); 
     beamLine.RemovePoint(1);
     beamLine.AddPoint(collisionPoint);
     beamParticles.Position = collisionPoint * .5f;
@@ -72,11 +80,11 @@ public partial class Laser : RayCast2D
 
   }
 
-  public override void _UnhandledInput(InputEvent @event)
-  {
-    if (@event is InputEventMouseButton)
-      SetIsCasting(@event.IsPressed());
-  }
+  //public override void _UnhandledInput(InputEvent @event)
+  //{
+  //  if (@event is InputEventMouseButton)
+  //    SetIsCasting(@event.IsPressed());
+  //}
 
   public void AppearBeam()
   {
@@ -84,7 +92,7 @@ public partial class Laser : RayCast2D
     tween = CreateTween();
     tween.Stop();
     tween.TweenProperty(beamLine, "width", beamWidth, 0.2);
-    tween.TweenProperty(area, "scale", new Vector2(beamWidth, area.Scale.Y), 0.2);
+    tween.TweenProperty(area, "scale", new Vector2(beamWidth * direction, area.Scale.Y), 0.2);
     tween.Play();
   }
 

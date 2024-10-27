@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_cdah4"]
 [ext_resource type="Script" path="res://Scenes/UI/Menu/Menu.cs" id="2_r5yip"]
 
-[node name="Base" type="Control" node_paths=PackedStringArray("StartButton", "OptionsButton", "QuitButton", "Title")]
+[node name="Base" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,10 +12,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_cdah4")
 script = ExtResource("2_r5yip")
-StartButton = NodePath("PanelContainer/MainVertical/VBoxContainer/StartGameButton")
-OptionsButton = NodePath("PanelContainer/MainVertical/VBoxContainer/OptionsButton")
-QuitButton = NodePath("PanelContainer/MainVertical/VBoxContainer/QuitGameButton")
-Title = NodePath("PanelContainer/MainVertical/Game Title")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -65,12 +61,6 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.2
 alignment = 1
 
-[connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHover" binds= ["Start"]]
-[connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHoverExit" binds= ["Start"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnStartPressed"]
-[connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHover" binds= ["Options"]]
-[connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHoverExit" binds= ["Options"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
-[connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHover" binds= ["Quit"]]
-[connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHoverExit" binds= ["Quit"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnQuitPressed"]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 public partial class Punch : Ability
 {
   [Export] public AbilityResource punchResource;
-
+  private bool isDoingAction = false;
   double timer = 0;
   [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
@@ -14,6 +14,7 @@ public partial class Punch : Ability
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
+    GD.Print("Punch One!");
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -22,7 +23,7 @@ public partial class Punch : Ability
     var query = new PhysicsShapeQueryParameters2D();
     query.Shape = new CircleShape2D { Radius = coneRange };
     query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
-
+    
     var results = spaceState.IntersectShape(query);
 
     AnimationPlayer.Play("punch");
@@ -55,50 +56,49 @@ public partial class Punch : Ability
     await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(punchResource.Cooldown, false, true), "timeout");
-
+    isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }
 
   public override void _Process(double delta)
   {
-    QueueRedraw();  // Redraw the cone when the punch is initiated
+    QueueRedraw();  // Redraw the cone when the punch is initiated    
   }
 
   public override void Action()
   {
+    isDoingAction = true;
     CallDeferred("DetectInCone");  // Perform the cone detection
   }
 
   public override void _Draw()
   {
-    base._Draw();
+      
+     if(isDoingAction)
+     {
+      // Use character's movement direction as forward direction
+      Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
+      // Calculate the cone's half-angle in radians
+      float halfAngleRad = Mathf.DegToRad(coneAngleDegrees / 2);
+      // Calculate the left and right boundaries of the cone based on playerPosition
+      Vector2 leftDir = Position + forward.Rotated(-halfAngleRad) * coneRange;
+      Vector2 rightDir = Position + forward.Rotated(halfAngleRad) * coneRange;
 
-    // Get the forward direction based on movement velocity
-    Vector2 forward = CurrentVelocity.Normalized();
+      // Draw the cone boundaries, anchored to the player's position
+      Color lineColor = new Color(0, 0, 0, 0.1f);
+      DrawLine(Position, leftDir, lineColor, 2);   // Left boundary
+      DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
+      DrawLine(leftDir, rightDir, lineColor, 2);         // Closing line
 
-    // Calculate the cone's half-angle in radians
-    float halfAngleRad = Mathf.DegToRad(coneAngleDegrees);
-
-    // Calculate the left and right boundaries of the cone
-    Vector2 leftDir = forward.Rotated(-halfAngleRad) * coneRange;
-    Vector2 rightDir = forward.Rotated(halfAngleRad) * coneRange;
-
-    Color lineColor = new(0, 0, 0, 0.1f);
-    // Draw the cone as lines
-    DrawLine(Position, Position + leftDir, lineColor, 2);  // Left line of the cone
-    DrawLine(Position, Position + rightDir, lineColor, 2); // Right line of the cone
-    DrawLine(Position + leftDir, Position + rightDir, lineColor, 2);  // Closing line of the cone
-
-    Color color = new(122, 122, 122, 0.1f);
-
-    // Optionally fill the cone area (as a polygon)
-    Vector2[] points = { Position, Position + leftDir, Position + rightDir };
-    DrawPolygon(points, new Color[] { color });
-
-    // Debugging: Draw circles on the detected enemies within the cone
-    DetectInConeVisual();
+      // Optionally fill the cone area (as a polygon)
+      Color fillColor = new Color(0.8f, 0.8f, 0.8f, 0.1f);  // Light gray with transparency
+      Vector2[] points = { Position, leftDir, rightDir };
+      DrawPolygon(points, new Color[] { fillColor });
+      
+     }
+      // Visualize enemies detected within the cone
+      DetectInConeVisual();
   }
-
   // Helper method to visualize enemies detected in the cone
   private void DetectInConeVisual()
   {

@@ -93,6 +93,7 @@ public partial class Player : CharacterBody2D
     }
     else
     {
+      // TODO: Shouldnt the friction be exported? Maybe in the character resource?
       // Apply friction/damping when there is no input
       float friction = 10f; // Adjust this value to change how fast the character slows down
       Velocity = Velocity.Lerp(Vector2.Zero, friction * (float)delta);

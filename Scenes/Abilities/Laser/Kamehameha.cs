@@ -16,6 +16,7 @@ public partial class Kamehameha : Ability
 
   public async void FireLaser()
   {
+    Laser.SetDirection(CurrentVelocity.X > 0 ? 1 : -1);
     AnimationPlayer.Play("punch");
     Laser.SetIsCasting(true);
     await ToSignal(GetTree().CreateTimer(1.5f, false, true), "timeout");
