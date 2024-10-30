@@ -16,7 +16,7 @@ public partial class Kamehameha : Ability
 
   public async void FireLaser()
   {
-    Laser.SetDirection(CurrentVelocity.X > 0 ? 1 : -1);
+    Laser.SetDirection(facingDirection);
     AnimationPlayer.Play("punch");
     Laser.SetIsCasting(true);
     await ToSignal(GetTree().CreateTimer(1.5f, false, true), "timeout");
@@ -43,6 +43,12 @@ public partial class Kamehameha : Ability
       // Save a list of elements entered
       // if element is not on the list, he gets hit and added to the list
       // when laser is over, clear the list
+      if (body is Mob mob)
+      {
+        Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;
+        mob.KnockBack(curDirection, 100);
+      }
+
       if (healthbar.IsAlive)
         EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,

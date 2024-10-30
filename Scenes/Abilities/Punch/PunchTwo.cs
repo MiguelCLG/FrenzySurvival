@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 public partial class PunchTwo : Ability
 {
   [Export] public AbilityResource punchResource;
-  private bool isDoingAction = false;   
+  private bool isDoingAction = false;
   double timer = 0;
   [Export] private float coneAngleDegrees = 45.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
@@ -14,8 +14,6 @@ public partial class PunchTwo : Ability
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
-    
-    GD.Print("Punch two!");
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -63,7 +61,7 @@ public partial class PunchTwo : Ability
 
   public override void _Process(double delta)
   {
-    QueueRedraw();  // Redraw the cone when the punch is initiated    
+    QueueRedraw();  // Redraw the cone when the punch is initiated
   }
 
   public override void Action()
@@ -74,7 +72,7 @@ public partial class PunchTwo : Ability
 
   public override void _Draw()
   {
-    if(isDoingAction)
+    if (isDoingAction)
     {
       // Use character's movement direction as forward direction
       Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
@@ -95,8 +93,8 @@ public partial class PunchTwo : Ability
       Vector2[] points = { Position, leftDir, rightDir };
       DrawPolygon(points, new Color[] { fillColor });
     }
-      // Visualize enemies detected within the cone
-      DetectInConeVisual();
+    // Visualize enemies detected within the cone
+    DetectInConeVisual();
   }
   // Helper method to visualize enemies detected in the cone
   private void DetectInConeVisual()

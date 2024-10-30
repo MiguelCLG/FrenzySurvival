@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="1_ir8nx"]
 [ext_resource type="Texture2D" uid="uid://cocqcjcq641v1" path="res://Assets/glowing_circle.png" id="2_yc2np"]
+[ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="3_2ordb"]
 
 [sub_resource type="Curve" id="Curve_330ob"]
 _data = [Vector2(0, 0.0991702), 0.0, 0.0, 0, 0, Vector2(0.474614, 0.347303), 1.10355, 1.10355, 0, 0, Vector2(0.794702, 0.697925), 1.22178, 1.22178, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -61,13 +62,6 @@ tangential_accel_max = 100.0
 color_ramp = SubResource("GradientTexture1D_07hof")
 emission_curve = SubResource("CurveTexture_ajcer")
 
-[sub_resource type="Environment" id="Environment_r5a0d"]
-background_mode = 3
-background_color = Color(1, 1, 1, 1)
-glow_enabled = true
-glow_bloom = 0.21
-glow_hdr_scale = 0.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6aj0a"]
 size = Vector2(23, 20)
 
@@ -75,6 +69,7 @@ size = Vector2(23, 20)
 position = Vector2(584, 304)
 target_position = Vector2(500, 0)
 script = ExtResource("1_ir8nx")
+laserEnvironment = ExtResource("3_2ordb")
 beamWidth = 100.0
 
 [node name="BeamLine" type="Line2D" parent="."]
@@ -109,8 +104,9 @@ process_material = SubResource("ParticleProcessMaterial_ecpu8")
 texture = ExtResource("2_yc2np")
 lifetime = 0.3
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_r5a0d")
+[node name="LaserEnvironment" type="WorldEnvironment" parent="."]
+unique_name_in_owner = true
+environment = ExtResource("3_2ordb")
 
 [node name="CollisionArea" type="Area2D" parent="."]
 unique_name_in_owner = true
