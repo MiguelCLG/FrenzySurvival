@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://pqb4bdfaydlb"]
+
+[ext_resource type="Texture2D" uid="uid://g3ppk5ebr723" path="res://Assets/CharacterAssets/Sayan/sayanp_kick.png" id="1_ltipu"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_rhw0s"]
+
+[resource]
+script = ExtResource("1_rhw0s")
+Name = ""
+Cooldown = 1
+Value = 100
+Damage = 45
+Icon = ExtResource("1_ltipu")

@@ -14,7 +14,6 @@ public partial class Punch : Ability
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
-    GD.Print("Punch One!");
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -23,7 +22,7 @@ public partial class Punch : Ability
     var query = new PhysicsShapeQueryParameters2D();
     query.Shape = new CircleShape2D { Radius = coneRange };
     query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
-    
+
     var results = spaceState.IntersectShape(query);
 
     AnimationPlayer.Play("punch");
@@ -62,7 +61,7 @@ public partial class Punch : Ability
 
   public override void _Process(double delta)
   {
-    QueueRedraw();  // Redraw the cone when the punch is initiated    
+    QueueRedraw();  // Redraw the cone when the punch is initiated
   }
 
   public override void Action()
@@ -73,9 +72,9 @@ public partial class Punch : Ability
 
   public override void _Draw()
   {
-      
-     if(isDoingAction)
-     {
+
+    if (isDoingAction)
+    {
       // Use character's movement direction as forward direction
       Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
       // Calculate the cone's half-angle in radians
@@ -94,10 +93,10 @@ public partial class Punch : Ability
       Color fillColor = new Color(0.8f, 0.8f, 0.8f, 0.1f);  // Light gray with transparency
       Vector2[] points = { Position, leftDir, rightDir };
       DrawPolygon(points, new Color[] { fillColor });
-      
-     }
-      // Visualize enemies detected within the cone
-      DetectInConeVisual();
+
+    }
+    // Visualize enemies detected within the cone
+    DetectInConeVisual();
   }
   // Helper method to visualize enemies detected in the cone
   private void DetectInConeVisual()
@@ -134,6 +133,4 @@ public partial class Punch : Ability
       }
     }
   }
-
-
 }

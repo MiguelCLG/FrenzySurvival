@@ -3,7 +3,8 @@ using System;
 
 public partial class Laser : RayCast2D
 {
-
+  [Export] Godot.Environment laserEnvironment;
+  WorldEnvironment worldEnvironment;
   bool IsCasting { get; set; }
   Vector2 maxPosition = new(500, 0);
   Vector2 collisionPoint;
@@ -24,9 +25,12 @@ public partial class Laser : RayCast2D
     castingParticlesBegin = GetNode<GpuParticles2D>("%CastingParticlesBegin");
     collisionParticles = GetNode<GpuParticles2D>("%CollisionParticles");
     beamParticles = GetNode<GpuParticles2D>("%BeamParticles");
+    worldEnvironment = GetNode<WorldEnvironment>("LaserEnvironment");
     beamLine.Width = 0;
     collisionPoint = beamLine.Points[1];
     initialPos = Position;
+    worldEnvironment.Environment = null;
+
   }
 
   public void SetDirection(int newValue)
@@ -52,7 +56,6 @@ public partial class Laser : RayCast2D
       //collisionParticles.Position = collisionPoint;
     }
     Position = new Vector2(initialPos.X * direction, initialPos.Y);
-    //GD.Print(beamLine.Points[0]); 
     beamLine.RemovePoint(1);
     beamLine.AddPoint(collisionPoint);
     beamParticles.Position = collisionPoint * .5f;

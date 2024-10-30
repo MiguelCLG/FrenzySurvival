@@ -20,7 +20,7 @@ texture_filter = 1
 sprite_frames = ExtResource("3_peidu")
 animation = &"death"
 autoplay = "default"
-frame_progress = 0.38354
+frame_progress = 0.0428472
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_oxruw")

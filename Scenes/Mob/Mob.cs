@@ -14,6 +14,10 @@ public partial class Mob : CharacterBody2D
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
   private float stopDistance = 30f;
 
+  private float force = 1f;
+  private Vector2 direction = Vector2.Zero;
+
+
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
@@ -35,6 +39,11 @@ public partial class Mob : CharacterBody2D
       UpdateTarget();
       Movement(delta);
     }
+  }
+
+  public override void _PhysicsProcess(double delta)
+  {
+    MoveAndSlide();
   }
 
   private void Movement(double delta)
@@ -108,24 +117,6 @@ public partial class Mob : CharacterBody2D
 
   }
 
-  /* public void TakeDamage(object sender, object[] args)
-  {
-    // AnimationPlayer.Play("Hurt");
-    if (args[0] is Healthbar healthbar)
-    {
-      if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
-      {
-        if (!healthbar.IsAlive)
-        {
-          EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
-          return;
-        }
-        healthbar.TakeDamage(float.Parse(args[1].ToString()));
-        AnimationPlayer.Play("hurt");
-      }
-    }
-  } */
-
   public async void TakeDamage(object sender, object[] args)
   {
     if (AnimationPlayer.Animation == "death") return;
@@ -156,6 +147,21 @@ public partial class Mob : CharacterBody2D
         SetProcess(true);
       }
     }
+  }
+
+  public async void KnockBack(Vector2 dir, float frc)
+  {
+    if (AnimationPlayer.Animation == "death") return;
+    direction = dir;
+    force = frc;
+    SetProcess(false);
+    SetPhysicsProcess(true);
+    await ToSignal(GetTree().CreateTimer(.1f), "timeout");
+    Velocity = dir * frc;
+    await ToSignal(GetTree().CreateTimer(1f), "timeout");
+    Velocity = Vector2.Zero;
+    SetPhysicsProcess(false);
+    SetProcess(true);
   }
 
   public void OnPlayerDeath(object sender, object[] args)

@@ -14,6 +14,7 @@ public partial class Player : CharacterBody2D
   double timer = 5;
   bool isDoingCombo = false;
   bool isGettingHurt = false;
+  int facingDirection = 1;
 
   public override void _Ready()
   {
@@ -102,6 +103,7 @@ public partial class Player : CharacterBody2D
 
     // Optionally, use MoveAndSlide to handle movement with collisions
     AnimationPlayer.FlipH = Velocity.X < 0;
+    abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);
     MoveAndSlide();
 
   }

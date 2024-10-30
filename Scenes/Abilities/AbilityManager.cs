@@ -9,7 +9,7 @@ public partial class AbilityManager : Node2D
   public Array<Ability> abilityArray = new Array<Ability>();
 
   public int actionindex = 0;
-
+  int facingDirection = 1;
 
   public override void _Ready()
   {
@@ -25,6 +25,11 @@ public partial class AbilityManager : Node2D
 
   }
 
+  public void SetFacingDirection(int direction)
+  {
+    facingDirection = direction;
+  }
+
   public void DoNextActionAsync()
   {
     if (actionindex > abilityArray.Count - 1)
@@ -35,6 +40,7 @@ public partial class AbilityManager : Node2D
     }
     else
     {
+      abilityArray[actionindex].SetFacingDirection(facingDirection);
       abilityArray[actionindex].Action();
       actionindex++;
     }
@@ -50,6 +56,7 @@ public partial class AbilityManager : Node2D
     }
     else
     {
+      abilityArray[actionindex].SetFacingDirection(facingDirection);
       abilityArray[actionindex].Action();
       actionindex++;
     }
