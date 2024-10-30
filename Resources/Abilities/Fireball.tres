@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_rby3w")
 Name = "Fireball"
-Cooldown = 5
-Value = 13
-Damage = 0
+Cooldown = 2
+Value = 100
+Damage = 10
