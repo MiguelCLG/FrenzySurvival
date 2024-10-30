@@ -14,10 +14,6 @@ public partial class Mob : CharacterBody2D
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
   private float stopDistance = 30f;
 
-  private float force = 1f;
-  private Vector2 direction = Vector2.Zero;
-
-
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
@@ -125,15 +121,11 @@ public partial class Mob : CharacterBody2D
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
       {
         SetProcess(false);
-        void action()
-        {
-          if (AnimationPlayer.Frame == 6)
-            healthbar.TakeDamage(float.Parse(args[1].ToString()));
-        }
-        AnimationPlayer.FrameChanged += action;
+
+        healthbar.TakeDamage(float.Parse(args[1].ToString()));
+
         AnimationPlayer.Play("hurt");
         await ToSignal(AnimationPlayer, "animation_finished");
-        AnimationPlayer.FrameChanged -= action;
 
         if (!healthbar.IsAlive)
         {
@@ -152,8 +144,6 @@ public partial class Mob : CharacterBody2D
   public async void KnockBack(Vector2 dir, float frc)
   {
     if (AnimationPlayer.Animation == "death") return;
-    direction = dir;
-    force = frc;
     SetProcess(false);
     SetPhysicsProcess(true);
     await ToSignal(GetTree().CreateTimer(.1f), "timeout");
