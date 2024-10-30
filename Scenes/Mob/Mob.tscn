@@ -7,7 +7,7 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oxruw"]
 radius = 3.0
-height = 8.0
+height = 16.0
 
 [node name="Mob" type="CharacterBody2D" node_paths=PackedStringArray("AnimationPlayer") groups=["Enemies"]]
 disable_mode = 2

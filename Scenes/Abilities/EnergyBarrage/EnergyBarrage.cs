@@ -44,6 +44,7 @@ public partial class EnergyBarrage : Ability
     {
       if (!body.IsInGroup("Enemies")) return;
       var healthbar = body.GetNode<Healthbar>("Healthbar");
+      if (!healthbar.IsAlive) return;
       if (body is Mob mob)
       {
         Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;

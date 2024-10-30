@@ -10,4 +10,4 @@ LaserResource = ExtResource("2_bcv6r")
 
 [node name="LaserRaycast" parent="." instance=ExtResource("3_qrrlu")]
 unique_name_in_owner = true
-position = Vector2(12, -3)
+position = Vector2(19, -3)
