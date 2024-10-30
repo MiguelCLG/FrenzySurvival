@@ -15,10 +15,6 @@ public partial class Mob : CharacterBody2D
   [Export] public PackedScene KiPickup;
   private float stopDistance = 30f;
 
-  private float force = 1f;
-  private Vector2 direction = Vector2.Zero;
-
-
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
