@@ -3,7 +3,6 @@ using System;
 
 public partial class Kick : Ability
 {
-  [Export] public AbilityResource kickResource;
   private bool isDoingAction = false;
   double timer = 0;
   [Export] private float coneAngleDegrees = 45.0f;  // Cone's half-angle in degrees
@@ -44,16 +43,16 @@ public partial class Kick : Ability
           if (healthbar.IsAlive)
             EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,
-              kickResource.Damage
+              abilityResource.Damage
             });
-          body.As<Mob>().KnockBack(forward, kickResource.Value);
+          body.As<Mob>().KnockBack(forward, abilityResource.Value);
         }
       }
     }
 
     await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
     AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(kickResource.Cooldown, false, true), "timeout");
+    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }

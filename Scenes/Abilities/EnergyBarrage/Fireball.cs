@@ -3,7 +3,6 @@ using System;
 
 public partial class Fireball : AnimatedSprite2D
 {
-  [Export] public AbilityResource fireballResource;
   [Export] public float speed = 500f;
   private int facingDirection = 1;
   private int lifespan = 10;

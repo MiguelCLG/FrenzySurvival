@@ -4,8 +4,6 @@ using System;
 public partial class Kamehameha : Ability
 {
 
-  [Export] public AbilityResource LaserResource;
-
   Laser Laser;
   public override void _Ready()
   {
@@ -22,7 +20,7 @@ public partial class Kamehameha : Ability
     await ToSignal(GetTree().CreateTimer(1.5f, false, true), "timeout");
     Laser.SetIsCasting(false);
     AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(LaserResource.Cooldown, false, true), "timeout");
+    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }
   public override void Action()
@@ -52,7 +50,7 @@ public partial class Kamehameha : Ability
       if (healthbar.IsAlive)
         EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,
-              LaserResource.Damage
+              abilityResource.Damage
             });
     }
   }

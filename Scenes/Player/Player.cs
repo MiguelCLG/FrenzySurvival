@@ -25,6 +25,13 @@ public partial class Player : CharacterBody2D
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventRegistry.RegisterEvent("OnComboFinished");
     EventSubscriber.SubscribeToEvent("OnComboFinished", OnComboFinished);
+    EventRegistry.RegisterEvent("SetKI");
+    EventSubscriber.SubscribeToEvent("SetKI", SetKI);
+
+    GetTree().CreateTimer(.2f, false, true).Timeout += () =>
+    {
+      SetKI(this, new object[] { playerResource.KI });
+    };
   }
 
 
@@ -110,10 +117,29 @@ public partial class Player : CharacterBody2D
     MoveAndSlide();
 
   }
+
+  public void SetInitialKIValue()
+  {
+    abilityManager.SetKI(playerResource.KI);
+    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI });
+  }
+
+  public void SetKI(object sender, object[] args)
+  {
+    if (args[0] is int kiValue)
+    {
+      int newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
+      playerResource.KI = newKi;
+      abilityManager.SetKI(newKi);
+      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+    }
+  }
+
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", OnComboFinished);
+    EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
 
   }
 }

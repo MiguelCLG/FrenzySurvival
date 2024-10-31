@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddm8b3qk8htao"]
+
+[ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_a8h6o"]
+
+[node name="LevelUpUI" type="CanvasLayer"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.219
+anchor_right = 0.781
+anchor_bottom = 1.0
+offset_left = -0.28801
+offset_right = 0.287964
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+theme = ExtResource("1_a8h6o")

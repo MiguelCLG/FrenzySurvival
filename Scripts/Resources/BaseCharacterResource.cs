@@ -9,6 +9,8 @@ public partial class BaseCharacterResource : Resource
   [Export] public int Speed;
   [Export] public int Shield;
   [Export] public int MaxShield;
+  [Export] public int KI;
+  [Export] public int MaxKI;
   [Export] public SpriteFrames AnimatedFrames;
   [Export] public Texture2D Portrait;
   [Export] public Array<AbilityResource> Abilities;

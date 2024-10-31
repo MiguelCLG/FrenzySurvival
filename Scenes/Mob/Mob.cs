@@ -12,6 +12,7 @@ public partial class Mob : CharacterBody2D
   double timer = 0;
   bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
+  [Export] public PackedScene KiPickup;
   private float stopDistance = 30f;
 
   public override void _Ready()
@@ -130,6 +131,7 @@ public partial class Mob : CharacterBody2D
         if (!healthbar.IsAlive)
         {
           AnimationPlayer.Play("death");
+
           EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
           return;
         }
@@ -157,6 +159,13 @@ public partial class Mob : CharacterBody2D
   public void OnPlayerDeath(object sender, object[] args)
   {
     isTargetAlive = false;
+  }
+
+  public void DropKi()
+  {
+    Node2D pickup = KiPickup.Instantiate<Node2D>();
+    GetTree().Root.AddChild(pickup);
+    pickup.GlobalPosition = GlobalPosition;
   }
 
   public override void _ExitTree()
