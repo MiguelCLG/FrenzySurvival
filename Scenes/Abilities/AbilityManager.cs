@@ -10,6 +10,7 @@ public partial class AbilityManager : Node2D
 
   public int actionindex = 0;
   int facingDirection = 1;
+  int ki = 0;
 
   public override void _Ready()
   {
@@ -23,6 +24,11 @@ public partial class AbilityManager : Node2D
     EventSubscriber.SubscribeToEvent("ActionFinished", DoNextActionAsync);
 
 
+  }
+
+  public void SetKI(int newKi)
+  {
+    ki = newKi;
   }
 
   public void SetFacingDirection(int direction)
@@ -40,14 +46,24 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      abilityArray[actionindex].SetFacingDirection(facingDirection);
-      abilityArray[actionindex].Action();
+      if (!abilityArray[actionindex].abilityResource.isSuperAbility)
+      {
+        abilityArray[actionindex].SetFacingDirection(facingDirection);
+        abilityArray[actionindex].Action();
+      }
+      else if (abilityArray[actionindex].abilityResource.kiRequired <= ki)
+      {
+        abilityArray[actionindex].SetFacingDirection(facingDirection);
+        abilityArray[actionindex].Action();
+        abilityArray[actionindex].SpendKi(ki);
+      }
       actionindex++;
     }
   }
 
   public void DoNextActionAsync(object sender, object[] args)
   {
+
     if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
@@ -56,8 +72,23 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      abilityArray[actionindex].SetFacingDirection(facingDirection);
-      abilityArray[actionindex].Action();
+      if (!abilityArray[actionindex].abilityResource.isSuperAbility) // it is not a super
+      {
+        abilityArray[actionindex].SetFacingDirection(facingDirection);
+        abilityArray[actionindex].Action();
+      }
+      else if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is a super and has ki to spend
+      {
+        abilityArray[actionindex].SetFacingDirection(facingDirection);
+        abilityArray[actionindex].Action();
+        abilityArray[actionindex].SpendKi(-abilityArray[actionindex].abilityResource.kiRequired);
+      }
+      else // it is a super but does not have enough ki
+      {
+        actionindex++;
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        return;
+      }
       actionindex++;
     }
   }

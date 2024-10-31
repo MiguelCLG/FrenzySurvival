@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://cjsxx5bkrptff"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_tml6u"]
+[ext_resource type="Resource" uid="uid://2l71ng11ql21" path="res://Resources/Abilities/Namekian/punch.tres" id="1_xrlhg"]
+[ext_resource type="SpriteFrames" uid="uid://bq5l07jlroepc" path="res://Assets/CharacterAssets/Namekian/Namekian_1.tres" id="2_2ygy4"]
+[ext_resource type="Texture2D" uid="uid://lcm7kw3v6ygs" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek_stand.png" id="3_04r7q"]
+
+[resource]
+script = ExtResource("1_tml6u")
+HP = 80
+MaxHP = 80
+Speed = 60
+Shield = 0
+MaxShield = 0
+KI = 0
+MaxKI = 0
+AnimatedFrames = ExtResource("2_2ygy4")
+Portrait = ExtResource("3_04r7q")
+Abilities = Array[Object]([ExtResource("1_xrlhg")])

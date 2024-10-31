@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 public partial class Punch : Ability
 {
-  [Export] public AbilityResource punchResource;
   private bool isDoingAction = false;
   double timer = 0;
   [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
@@ -46,7 +45,7 @@ public partial class Punch : Ability
           if (healthbar.IsAlive)
             EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,
-              punchResource.Damage
+              abilityResource.Damage
             });
         }
       }
@@ -54,7 +53,7 @@ public partial class Punch : Ability
 
     await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
     AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(punchResource.Cooldown, false, true), "timeout");
+    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }

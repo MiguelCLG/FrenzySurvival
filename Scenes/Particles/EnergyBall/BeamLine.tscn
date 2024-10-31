@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://nnvpi5hi8qwy"]
+
+[sub_resource type="Curve" id="Curve_wpr6y"]
+_data = [Vector2(0, 0.811442), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_trsyi"]
+offsets = PackedFloat32Array(0.0121065, 0.995157)
+colors = PackedColorArray(0.94902, 1, 1, 0.196078, 0.784314, 1, 1, 1)
+
+[node name="BeamLine" type="Line2D"]
+points = PackedVector2Array(0, 0, 100, 0)
+width_curve = SubResource("Curve_wpr6y")
+gradient = SubResource("Gradient_trsyi")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

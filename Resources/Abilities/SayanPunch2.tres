@@ -8,5 +8,5 @@ script = ExtResource("2_wu2kt")
 Name = "SayanPunch2"
 Cooldown = 1
 Value = 30
-Damage = 30
+Damage = 20
 Icon = ExtResource("1_8odsf")

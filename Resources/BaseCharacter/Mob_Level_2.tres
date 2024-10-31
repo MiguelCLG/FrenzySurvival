@@ -13,6 +13,8 @@ Cooldown = 1
 Value = 30
 Damage = 30
 Icon = ExtResource("1_d2044")
+isSuperAbility = false
+kiRequired = 0
 
 [resource]
 script = ExtResource("1_3pdoh")
@@ -21,6 +23,8 @@ MaxHP = 200
 Speed = 60
 Shield = 50
 MaxShield = 50
+KI = 100
+MaxKI = 100
 AnimatedFrames = ExtResource("3_qhc5k")
 Portrait = ExtResource("2_ptymd")
 Abilities = Array[Object]([SubResource("Resource_sefrc")])

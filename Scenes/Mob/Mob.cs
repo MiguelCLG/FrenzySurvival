@@ -12,6 +12,7 @@ public partial class Mob : CharacterBody2D
   double timer = 0;
   bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
+  [Export] public PackedScene KiPickup;
   private float stopDistance = 30f;
 
   public override void _Ready()
@@ -34,6 +35,10 @@ public partial class Mob : CharacterBody2D
     {
       UpdateTarget();
       Movement(delta);
+    }
+    else if (AnimationPlayer.Animation != "death" && isTargetAlive)
+    {
+      Die();
     }
   }
 
@@ -121,7 +126,6 @@ public partial class Mob : CharacterBody2D
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
       {
         SetProcess(false);
-
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
 
         AnimationPlayer.Play("hurt");
@@ -129,8 +133,7 @@ public partial class Mob : CharacterBody2D
 
         if (!healthbar.IsAlive)
         {
-          AnimationPlayer.Play("death");
-          EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+          Die();
           return;
         }
 
@@ -159,6 +162,19 @@ public partial class Mob : CharacterBody2D
     isTargetAlive = false;
   }
 
+  public void DropKi()
+  {
+    Node2D pickup = KiPickup.Instantiate<Node2D>();
+    pickup.GlobalPosition = GlobalPosition;
+    GetTree().Root.AddChild(pickup);
+  }
+
+  public void Die()
+  {
+    AnimationPlayer.Play("death");
+
+    EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+  }
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);

@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjtn3vs1t3ogt"]
+[gd_scene load_steps=4 format=3 uid="uid://cjtn3vs1t3ogt"]
 
 [ext_resource type="SpriteFrames" uid="uid://bgaohdtx268mg" path="res://Assets/Effects/Fireball/Fireball.tres" id="1_ib474"]
 [ext_resource type="Script" path="res://Scenes/Abilities/EnergyBarrage/Fireball.cs" id="2_muhlh"]
-[ext_resource type="Resource" uid="uid://bf0v7h5midfbe" path="res://Resources/Abilities/Fireball.tres" id="3_2orqe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lwxqa"]
 radius = 36.5714
@@ -10,17 +9,15 @@ radius = 36.5714
 [node name="Fireball" type="AnimatedSprite2D"]
 scale = Vector2(0.109375, 0.109375)
 sprite_frames = ExtResource("1_ib474")
-animation = &"destroy"
+animation = &"create"
 frame = 12
 frame_progress = 1.0
 script = ExtResource("2_muhlh")
-fireballResource = ExtResource("3_2orqe")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(36.5714, 0)
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_lwxqa")
 
 [connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]
