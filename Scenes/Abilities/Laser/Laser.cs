@@ -94,6 +94,7 @@ public partial class Laser : RayCast2D
     Tween tween;
     tween = CreateTween();
     tween.Stop();
+    tween.SetParallel(true);
     tween.TweenProperty(beamLine, "width", beamWidth, 0.2);
     tween.TweenProperty(area, "scale", new Vector2(beamWidth * direction, area.Scale.Y), 0.2);
     tween.Play();
@@ -104,6 +105,7 @@ public partial class Laser : RayCast2D
     Tween tween;
     tween = CreateTween();
     tween.Stop();
+    tween.SetParallel(true);
     tween.TweenProperty(beamLine, "width", 0f, 0.2);
     tween.TweenProperty(area, "scale", new Vector2(0, area.Scale.Y), 0.2);
     collisionPoint = Vector2.Zero;

@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://d0ml4xyq0rkl6"]
+
+[ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBall.cs" id="1_b2if6"]
+[ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="1_xa75f"]
+[ext_resource type="PackedScene" uid="uid://nnvpi5hi8qwy" path="res://Scenes/Particles/EnergyBall/BeamLine.tscn" id="2_ti3vb"]
+
+[sub_resource type="Curve" id="Curve_waixf"]
+_data = [Vector2(0, 0.204876), 0.0, 0.0, 0, 0, Vector2(1, 0.0213858), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_0mpdh"]
+offsets = PackedFloat32Array(0, 0.11138, 0.464891, 0.8523, 1)
+colors = PackedColorArray(1, 1, 1, 0.486275, 0.0156863, 0.976471, 0.988235, 0.490196, 0, 0.682353, 0.956863, 1, 0.0156863, 0.976471, 0.988235, 0.541176, 1, 1, 1, 0.360784)
+
+[node name="EnergyBall" type="Node2D"]
+script = ExtResource("1_b2if6")
+beamLineScene = ExtResource("2_ti3vb")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+texture_filter = 1
+amount = 2000
+lifetime = 0.3
+fixed_fps = 60
+texture = ExtResource("1_xa75f")
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 180.0
+angular_velocity_min = -40.0
+angular_velocity_max = 100.0
+orbit_velocity_min = -20.0
+orbit_velocity_max = 20.0
+radial_accel_min = -90.0
+radial_accel_max = 100.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_waixf")
+color_ramp = SubResource("Gradient_0mpdh")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
