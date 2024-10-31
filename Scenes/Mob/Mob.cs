@@ -36,6 +36,10 @@ public partial class Mob : CharacterBody2D
       UpdateTarget();
       Movement(delta);
     }
+    else if (AnimationPlayer.Animation != "death")
+    {
+      Die();
+    }
   }
 
   public override void _PhysicsProcess(double delta)
@@ -122,16 +126,13 @@ public partial class Mob : CharacterBody2D
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
       {
         SetProcess(false);
-
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
 
         AnimationPlayer.Play("hurt");
         await ToSignal(AnimationPlayer, "animation_finished");
         if (!healthbar.IsAlive)
         {
-          AnimationPlayer.Play("death");
-
-          EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+          Die();
           return;
         }
 
@@ -163,10 +164,16 @@ public partial class Mob : CharacterBody2D
   public void DropKi()
   {
     Node2D pickup = KiPickup.Instantiate<Node2D>();
-    GetTree().Root.AddChild(pickup);
     pickup.GlobalPosition = GlobalPosition;
+    GetTree().Root.AddChild(pickup);
   }
 
+  public void Die()
+  {
+    AnimationPlayer.Play("death");
+
+    EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
+  }
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);

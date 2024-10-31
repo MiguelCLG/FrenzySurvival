@@ -96,7 +96,6 @@ public partial class Main : Node2D
       await ToSignal(GetTree().CreateTimer(2f), "timeout");
       if (IsInstanceValid(mob) && !mob.IsQueuedForDeletion())
       {
-
         enemiesKilled++;
         if (Random.Shared.NextDouble() > 0.5)
           mob.DropKi();
