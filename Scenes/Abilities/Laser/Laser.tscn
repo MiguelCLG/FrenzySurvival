@@ -6,8 +6,8 @@
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="3_2ordb"]
 
 [sub_resource type="Curve" id="Curve_330ob"]
-_data = [Vector2(0, 0.250207), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0, 0.746473), 0.0, -2.31496, 0, 1, Vector2(0.251656, 0.1639), 0.0, 0.0, 0, 0, Vector2(0.750552, 0.1639), 0.0, 0.134508, 1, 0, Vector2(1, 0.74859), 2.34393, 0.0, 1, 0]
+point_count = 4
 
 [sub_resource type="Gradient" id="Gradient_5nrhx"]
 offsets = PackedFloat32Array(0, 0.0750605)
@@ -85,8 +85,8 @@ beamWidth = 100.0
 
 [node name="BeamLine" type="Line2D" parent="."]
 unique_name_in_owner = true
-points = PackedVector2Array(0, 0, 40, 0)
-width = 30.0
+points = PackedVector2Array(0, 0, 15, 0, 30, 0, 45, 0)
+width = 27.58
 width_curve = SubResource("Curve_330ob")
 default_color = Color(0.0235294, 0.815686, 1, 1)
 gradient = SubResource("Gradient_5nrhx")
@@ -125,9 +125,9 @@ unique_name_in_owner = true
 
 [node name="CollisionArea" type="Area2D" parent="."]
 unique_name_in_owner = true
+scale = Vector2(1e-05, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
-position = Vector2(11.5, 0)
 shape = SubResource("RectangleShape2D_6aj0a")
 
 [connection signal="body_entered" from="CollisionArea" to="." method="OnAreaEntered"]

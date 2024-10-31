@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="1_2mebm"]
 
 [sub_resource type="Curve" id="Curve_waixf"]
-_data = [Vector2(0, 0.204876), 0.0, 0.0, 0, 0, Vector2(1, 0.0213858), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.27716), 0.0, -0.27716, 0, 1, Vector2(1, 0), -0.27716, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_0mpdh"]
-offsets = PackedFloat32Array(0, 0.11138, 0.464891, 0.8523, 1)
-colors = PackedColorArray(1, 1, 1, 0.486275, 0.0156863, 0.976471, 0.988235, 0.490196, 0, 0.682353, 0.956863, 1, 0.0156863, 0.976471, 0.988235, 0.541176, 1, 1, 1, 0.360784)
+offsets = PackedFloat32Array(0, 0.11138, 0.472155, 0.8523, 1)
+colors = PackedColorArray(1, 1, 1, 0.501961, 0.0156863, 0.976471, 0.988235, 0.490196, 0, 0.682353, 0.956863, 1, 0.0156863, 0.976471, 0.988235, 0.490196, 1, 1, 1, 0.501961)
 
 [node name="Explosion" type="Node2D"]
 
@@ -17,7 +17,8 @@ texture_filter = 1
 emitting = false
 amount = 2000
 one_shot = true
-explosiveness = 1.0
+explosiveness = 0.77
+randomness = 0.31
 fixed_fps = 60
 texture = ExtResource("1_2mebm")
 direction = Vector2(1, 1)

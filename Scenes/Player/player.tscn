@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dgxub8yjvhnxn"]
+[gd_scene load_steps=19 format=3 uid="uid://dgxub8yjvhnxn"]
 
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
@@ -16,6 +16,7 @@
 [ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="12_wejuf"]
 [ext_resource type="Resource" uid="uid://pqb4bdfaydlb" path="res://Resources/Abilities/Kick.tres" id="14_0vgeq"]
 [ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="16_jfwbv"]
+[ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="17_bu3g1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
 radius = 3.0
@@ -48,6 +49,8 @@ script = ExtResource("5_60arm")
 
 [node name="Punch" parent="Abilities" instance=ExtResource("6_jh7fk")]
 abilityResource = ExtResource("7_5v6vx")
+
+[node name="EnergyBarrier" parent="Abilities" instance=ExtResource("17_bu3g1")]
 
 [node name="EnergyBarrage" parent="Abilities" instance=ExtResource("10_guswd")]
 fireballScene = ExtResource("12_e1lox")

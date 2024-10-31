@@ -9,9 +9,11 @@
 script = ExtResource("4_vo1ox")
 HP = 320
 MaxHP = 320
-Speed = 200
+Speed = 100
 Shield = 0
 MaxShield = 0
+KI = 0
+MaxKI = 0
 AnimatedFrames = ExtResource("2_3nwla")
 Portrait = ExtResource("3_cuqdc")
 Abilities = Array[Object]([ExtResource("1_48t5v")])

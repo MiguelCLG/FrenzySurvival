@@ -30,7 +30,7 @@ public partial class Player : CharacterBody2D
 
     GetTree().CreateTimer(.2f, false, true).Timeout += () =>
     {
-      SetKI(this, new object[] { playerResource.KI });
+      SetInitialKIValue();
     };
   }
 

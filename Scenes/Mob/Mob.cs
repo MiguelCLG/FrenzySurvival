@@ -36,7 +36,7 @@ public partial class Mob : CharacterBody2D
       UpdateTarget();
       Movement(delta);
     }
-    else if (AnimationPlayer.Animation != "death")
+    else if (AnimationPlayer.Animation != "death" && isTargetAlive)
     {
       Die();
     }

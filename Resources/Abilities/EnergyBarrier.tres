@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://cdh5xrqtfauyv"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_8f8b3"]
+[ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="1_j15y0"]
+
+[resource]
+script = ExtResource("1_8f8b3")
+Name = "EnergyBarrier"
+Cooldown = 2
+Value = 100
+Damage = 50
+Icon = ExtResource("1_j15y0")
+isSuperAbility = true
+kiRequired = 30
