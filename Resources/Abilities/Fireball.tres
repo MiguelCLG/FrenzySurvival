@@ -9,4 +9,4 @@ Cooldown = 2
 Value = 10
 Damage = 10
 isSuperAbility = true
-kiRequired = 5
+kiRequired = 10

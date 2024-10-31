@@ -63,6 +63,7 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync(object sender, object[] args)
   {
+
     if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
