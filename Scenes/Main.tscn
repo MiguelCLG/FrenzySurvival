@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=16 format=4 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_4s73o"]
 [ext_resource type="PackedScene" uid="uid://dgxub8yjvhnxn" path="res://Scenes/Player/player.tscn" id="1_miebb"]
@@ -9,12 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://c5fdrwbnq6cdb" path="res://Assets/TX Tileset Grass.png" id="5_d1uv5"]
 [ext_resource type="Texture2D" uid="uid://b3ywthjgplt4u" path="res://Assets/TX Plant.png" id="7_3q4o0"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="7_ep2n3"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://crsn7u6xj58kd" path="res://Scenes/Mob/Mob.tscn" id="10_fhq4v"]
 [ext_resource type="Resource" uid="uid://cshxvy0oulrjb" path="res://Resources/BaseCharacter/Pot.tres" id="11_y6i5v"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmpq7"]
+=======
 texture = ExtResource("5_d1uv5")
-0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
