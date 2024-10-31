@@ -55,8 +55,6 @@ public partial class Main : Node2D
       GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
 
     }
-
-
   }
 
   public void CreateMob()
