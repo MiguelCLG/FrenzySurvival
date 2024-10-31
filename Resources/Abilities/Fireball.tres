@@ -6,5 +6,7 @@
 script = ExtResource("1_rby3w")
 Name = "Fireball"
 Cooldown = 2
-Value = 100
+Value = 10
 Damage = 10
+isSuperAbility = true
+kiRequired = 5

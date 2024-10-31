@@ -8,5 +8,5 @@ script = ExtResource("1_rhw0s")
 Name = ""
 Cooldown = 1
 Value = 100
-Damage = 45
+Damage = 30
 Icon = ExtResource("1_ltipu")

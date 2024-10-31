@@ -15,5 +15,9 @@ public partial class AbilityResource : Resource
   public int Damage { get; set; }
   [Export]
   public Texture2D Icon { get; set; }
+  [Export]
+  public bool isSuperAbility { get; set; }
+  [Export]
+  public int kiRequired { get; set; }
 
 }

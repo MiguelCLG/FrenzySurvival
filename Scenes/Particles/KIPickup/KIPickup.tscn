@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://lcm46xdu4af3"]
+
+[ext_resource type="Script" path="res://Scenes/Particles/KIPickup/KiPickup.cs" id="1_l4byo"]
+
+[sub_resource type="Curve" id="Curve_jbdfv"]
+_data = [Vector2(0, 0.99444), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_254f6"]
+offsets = PackedFloat32Array(0, 0.123487, 0.309927, 0.552058, 0.731235)
+colors = PackedColorArray(0.783728, 0.486506, 0, 1, 0.835778, 0.617297, 0.067117, 1, 0.809229, 0.523186, 0, 1, 0.87451, 0.670588, 0.0509804, 1, 1, 0.854902, 0.180392, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6a06"]
+radius = 8.06226
+
+[node name="KiPickup" type="Node2D"]
+script = ExtResource("1_l4byo")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 500
+lifetime = 0.3
+emission_shape = 1
+emission_sphere_radius = 9.35
+gravity = Vector2(0, -980)
+radial_accel_min = -100.0
+radial_accel_max = -59.13
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_jbdfv")
+color_ramp = SubResource("Gradient_254f6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_t6a06")
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]

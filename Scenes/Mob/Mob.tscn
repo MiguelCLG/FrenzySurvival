@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://crsn7u6xj58kd"]
+[gd_scene load_steps=7 format=3 uid="uid://crsn7u6xj58kd"]
 
 [ext_resource type="Script" path="res://Scenes/Mob/Mob.cs" id="1_y3mlx"]
 [ext_resource type="Resource" uid="uid://cckvc2yvvfj3o" path="res://Resources/BaseCharacter/Mob_Level_2.tres" id="2_7k132"]
 [ext_resource type="SpriteFrames" uid="uid://7aoet3rsyt51" path="res://Assets/CharacterAssets/Sayan/Sayan.tres" id="3_peidu"]
+[ext_resource type="PackedScene" uid="uid://lcm46xdu4af3" path="res://Scenes/Particles/KIPickup/KIPickup.tscn" id="3_q3che"]
 [ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_xbwag"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oxruw"]
@@ -14,6 +15,7 @@ disable_mode = 2
 script = ExtResource("1_y3mlx")
 mobResource = ExtResource("2_7k132")
 AnimationPlayer = NodePath("Portrait")
+KiPickup = ExtResource("3_q3che")
 
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

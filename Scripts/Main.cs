@@ -66,8 +66,8 @@ public partial class Main : Node2D
     mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
 
 
-    Vector2 randomPositionPositive = new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
-    Vector2 randomPositionNegative = new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
+    Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
+    Vector2 randomPositionNegative = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
     mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
 
 
@@ -98,7 +98,8 @@ public partial class Main : Node2D
       {
 
         enemiesKilled++;
-
+        if (Random.Shared.NextDouble() > 0.5)
+          mob.DropKi();
         mob.GetParent().RemoveChild(mob);
         mob.QueueFree();
       }

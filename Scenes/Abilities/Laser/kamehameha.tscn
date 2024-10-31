@@ -1,12 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://4cgaxihbvw23"]
+[gd_scene load_steps=3 format=3 uid="uid://4cgaxihbvw23"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_k7mjl"]
-[ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="2_bcv6r"]
 [ext_resource type="PackedScene" uid="uid://dihogff886yg0" path="res://Scenes/Abilities/Laser/Laser.tscn" id="3_qrrlu"]
 
 [node name="Kamehameha" type="Node2D"]
 script = ExtResource("1_k7mjl")
-LaserResource = ExtResource("2_bcv6r")
 
 [node name="LaserRaycast" parent="." instance=ExtResource("3_qrrlu")]
 unique_name_in_owner = true

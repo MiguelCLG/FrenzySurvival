@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://2l71ng11ql21"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_s771v"]
+
+[resource]
+script = ExtResource("1_s771v")
+Name = "Namek_Punch"
+Cooldown = 1
+Value = 10
+Damage = 30

@@ -108,7 +108,6 @@ lifetime = 0.3
 
 [node name="LaserEnvironment" type="WorldEnvironment" parent="."]
 unique_name_in_owner = true
-environment = ExtResource("3_2ordb")
 
 [node name="CollisionArea" type="Area2D" parent="."]
 unique_name_in_owner = true
