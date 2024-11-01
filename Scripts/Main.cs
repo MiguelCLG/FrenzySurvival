@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 public partial class Main : Node2D
 {
   [Export] BaseCharacterResource[] mobsResourceReference;
+  [Export] MobSpawnRules[] mobSpawnRules;
   Node2D playerReference;
   PackedScene mobScene;
   CanvasLayer UI;
@@ -32,13 +33,14 @@ public partial class Main : Node2D
   {
     spawnCooldown += delta;
     time += delta;
-    if (currentEnemies < maxEnemies && spawnCooldown > 1)
-    {
-      CreateMob();
-      spawnCooldown = 0;
-    }
+    //if (currentEnemies < maxEnemies && spawnCooldown > 1)
+    //{
+    //  CreateMob();
+    //  spawnCooldown = 0;
+    //}
+    HandleSpawnRules();
     currentEnemies = mobContainer.GetChildren().Count;
-
+    
     UI.GetNode<Label>("%EnemyCountLabel").Text = $"Enemies: {currentEnemies}";
     // Convert 'time' to minutes and seconds
     int minutes = (int)(time / 60);  // Divide by 60 to get minutes
@@ -57,6 +59,18 @@ public partial class Main : Node2D
     }
   }
 
+  private void HandleSpawnRules()
+  {
+    for (int i = 0; i < mobSpawnRules.Length; i++)
+      foreach (var kvp in mobSpawnRules[i].GetUnitsToSpawn(time))
+      { 
+        int numToSpawn = kvp.Key - CountSpawnedMobsWithResource(kvp.Value);
+        if(numToSpawn > 0)
+          for (int j = 0; j < numToSpawn; j++)
+            CreateMobOfResource(kvp.Value);
+      }
+  }
+
   public void CreateMob()
   {
     var mob = mobScene.Instantiate<Mob>();
@@ -72,6 +86,37 @@ public partial class Main : Node2D
 
 
     // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
+  }
+  public void CreateMobOfResource(BaseCharacterResource charResourse)
+  {
+    var mob = mobScene.Instantiate<Mob>();
+    mobContainer.AddChild(mob);
+    mob.mobResource = charResourse;
+    mob.healthbar.SetInitialValues(mob.mobResource);
+    mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
+
+
+    Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
+    Vector2 randomPositionNegative = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
+    mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+
+
+    // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
+  }
+
+  private int CountSpawnedMobsWithResource(BaseCharacterResource targetResource)
+  {
+      int count = 0;
+
+      foreach (var child in mobContainer.GetChildren())
+      {
+          if (child is Mob mob && mob.mobResource == targetResource)
+          {
+              count++;
+          }
+      }
+
+      return count;
   }
 
   public async void OnPlayerDeath(object sender, object[] args)
