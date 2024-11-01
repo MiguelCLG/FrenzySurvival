@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=6 format=3 uid="uid://bauccg67skhm0"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://bauccg67skhm0"]
 
 [ext_resource type="Resource" uid="uid://2l71ng11ql21" path="res://Resources/Abilities/Namekian/punch.tres" id="1_48t5v"]
-[ext_resource type="SpriteFrames" uid="uid://bc8y8vw6l43fc" path="res://Assets/CharacterAssets/Namekian/Namekian_3.tres" id="2_3nwla"]
+[ext_resource type="SpriteFrames" uid="uid://f8grogvdsd5l" path="res://Assets/CharacterAssets/Namekian/Namekian_3.tres" id="2_3nwla"]
 [ext_resource type="Texture2D" uid="uid://cojqc5efeee3p" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_stand.png" id="3_cuqdc"]
-[ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="3_wpnyj"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_vo1ox"]
 
 [resource]
@@ -18,4 +17,4 @@ MaxKI = 0
 AnimatedFrames = ExtResource("2_3nwla")
 Portrait = ExtResource("3_cuqdc")
 Abilities = Array[Object]([ExtResource("1_48t5v")])
-LootTables = Array[Resource]([ExtResource("3_wpnyj")])
+LootTables = null

@@ -18,6 +18,14 @@ public partial class Healthbar : ProgressBar
     MaxHealth = resource.MaxHP;
     UpdateUI();
   }
+  public void Heal(float value)
+  {
+    if (!IsAlive) return;
+    Health += value;
+    if (Health > MaxHealth)
+      Health = MaxHealth;
+    UpdateUI();
+  }
   public void TakeDamage(float value)
   {
     if (!IsAlive) return;

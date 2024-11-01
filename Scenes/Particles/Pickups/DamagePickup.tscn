@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://u86fim80usry"]
+
+[ext_resource type="Script" path="res://Scenes/Particles/Pickups/Pickup.cs" id="1_8t5r6"]
+[ext_resource type="Resource" uid="uid://decxqhrnt0um2" path="res://Resources/PickUps/DamagePickup.tres" id="2_umgam"]
+
+[sub_resource type="Curve" id="Curve_jbdfv"]
+_data = [Vector2(0, 0.99444), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_254f6"]
+offsets = PackedFloat32Array(0, 0.123487, 0.309927, 0.552058, 0.731235)
+colors = PackedColorArray(0.784314, 0, 0, 1, 0.835294, 0, 0.0666667, 1, 0.807843, 0, 0, 1, 0.87451, 0, 0.0509804, 1, 1, 0, 0.180392, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6a06"]
+radius = 8.06226
+
+[sub_resource type="Animation" id="Animation_5vu5q"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mcr0i"]
+_data = {
+"RESET": SubResource("Animation_5vu5q")
+}
+
+[node name="Pickup" type="Node2D"]
+position = Vector2(-10, 0)
+script = ExtResource("1_8t5r6")
+pickUp = ExtResource("2_umgam")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 500
+lifetime = 0.3
+emission_shape = 1
+emission_sphere_radius = 9.35
+gravity = Vector2(0, -980)
+radial_accel_min = -100.0
+radial_accel_max = -59.13
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_jbdfv")
+color_ramp = SubResource("Gradient_254f6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_t6a06")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mcr0i")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]

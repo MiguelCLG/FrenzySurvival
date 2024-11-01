@@ -1,3 +1,4 @@
+using System;
 using Algos;
 using Godot;
 
@@ -123,7 +124,6 @@ public partial class Mob : CharacterBody2D
       {
         SetProcess(false);
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
-
         AnimationPlayer.Play("hurt");
         await ToSignal(AnimationPlayer, "animation_finished");
         if (!healthbar.IsAlive)
@@ -159,15 +159,15 @@ public partial class Mob : CharacterBody2D
 
   public void HandleLootDrop()
   {
-    if(mobResource.LootTables is null)
+    if (mobResource.LootTables is null)
       return;
-    if(mobResource.LootTables.Count == 0)
+    if (mobResource.LootTables.Count == 0)
       return;
-    
-    foreach(LootTable lootTable in mobResource.LootTables)
+
+    foreach (LootTable lootTable in mobResource.LootTables)
     {
       PackedScene dropItem = lootTable.GetDroppedItem();
-      if(dropItem is not null)
+      if (dropItem is not null)
       {
         Node2D pickup = dropItem.Instantiate<Node2D>();
         pickup.GlobalPosition = GlobalPosition;

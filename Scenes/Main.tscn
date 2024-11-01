@@ -588,6 +588,8 @@ tile_set = SubResource("TileSet_666cc")
 [node name="MobContainer" type="Node2D" parent="."]
 unique_name_in_owner = true
 
+[node name="Pot" parent="." instance=ExtResource("14_evdip")]
+
 [node name="UI" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
@@ -706,9 +708,6 @@ size_flags_stretch_ratio = 0.3
 
 [node name="KiBar" parent="UI/MainUI" instance=ExtResource("10_r72bm")]
 layout_mode = 1
-
-[node name="Pot" parent="." instance=ExtResource("14_evdip")]
-position = Vector2(-79, 103)
 
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button" to="." method="Restart"]
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]

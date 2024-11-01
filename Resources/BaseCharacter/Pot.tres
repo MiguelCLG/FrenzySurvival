@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://cshxvy0oulrjb"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://bhfenastadlvk"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_7st2x"]
 [ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="2_7h2jt"]

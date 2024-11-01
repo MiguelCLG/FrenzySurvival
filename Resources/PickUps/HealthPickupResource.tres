@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ld50cfrg3fn"]
+[gd_resource type="Resource" script_class="PickUpResource" load_steps=3 format=3 uid="uid://ld50cfrg3fn"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/PickUpResource.cs" id="1_pffht"]
 [ext_resource type="PackedScene" uid="uid://c6oynrigi7xv7" path="res://Scenes/Particles/Pickups/Pickup.tscn" id="1_ut7ha"]
@@ -7,5 +7,5 @@
 script = ExtResource("1_pffht")
 pickUpObj = ExtResource("1_ut7ha")
 statChange = {
-"health": 30.0
+"health": 10.0
 }
