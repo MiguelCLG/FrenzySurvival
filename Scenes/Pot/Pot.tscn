@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://cavnmq2kd8cir"]
+[gd_scene load_steps=6 format=3 uid="uid://cavnmq2kd8cir"]
 
 [ext_resource type="Script" path="res://Scenes/Mob/Mob.cs" id="1_70skf"]
 [ext_resource type="Resource" uid="uid://cshxvy0oulrjb" path="res://Resources/BaseCharacter/Pot.tres" id="2_t1mjn"]
-[ext_resource type="PackedScene" uid="uid://lcm46xdu4af3" path="res://Scenes/Particles/KIPickup/KIPickup.tscn" id="3_jsyec"]
 [ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="4_nflxu"]
 [ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="5_38wog"]
 
@@ -15,7 +14,6 @@ disable_mode = 2
 script = ExtResource("1_70skf")
 mobResource = ExtResource("2_t1mjn")
 AnimationPlayer = NodePath("Portrait")
-KiPickup = ExtResource("3_jsyec")
 
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

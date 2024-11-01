@@ -1,5 +1,3 @@
-
-using System;
 using Algos;
 using Godot;
 
@@ -12,7 +10,6 @@ public partial class Mob : CharacterBody2D
   double timer = 0;
   bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
-  [Export] public PackedScene KiPickup;
   private float stopDistance = 30f;
 
   public override void _Ready()
@@ -158,13 +155,6 @@ public partial class Mob : CharacterBody2D
   public void OnPlayerDeath(object sender, object[] args)
   {
     isTargetAlive = false;
-  }
-
-  public void DropKi()
-  {
-    Node2D pickup = KiPickup.Instantiate<Node2D>();
-    pickup.GlobalPosition = GlobalPosition;
-    GetTree().Root.AddChild(pickup);
   }
 
   public void HandleLootDrop()

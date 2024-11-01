@@ -57,9 +57,10 @@ public partial class Laser : RayCast2D
       //collisionParticles.Position = collisionPoint;
     }
     Position = new Vector2(initialPos.X * direction, initialPos.Y);
-    beamLine.RemovePoint(1);
-    beamLine.RemovePoint(2);
-    beamLine.RemovePoint(3);
+    for (int i = 0; i < beamLine.Points.Length; i++)
+      beamLine.RemovePoint(i);
+    
+    beamLine.AddPoint(Vector2.Zero);
     beamLine.AddPoint(collisionPoint / 4);
     beamLine.AddPoint(collisionPoint - collisionPoint / 4);
     beamLine.AddPoint(collisionPoint);

@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://lcm46xdu4af3"]
+[gd_scene load_steps=8 format=3 uid="uid://mm4nu47rrfkn"]
 
-[ext_resource type="Script" path="res://Scenes/Particles/KIPickup/KiPickup.cs" id="1_l4byo"]
+[ext_resource type="Script" path="res://Scenes/Particles/Pickups/Pickup.cs" id="1_gkcgl"]
+[ext_resource type="Resource" uid="uid://d2xfl575cquaw" path="res://Resources/PickUps/KiPickupResource.tres" id="2_50rd6"]
 
 [sub_resource type="Curve" id="Curve_jbdfv"]
 _data = [Vector2(0, 0.99444), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -21,9 +22,10 @@ _data = {
 "RESET": SubResource("Animation_5vu5q")
 }
 
-[node name="KiPickup" type="Node2D"]
+[node name="Pickup" type="Node2D"]
 position = Vector2(-10, 0)
-script = ExtResource("1_l4byo")
+script = ExtResource("1_gkcgl")
+pickUp = ExtResource("2_50rd6")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 amount = 500

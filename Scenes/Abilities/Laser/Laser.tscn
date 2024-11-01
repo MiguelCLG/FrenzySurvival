@@ -81,7 +81,7 @@ position = Vector2(584, 304)
 target_position = Vector2(500, 0)
 script = ExtResource("1_ir8nx")
 laserEnvironment = ExtResource("3_2ordb")
-beamWidth = 100.0
+beamWidth = 30.0
 
 [node name="BeamLine" type="Line2D" parent="."]
 unique_name_in_owner = true

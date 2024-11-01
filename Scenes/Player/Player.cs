@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
@@ -25,8 +26,10 @@ public partial class Player : CharacterBody2D
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventRegistry.RegisterEvent("OnComboFinished");
     EventSubscriber.SubscribeToEvent("OnComboFinished", OnComboFinished);
-    EventRegistry.RegisterEvent("SetKI");
-    EventSubscriber.SubscribeToEvent("SetKI", SetKI);
+    //EventRegistry.RegisterEvent("SetKI");
+    //EventSubscriber.SubscribeToEvent("SetKI", SetKI);
+    EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
+    EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
 
     GetTree().CreateTimer(.2f, false, true).Timeout += () =>
     {
@@ -132,6 +135,35 @@ public partial class Player : CharacterBody2D
       playerResource.KI = newKi;
       abilityManager.SetKI(newKi);
       EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+    }
+  }
+
+  public void IncreaseStatsFromDictionary(object sender, object[] args)
+  {
+    if (args[0] is Dictionary<string, int> statIncreases)
+    {
+     foreach(var kvp in statIncreases)
+     {
+      switch (kvp.Key)
+      {
+        case "ki":
+          int newKi = playerResource.KI +kvp.Value < playerResource.MaxKI ? playerResource.KI +kvp.Value : playerResource.MaxKI;
+          playerResource.KI = newKi;
+          abilityManager.SetKI(newKi);
+          EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+          break;
+
+        case "health":
+          int newHelath = playerResource.HP +kvp.Value < playerResource.MaxHP ? playerResource.HP +kvp.Value : playerResource.MaxHP;
+          playerResource.HP = newHelath;
+          break;
+
+        default:
+          break;
+      }
+      if(kvp.Key == "ki")
+      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+     }
     }
   }
 
