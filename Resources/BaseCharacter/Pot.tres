@@ -10,6 +10,8 @@ Name = "Punch"
 Cooldown = 1
 Value = 30
 Damage = 30
+isSuperAbility = false
+kiRequired = 0
 
 [resource]
 script = ExtResource("4_kg0n4")
@@ -18,5 +20,7 @@ MaxHP = 1
 Speed = 0
 Shield = 0
 MaxShield = 0
+KI = 0
+MaxKI = 0
 AnimatedFrames = ExtResource("2_7h2jt")
 Abilities = Array[Object]([SubResource("Resource_yfgwj")])
