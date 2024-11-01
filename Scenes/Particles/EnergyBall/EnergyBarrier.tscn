@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://drjkqatxwdqfm"]
+[gd_scene load_steps=10 format=3 uid="uid://drjkqatxwdqfm"]
 
 [ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.cs" id="1_gu2x1"]
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="1_yipit"]
 [ext_resource type="Resource" uid="uid://cdh5xrqtfauyv" path="res://Resources/Abilities/EnergyBarrier.tres" id="2_gblfi"]
+[ext_resource type="PackedScene" uid="uid://drjbj7f3s88v1" path="res://Scenes/Particles/EnergyBall/Explosion.tscn" id="4_s6j1m"]
 
 [sub_resource type="Curve" id="Curve_waixf"]
 _data = [Vector2(0, 0.27716), 0.0, -0.27716, 0, 1, Vector2(1, 0), -0.27716, 0.0, 1, 0]
@@ -48,6 +49,9 @@ split_scale = true
 scale_curve_x = SubResource("Curve_28bm4")
 scale_curve_y = SubResource("Curve_q2xv8")
 color_ramp = SubResource("Gradient_0mpdh")
+
+[node name="Explosion" parent="." instance=ExtResource("4_s6j1m")]
+unique_name_in_owner = true
 
 [node name="Area2D" type="Area2D" parent="."]
 

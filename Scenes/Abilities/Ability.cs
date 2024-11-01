@@ -9,7 +9,6 @@ public partial class Ability : Node2D
 
   public AnimatedSprite2D AnimationPlayer;
 
-
   public int facingDirection = 1;
 
   public void SetFacingDirection(int direction)

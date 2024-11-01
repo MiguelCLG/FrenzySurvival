@@ -10,7 +10,7 @@ point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_0mpdh"]
 offsets = PackedFloat32Array(0, 0.11138, 0.472155, 0.8523, 1)
-colors = PackedColorArray(1, 1, 1, 0.501961, 0.0156863, 0.976471, 0.988235, 0.490196, 0, 0.682353, 0.956863, 1, 0.0156863, 0.976471, 0.988235, 0.490196, 1, 1, 1, 0.501961)
+colors = PackedColorArray(1, 1, 1, 0.501961, 0.931287, 0.880875, 0, 0.490196, 0.764542, 0.616018, 0, 1, 0.963939, 0.866834, 0, 0.490196, 1, 1, 1, 0.501961)
 
 [node name="EnergyBall" type="Node2D"]
 script = ExtResource("1_b2if6")

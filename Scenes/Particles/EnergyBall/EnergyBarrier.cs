@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class EnergyBarrier : Ability
 {
@@ -8,6 +9,7 @@ public partial class EnergyBarrier : Ability
   [Export] public CpuParticles2D cpuParticles2D;
   [Export] public CollisionShape2D collisionShape2D;
   [Export] public float speed = 50f;
+  List<Mob> mobsInArea = new();
   bool isAscending = true;
   public override void _Ready()
   {
@@ -15,13 +17,15 @@ public partial class EnergyBarrier : Ability
     collisionShape2D = GetNode<CollisionShape2D>("%CollisionShape2D");
     (collisionShape2D.Shape as CircleShape2D).Radius = radius;
     cpuParticles2D.EmissionSphereRadius = radius;
-    SetEmitting(false);
+    GetTree().CreateTimer(.1f, false, true).Timeout += () => { SetEmitting(false); };
+    EventSubscriber.SubscribeToEvent("OnMobDeath", OnMobDeath);
   }
 
   public void SetEmitting(bool emitting)
   {
     SetProcess(emitting);
     cpuParticles2D.Emitting = emitting;
+    AnimationPlayer.Play(emitting ? "explosion" : "default");
   }
 
   public override void _Process(double delta)
@@ -38,18 +42,24 @@ public partial class EnergyBarrier : Ability
     }
     else if (radius >= 1 && !isAscending)
     {
-      radius -= speed * (float)delta;
-      if (radius < 0)
-        radius = 0;
-      cpuParticles2D.EmissionSphereRadius = radius;
-      (collisionShape2D.Shape as CircleShape2D).Radius = radius;
-    }
-    else
-    {
-      SetEmitting(false);
-      isAscending = true;
+      GetNode<CpuParticles2D>("%Explosion/CPUParticles2D").Emitting = true;
+      foreach (Mob mob in mobsInArea)
+      {
+        if (IsInstanceValid(mob) && !mob.IsQueuedForDeletion())
+        {
+          mob.TakeDamage(this, new object[] { this, abilityResource.Damage });
+          mob.KnockBack(-mob.Velocity, abilityResource.Value);
+        }
+        SetEmitting(false);
+        isAscending = true;
+        radius = 1;
+        (collisionShape2D.Shape as CircleShape2D).Radius = radius;
+
+
+      }
       EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
     }
+
   }
 
   public override void Action()
@@ -57,6 +67,13 @@ public partial class EnergyBarrier : Ability
     CallDeferred("SetEmitting", true);
   }
 
+  public void OnMobDeath(object sender, object[] args)
+  {
+    if (args[0] is Mob mob)
+    {
+      mobsInArea.Remove(mob);
+    }
+  }
   public void OnBodyEntered(Node2D body)
   {
     if (!body.IsInGroup("Enemies")) return;
@@ -68,6 +85,7 @@ public partial class EnergyBarrier : Ability
     // when laser is over, clear the list
     if (body is Mob mob)
     {
+      mobsInArea.Add(mob);
       Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;
       mob.KnockBack(curDirection, 5);
     }
@@ -77,6 +95,16 @@ public partial class EnergyBarrier : Ability
               healthbar,
               abilityResource.Damage
             });
+  }
+  public void OnBodyExited(Node2D body)
+  {
+    if (!body.IsInGroup("Enemies")) return;
+
+    if (body is Mob mob)
+    {
+      mobsInArea.Remove(mob);
+
+    }
   }
 
   /* public override void _UnhandledInput(InputEvent @event)

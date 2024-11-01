@@ -7,7 +7,7 @@
 script = ExtResource("1_8f8b3")
 Name = "EnergyBarrier"
 Cooldown = 2
-Value = 100
+Value = 80
 Damage = 50
 Icon = ExtResource("1_j15y0")
 isSuperAbility = true
