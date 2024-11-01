@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dhkl45jn32c2r"]
+
+[ext_resource type="Script" path="res://Scenes/Particles/Pickups/Pickup.cs" id="1_6y102"]
+[ext_resource type="Resource" uid="uid://ld50cfrg3fn" path="res://Resources/PickUps/HealthPickupResource.tres" id="2_fo4j1"]
+
+[sub_resource type="Curve" id="Curve_jbdfv"]
+_data = [Vector2(0, 0.99444), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_254f6"]
+offsets = PackedFloat32Array(0.268765, 0.447942, 0.680614, 0.690073, 0.876513, 1)
+colors = PackedColorArray(1, 0.854902, 0.180392, 0, 0.323549, 0.832216, 0.145609, 1, 0.434787, 0.679226, 0.153901, 1, 0.414398, 0.678492, 0.141875, 1, 0.5135, 0.742098, 3.85046e-07, 1, 0.378613, 0.647343, 0.136618, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t6a06"]
+radius = 8.06226
+
+[sub_resource type="Animation" id="Animation_5vu5q"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mcr0i"]
+_data = {
+"RESET": SubResource("Animation_5vu5q")
+}
+
+[node name="Pickup" type="Node2D"]
+position = Vector2(-10, 0)
+script = ExtResource("1_6y102")
+pickUp = ExtResource("2_fo4j1")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 500
+lifetime = 0.3
+emission_shape = 1
+emission_sphere_radius = 9.35
+gravity = Vector2(0, -980)
+radial_accel_min = -100.0
+radial_accel_max = -59.13
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_jbdfv")
+color_ramp = SubResource("Gradient_254f6")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_t6a06")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mcr0i")
+}
+
+[connection signal="body_entered" from="Area2D" to="." method="OnBodyEntered"]

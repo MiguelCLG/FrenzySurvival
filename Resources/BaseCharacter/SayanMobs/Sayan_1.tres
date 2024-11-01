@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://dfbwf6gk25vf3"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_fv6kt"]
+[ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="1_rnsck"]
+[ext_resource type="SpriteFrames" uid="uid://c6j7k6bgmbvmi" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/Sayan_1.tres" id="2_wx5nq"]
+
+[resource]
+script = ExtResource("1_fv6kt")
+HP = 100
+MaxHP = 100
+Speed = 50
+Shield = 0
+MaxShield = 0
+KI = 0
+MaxKI = 0
+AnimatedFrames = ExtResource("2_wx5nq")
+Abilities = Array[Object]([ExtResource("1_rnsck")])
+LootTables = null

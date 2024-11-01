@@ -1,4 +1,3 @@
-
 using System;
 using Algos;
 using Godot;
@@ -12,7 +11,6 @@ public partial class Mob : CharacterBody2D
   double timer = 0;
   bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
-  [Export] public PackedScene KiPickup;
   private float stopDistance = 30f;
 
   public override void _Ready()
@@ -115,7 +113,6 @@ public partial class Mob : CharacterBody2D
   public void UpdateTarget()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
-
   }
 
   public async void TakeDamage(object sender, object[] args)
@@ -127,7 +124,6 @@ public partial class Mob : CharacterBody2D
       {
         SetProcess(false);
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
-
         AnimationPlayer.Play("hurt");
         await ToSignal(AnimationPlayer, "animation_finished");
         if (!healthbar.IsAlive)
@@ -161,11 +157,23 @@ public partial class Mob : CharacterBody2D
     isTargetAlive = false;
   }
 
-  public void DropKi()
+  public void HandleLootDrop()
   {
-    Node2D pickup = KiPickup.Instantiate<Node2D>();
-    pickup.GlobalPosition = GlobalPosition;
-    GetTree().Root.AddChild(pickup);
+    if (mobResource.LootTables is null)
+      return;
+    if (mobResource.LootTables.Count == 0)
+      return;
+
+    foreach (LootTable lootTable in mobResource.LootTables)
+    {
+      PackedScene dropItem = lootTable.GetDroppedItem();
+      if (dropItem is not null)
+      {
+        Node2D pickup = dropItem.Instantiate<Node2D>();
+        pickup.GlobalPosition = GlobalPosition;
+        GetTree().Root.AddChild(pickup);
+      }
+    }
   }
 
   public void Die()

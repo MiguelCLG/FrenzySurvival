@@ -24,7 +24,8 @@ public partial class Ability : Node2D
   }
   public virtual void SpendKi(int value)
   {
-    EventRegistry.GetEventPublisher("SetKI").RaiseEvent(new object[] { -abilityResource.kiRequired });
+    EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary")
+      .RaiseEvent(new object[] { new Dictionary<string, int> { {"ki", -abilityResource.kiRequired} } });
   }
 
 

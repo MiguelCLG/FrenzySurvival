@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="PickUpResource" load_steps=3 format=3 uid="uid://decxqhrnt0um2"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/PickUpResource.cs" id="1_gqaqm"]
+[ext_resource type="PackedScene" uid="uid://c6oynrigi7xv7" path="res://Scenes/Particles/Pickups/Pickup.tscn" id="1_ssm40"]
+
+[resource]
+script = ExtResource("1_gqaqm")
+pickUpObj = ExtResource("1_ssm40")
+statChange = {
+"damage": 10
+}

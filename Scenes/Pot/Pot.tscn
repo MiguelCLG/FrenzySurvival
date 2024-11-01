@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://cavnmq2kd8cir"]
+
+[ext_resource type="Script" path="res://Scenes/Mob/Mob.cs" id="1_70skf"]
+[ext_resource type="Resource" uid="uid://bhfenastadlvk" path="res://Resources/BaseCharacter/Pot.tres" id="2_t1mjn"]
+[ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="4_nflxu"]
+[ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="5_38wog"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oxruw"]
+radius = 3.0
+height = 16.0
+
+[node name="Pot" type="CharacterBody2D" node_paths=PackedStringArray("AnimationPlayer") groups=["Enemies"]]
+position = Vector2(-74, 5)
+disable_mode = 2
+script = ExtResource("1_70skf")
+mobResource = ExtResource("2_t1mjn")
+AnimationPlayer = NodePath("Portrait")
+
+[node name="Portrait" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("4_nflxu")
+animation = &"move"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_oxruw")
+
+[node name="Healthbar" parent="." instance=ExtResource("5_38wog")]
+offset_left = -11.0
+offset_top = -19.0
+offset_right = 11.0
+offset_bottom = -15.0

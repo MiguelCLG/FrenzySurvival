@@ -30,6 +30,14 @@ public partial class AbilityManager : Node2D
   {
     ki = newKi;
   }
+  public void AddDamage(int newDamage)
+  {
+
+    foreach (Ability ability in abilityArray)
+    {
+      ability.abilityResource.Damage += newDamage;
+    }
+  }
 
   public void SetFacingDirection(int direction)
   {

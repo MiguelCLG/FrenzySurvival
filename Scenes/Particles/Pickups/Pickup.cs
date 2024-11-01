@@ -1,10 +1,9 @@
 using Godot;
-using System;
 
-public partial class KiPickup : Node2D
+public partial class Pickup : Node2D
 {
   AnimationPlayer animationPlayer;
-  [Export] public int KiValue = 10;
+  [Export] public PickUpResource pickUp;
 
   public override void _Ready()
   {
@@ -44,7 +43,7 @@ public partial class KiPickup : Node2D
   {
     if (body.IsInGroup("Player"))
     {
-      EventRegistry.GetEventPublisher("SetKI").RaiseEvent(new object[] { KiValue });
+      EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary").RaiseEvent(new object[] { pickUp.statChange });
       QueueFree();
     }
   }

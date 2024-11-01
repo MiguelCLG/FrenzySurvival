@@ -28,3 +28,4 @@ MaxKI = 100
 AnimatedFrames = ExtResource("3_qhc5k")
 Portrait = ExtResource("2_ptymd")
 Abilities = Array[Object]([SubResource("Resource_sefrc")])
+LootTables = null

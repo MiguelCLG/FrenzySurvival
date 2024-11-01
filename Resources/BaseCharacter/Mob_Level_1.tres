@@ -26,3 +26,4 @@ MaxKI = 0
 AnimatedFrames = ExtResource("2_6cyju")
 Portrait = ExtResource("3_ksr0n")
 Abilities = Array[Object]([SubResource("Resource_yfgwj")])
+LootTables = Array[Resource]([])

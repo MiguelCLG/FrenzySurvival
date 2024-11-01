@@ -10,8 +10,8 @@
 [resource]
 script = ExtResource("3_byggt")
 Race = ExtResource("2_a2w3a")
-HP = 1000
-MaxHP = 1000
+HP = 100
+MaxHP = 100
 Speed = 100
 Shield = 0
 MaxShield = 50
@@ -20,3 +20,4 @@ MaxKI = 100
 AnimatedFrames = SubResource("SpriteFrames_s6bm7")
 Portrait = ExtResource("3_ea6ps")
 Abilities = Array[Object]([ExtResource("1_n6yx3"), ExtResource("1_n6yx3")])
+LootTables = null
