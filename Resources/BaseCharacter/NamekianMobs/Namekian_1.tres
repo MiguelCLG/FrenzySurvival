@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_tml6u"]
 [ext_resource type="Resource" uid="uid://2l71ng11ql21" path="res://Resources/Abilities/Namekian/punch.tres" id="1_xrlhg"]
-[ext_resource type="SpriteFrames" uid="uid://bq5l07jlroepc" path="res://Assets/CharacterAssets/Namekian/Namekian_1.tres" id="2_2ygy4"]
+[ext_resource type="SpriteFrames" uid="uid://dl0ea7a4hyqoq" path="res://Assets/CharacterAssets/Namekian/Namekian_1.tres" id="2_2ygy4"]
 [ext_resource type="Texture2D" uid="uid://lcm7kw3v6ygs" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek_stand.png" id="3_04r7q"]
 
 [resource]

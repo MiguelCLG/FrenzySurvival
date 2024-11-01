@@ -10,4 +10,4 @@ script = ExtResource("2_w3cav")
 StartTimeInSeconds = 60.0
 FinishTimeInSeconds = 120.0
 MobsToSpawn = Array[Object]([ExtResource("1_aj5xr"), ExtResource("2_2rnov"), ExtResource("3_vo14s")])
-SpawnNumbers = PackedInt32Array(10, 5, 2)
+SpawnNumbers = PackedInt32Array(5, 3, 1)
