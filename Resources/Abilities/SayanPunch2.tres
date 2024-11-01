@@ -10,3 +10,5 @@ Cooldown = 1
 Value = 30
 Damage = 20
 Icon = ExtResource("1_8odsf")
+isSuperAbility = false
+kiRequired = 0

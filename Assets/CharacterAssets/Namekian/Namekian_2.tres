@@ -1,8 +1,12 @@
-[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://djdhtfhrfs1y"]
+[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://djdhtfhrfs1y"]
 
 [ext_resource type="Texture2D" uid="uid://bv84c7xbn2vqj" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek_ko.png" id="1_pn3vy"]
 [ext_resource type="Texture2D" uid="uid://ctuv52qe3r5mw" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek_stand.png" id="2_htjoo"]
 [ext_resource type="Texture2D" uid="uid://bevc5gd5udsrh" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek_hurt.png" id="3_38f4o"]
+[ext_resource type="Texture2D" uid="uid://bklcb012bvmrr" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_kick.png" id="4_dvyuw"]
+[ext_resource type="Texture2D" uid="uid://bk8queccdh6xw" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_move.png" id="5_olhn0"]
+[ext_resource type="Texture2D" uid="uid://bh421shhss4ib" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_punch1.png" id="6_ijllx"]
+[ext_resource type="Texture2D" uid="uid://w031esnavq42" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_punch2.png" id="7_hvy0k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5bteu"]
 atlas = ExtResource("1_pn3vy")
@@ -55,6 +59,22 @@ region = Rect2(128, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_v80o1"]
 atlas = ExtResource("3_38f4o")
 region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8p4yt"]
+atlas = ExtResource("4_dvyuw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tiopf"]
+atlas = ExtResource("5_olhn0")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ikx6"]
+atlas = ExtResource("6_ijllx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfii7"]
+atlas = ExtResource("7_hvy0k")
+region = Rect2(0, 0, 32, 32)
 
 [resource]
 animations = [{
@@ -114,7 +134,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l4mlu")
+"texture": SubResource("AtlasTexture_8p4yt")
 }],
 "loop": false,
 "name": &"kick",
@@ -122,7 +142,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l4mlu")
+"texture": SubResource("AtlasTexture_tiopf")
 }],
 "loop": false,
 "name": &"move",
@@ -130,7 +150,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l4mlu")
+"texture": SubResource("AtlasTexture_7ikx6")
 }],
 "loop": false,
 "name": &"punch",
@@ -138,7 +158,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_l4mlu")
+"texture": SubResource("AtlasTexture_bfii7")
 }],
 "loop": false,
 "name": &"punch_2",

@@ -15,10 +15,16 @@ public partial class Kamehameha : Ability
   public async void FireLaser()
   {
     Laser.SetDirection(facingDirection);
-    AnimationPlayer.Play("punch");
-    Laser.SetIsCasting(true);
+    AnimationPlayer.Play("beam");
+    void action()
+    {
+      if (AnimationPlayer.Frame == 3)
+        Laser.SetIsCasting(true);
+    }
+    AnimationPlayer.FrameChanged += action;
     await ToSignal(GetTree().CreateTimer(1.5f, false, true), "timeout");
     Laser.SetIsCasting(false);
+    AnimationPlayer.FrameChanged -= action;
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });

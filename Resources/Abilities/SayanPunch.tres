@@ -10,3 +10,5 @@ Cooldown = 1
 Value = 30
 Damage = 20
 Icon = ExtResource("1_t42dw")
+isSuperAbility = false
+kiRequired = 0

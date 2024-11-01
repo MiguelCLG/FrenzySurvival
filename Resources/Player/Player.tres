@@ -1,10 +1,11 @@
 [gd_resource type="Resource" script_class="PlayerResource" load_steps=6 format=3 uid="uid://s4myc45rkqu2"]
 
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="1_n6yx3"]
-[ext_resource type="SpriteFrames" uid="uid://d2firu6pqdskc" path="res://Assets/CharacterAssets/Sayan/SayanP.tres" id="2_573yj"]
 [ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
 [ext_resource type="Texture2D" uid="uid://btt1s3n87is20" path="res://Assets/CharacterAssets/Sayan/sayanp_punch.png" id="3_ea6ps"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s6bm7"]
 
 [resource]
 script = ExtResource("3_byggt")
@@ -16,6 +17,6 @@ Shield = 0
 MaxShield = 50
 KI = 100
 MaxKI = 100
-AnimatedFrames = ExtResource("2_573yj")
+AnimatedFrames = SubResource("SpriteFrames_s6bm7")
 Portrait = ExtResource("3_ea6ps")
 Abilities = Array[Object]([ExtResource("1_n6yx3"), ExtResource("1_n6yx3")])

@@ -10,3 +10,5 @@ Cooldown = 1
 Value = 100
 Damage = 30
 Icon = ExtResource("1_ltipu")
+isSuperAbility = false
+kiRequired = 0

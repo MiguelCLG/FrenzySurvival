@@ -8,3 +8,5 @@ Name = "Namek_Punch"
 Cooldown = 1
 Value = 10
 Damage = 30
+isSuperAbility = false
+kiRequired = 0
