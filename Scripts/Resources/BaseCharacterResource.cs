@@ -14,6 +14,8 @@ public partial class BaseCharacterResource : Resource
   [Export] public SpriteFrames AnimatedFrames;
   [Export] public Texture2D Portrait;
   [Export] public Array<AbilityResource> Abilities;
+  [Export] public Array<LootTable> LootTables;
+
 
 
 }

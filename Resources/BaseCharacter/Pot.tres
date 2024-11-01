@@ -24,3 +24,4 @@ KI = 0
 MaxKI = 0
 AnimatedFrames = ExtResource("2_7h2jt")
 Abilities = Array[Object]([SubResource("Resource_yfgwj")])
+LootTables = null

@@ -142,8 +142,9 @@ public partial class Main : Node2D
       if (IsInstanceValid(mob) && !mob.IsQueuedForDeletion())
       {
         enemiesKilled++;
-        if (Random.Shared.NextDouble() > 0.5)
-          mob.DropKi();
+        //if (Random.Shared.NextDouble() > 0.5)
+        //  mob.DropKi();
+        mob.HandleLootDrop();
         mob.GetParent().RemoveChild(mob);
         mob.QueueFree();
       }

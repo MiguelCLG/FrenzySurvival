@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=20 format=4 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_4s73o"]
 [ext_resource type="PackedScene" uid="uid://dgxub8yjvhnxn" path="res://Scenes/Player/player.tscn" id="1_miebb"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b3ywthjgplt4u" path="res://Assets/TX Plant.png" id="7_3q4o0"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="7_ep2n3"]
 [ext_resource type="PackedScene" uid="uid://b1fsgfpehbep8" path="res://Scenes/UI/KIBar/KIBar.tscn" id="10_r72bm"]
+[ext_resource type="PackedScene" uid="uid://cavnmq2kd8cir" path="res://Scenes/Pot/Pot.tscn" id="14_evdip"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmpq7"]
 texture = ExtResource("5_d1uv5")
@@ -705,6 +706,9 @@ size_flags_stretch_ratio = 0.3
 
 [node name="KiBar" parent="UI/MainUI" instance=ExtResource("10_r72bm")]
 layout_mode = 1
+
+[node name="Pot" parent="." instance=ExtResource("14_evdip")]
+position = Vector2(-79, 103)
 
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button" to="." method="Restart"]
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]
