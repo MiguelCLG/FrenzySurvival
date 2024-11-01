@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://6ie0s4s0ml2x"]
+
+[ext_resource type="Resource" uid="uid://cshxvy0oulrjb" path="res://Resources/BaseCharacter/Pot.tres" id="1_3rthk"]
+[ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="2_tc4kt"]
+
+[resource]
+script = ExtResource("2_tc4kt")
+StartTimeInSeconds = 0.0
+FinishTimeInSeconds = 1800.0
+MobsToSpawn = Array[Object]([ExtResource("1_3rthk")])
+SpawnNumbers = PackedInt32Array(3)

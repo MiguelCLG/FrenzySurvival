@@ -79,11 +79,9 @@ public partial class Main : Node2D
     mob.healthbar.SetInitialValues(mob.mobResource);
     mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
 
-
     Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
     Vector2 randomPositionNegative = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
     mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
-
 
     // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
   }

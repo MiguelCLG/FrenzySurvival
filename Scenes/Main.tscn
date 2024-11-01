@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=21 format=4 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_4s73o"]
 [ext_resource type="PackedScene" uid="uid://dgxub8yjvhnxn" path="res://Scenes/Player/player.tscn" id="1_miebb"]
@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://ckey3gjmffkdh" path="res://Resources/SpawnRules/MobSpawnRules20-60.tres" id="6_jmle1"]
 [ext_resource type="Texture2D" uid="uid://b3ywthjgplt4u" path="res://Assets/TX Plant.png" id="7_3q4o0"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="7_ep2n3"]
+[ext_resource type="Resource" uid="uid://6ie0s4s0ml2x" path="res://Resources/SpawnRules/PotSpawnRules.tres" id="8_4nifb"]
 [ext_resource type="PackedScene" uid="uid://b1fsgfpehbep8" path="res://Scenes/UI/KIBar/KIBar.tscn" id="10_r72bm"]
 [ext_resource type="PackedScene" uid="uid://cavnmq2kd8cir" path="res://Scenes/Pot/Pot.tscn" id="14_evdip"]
 
@@ -565,7 +566,7 @@ sources/0 = SubResource("TileSetAtlasSource_vf8yb")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4s73o")
 mobsResourceReference = Array[Object]([ExtResource("2_ok34s"), ExtResource("3_40odt"), ExtResource("4_qwj7o")])
-mobSpawnRules = Array[Resource]([ExtResource("5_nl3cc"), ExtResource("6_jmle1"), ExtResource("6_3kosg")])
+mobSpawnRules = Array[Resource]([ExtResource("5_nl3cc"), ExtResource("6_jmle1"), ExtResource("6_3kosg"), ExtResource("8_4nifb")])
 
 [node name="BaseLayer" type="TileMapLayer" parent="."]
 position = Vector2(-10, -25)

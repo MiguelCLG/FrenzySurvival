@@ -177,6 +177,7 @@ public partial class Player : CharacterBody2D
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", OnComboFinished);
     EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
+    EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
 
   }
 }

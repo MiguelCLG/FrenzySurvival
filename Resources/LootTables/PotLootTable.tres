@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://c33iqisjm77do"]
+
+[ext_resource type="PackedScene" uid="uid://mm4nu47rrfkn" path="res://Scenes/Particles/Pickups/KiPickup.tscn" id="1_ujhlf"]
+[ext_resource type="PackedScene" uid="uid://dhkl45jn32c2r" path="res://Scenes/Particles/Pickups/HealthPickup.tscn" id="2_nex11"]
+[ext_resource type="PackedScene" uid="uid://u86fim80usry" path="res://Scenes/Particles/Pickups/DamagePickup.tscn" id="3_6b3dc"]
+[ext_resource type="Script" path="res://Scripts/Resources/LootTable.cs" id="4_tca03"]
+
+[resource]
+script = ExtResource("4_tca03")
+DropItems = Array[PackedScene]([ExtResource("1_ujhlf"), ExtResource("2_nex11"), ExtResource("3_6b3dc")])
+DropChances = PackedFloat32Array(0.4, 0.4, 0.2)
