@@ -5,4 +5,5 @@ using Godot.Collections;
 public partial class PlayerResource : BaseCharacterResource
 {
   [Export] public RaceResource Race;
+  [Export] public LevelTableResource LevelUpTables;
 }

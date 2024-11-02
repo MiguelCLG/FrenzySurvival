@@ -22,5 +22,3 @@ value = 50.0
 fill_mode = 3
 show_percentage = false
 script = ExtResource("1_v2mtc")
-theme_override_styles/background = SubResource("StyleBoxFlat_84s4r")
-theme_override_styles/fill = SubResource("StyleBoxFlat_4pjy2")
