@@ -23,4 +23,4 @@ AnimatedFrames = SubResource("SpriteFrames_s6bm7")
 ShowHealBar = true
 Portrait = ExtResource("3_ea6ps")
 Abilities = Array[Object]([ExtResource("1_n6yx3"), ExtResource("1_n6yx3")])
-LootTables = null
+LootTables = Array[Resource]([])

@@ -33,9 +33,10 @@ public partial class Player : CharacterBody2D
     EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
     EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
 
-    GetTree().CreateTimer(.2f, false, true).Timeout += () =>
+    GetTree().CreateTimer(.5f, false, true).Timeout += () =>
     {
       SetInitialKIValue();
+      SetInitialExperienceValue();
     };
   }
 
@@ -70,11 +71,22 @@ public partial class Player : CharacterBody2D
 
   private void HandleExpIncrease(int increment)
   {
+    
     int newExp = experiencePoints + increment; 
+    int levelDepoisExp = playerResource.LevelUpTables.GetCurrentLevel(experiencePoints);
+    
     List<int> levelsGained = playerResource.LevelUpTables.GetLevelUps(experiencePoints, newExp);
     experiencePoints += increment;
+    
+    GD.Print();
+    
+    int MaxExpLevelAnterior = playerResource.LevelUpTables.levels[levelDepoisExp][0] == 0 ? 0 : playerResource.LevelUpTables.levels[levelDepoisExp][0] - 1;
+    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1]; 
+    EventRegistry.GetEventPublisher("OnExperienceChanged").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra });
+
     foreach(int level in levelsGained)
     {
+      EventRegistry.GetEventPublisher("OnLevelUp").RaiseEvent(new object[] { level });
       GD.Print($"Leveled Up! New level [{level}]!");
     } 
   }
@@ -138,6 +150,15 @@ public partial class Player : CharacterBody2D
   {
     abilityManager.SetKI(playerResource.KI);
     EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI });
+  }
+  public void SetInitialExperienceValue()
+  {
+    int newExp = experiencePoints; 
+    int levelDepoisExp = playerResource.LevelUpTables.GetCurrentLevel(experiencePoints);
+    int MaxExpLevelAnterior = playerResource.LevelUpTables.levels[levelDepoisExp][0] == 0 ? 0 : playerResource.LevelUpTables.levels[levelDepoisExp][0] - 1;
+    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1] - playerResource.LevelUpTables.levels[levelDepoisExp][0]; 
+
+    EventRegistry.GetEventPublisher("SetInitialExpValue").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra });
   }
 
   public void SetKI(object sender, object[] args)
