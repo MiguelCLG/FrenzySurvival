@@ -6,9 +6,9 @@
 [resource]
 script = ExtResource("1_xbgrv")
 Name = ""
-Cooldown = 5
+Cooldown = 1
 Value = 100
 Damage = 70
 Icon = ExtResource("1_0ryko")
-isSuperAbility = true
+isSuperAbility = false
 kiRequired = 50

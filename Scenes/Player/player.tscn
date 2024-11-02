@@ -1,20 +1,16 @@
-[gd_scene load_steps=19 format=3 uid="uid://dgxub8yjvhnxn"]
+[gd_scene load_steps=15 format=3 uid="uid://dgxub8yjvhnxn"]
 
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
 [ext_resource type="SpriteFrames" uid="uid://c6j7k6bgmbvmi" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/Sayan_1.tres" id="3_ej41o"]
 [ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_21k5k"]
 [ext_resource type="Script" path="res://Scenes/Abilities/AbilityManager.cs" id="5_60arm"]
-[ext_resource type="PackedScene" path="res://Scenes/Abilities/Punch/punch.tscn" id="6_jh7fk"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="6_jh7fk"]
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="7_5v6vx"]
 [ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="7_mmtn7"]
 [ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="8_xvjg7"]
 [ext_resource type="PackedScene" uid="uid://d2bnwgbvbo40l" path="res://Scenes/Abilities/Laser/kamehameha.tscn" id="9_wkxk2"]
 [ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="10_guswd"]
-[ext_resource type="Resource" uid="uid://bf0v7h5midfbe" path="res://Resources/Abilities/Fireball.tres" id="11_62p4s"]
-[ext_resource type="PackedScene" uid="uid://cjtn3vs1t3ogt" path="res://Scenes/Abilities/EnergyBarrage/fireball.tscn" id="12_e1lox"]
-[ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="12_wejuf"]
-[ext_resource type="Resource" uid="uid://o132q28lnjpm" path="res://Resources/Abilities/Kick.tres" id="14_0vgeq"]
 [ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="16_jfwbv"]
 [ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="17_bu3g1"]
 
@@ -31,10 +27,8 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_ej41o")
-animation = &"beam"
+animation = &"punch"
 autoplay = "default"
-frame = 5
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_vyyvv")
@@ -52,21 +46,15 @@ script = ExtResource("5_60arm")
 [node name="Punch" parent="Abilities" instance=ExtResource("6_jh7fk")]
 abilityResource = ExtResource("7_5v6vx")
 
-[node name="Punch2" parent="Abilities" instance=ExtResource("7_mmtn7")]
-abilityResource = ExtResource("12_wejuf")
-
 [node name="EnergyBarrier" parent="Abilities" instance=ExtResource("17_bu3g1")]
+
+[node name="Kick" parent="Abilities" instance=ExtResource("8_xvjg7")]
+
+[node name="Punch2" parent="Abilities" instance=ExtResource("7_mmtn7")]
 
 [node name="Kamehameha" parent="Abilities" instance=ExtResource("9_wkxk2")]
 position = Vector2(6, 3)
 abilityResource = ExtResource("16_jfwbv")
 
 [node name="EnergyBarrage" parent="Abilities" instance=ExtResource("10_guswd")]
-fireballScene = ExtResource("12_e1lox")
-abilityResource = ExtResource("11_62p4s")
-
-[node name="FireballSpawn" type="Node2D" parent="Abilities/EnergyBarrage"]
-position = Vector2(25, -3)
-
-[node name="Kick" parent="Abilities" instance=ExtResource("8_xvjg7")]
-abilityResource = ExtResource("14_0vgeq")
+position = Vector2(19, 0)
