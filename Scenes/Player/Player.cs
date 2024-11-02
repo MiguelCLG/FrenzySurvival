@@ -16,6 +16,7 @@ public partial class Player : CharacterBody2D
   bool isDoingCombo = false;
   bool isGettingHurt = false;
   int facingDirection = 1;
+  private int experiencePoints = 0;
 
   public override void _Ready()
   {
@@ -64,6 +65,13 @@ public partial class Player : CharacterBody2D
         }
       }
     }
+  }
+
+  private void HandleExpIncrease(int increment)
+  {
+    experiencePoints += increment;
+    GD.Print(experiencePoints);
+    // TODO: Handle Level Up Logic:
   }
 
   public override void _PhysicsProcess(double delta)
@@ -160,9 +168,15 @@ public partial class Player : CharacterBody2D
             playerResource.HP = newHealth;
             healthbar.Heal(kvp.Value);
             break;
+          
           case "damage":
             abilityManager.AddDamage(kvp.Value);
             break;
+          
+          case "experience":
+            HandleExpIncrease(kvp.Value);
+            break;
+          
           default:
             break;
         }

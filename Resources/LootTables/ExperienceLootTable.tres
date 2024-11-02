@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bxbekxlvv4rwk"]
+
+[ext_resource type="PackedScene" uid="uid://cpyqi8vlg7unu" path="res://Scenes/Particles/Pickups/ExperiencePickup.tscn" id="1_6qulm"]
+[ext_resource type="Script" path="res://Scripts/Resources/LootTable.cs" id="2_23144"]
+
+[resource]
+script = ExtResource("2_23144")
+DropItems = Array[PackedScene]([ExtResource("1_6qulm")])
+DropChances = PackedFloat32Array(1)

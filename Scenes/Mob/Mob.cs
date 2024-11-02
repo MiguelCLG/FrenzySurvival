@@ -29,6 +29,8 @@ public partial class Mob : CharacterBody2D
 
   public override void _Process(double delta)
   {
+    if(!mobResource.ShowHealBar)
+      healthbar.Visible = false;
     if (healthbar.IsAlive && isTargetAlive)
     {
       UpdateTarget();
