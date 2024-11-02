@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
@@ -69,9 +70,13 @@ public partial class Player : CharacterBody2D
 
   private void HandleExpIncrease(int increment)
   {
+    int newExp = experiencePoints + increment; 
+    List<int> levelsGained = playerResource.LevelUpTables.GetLevelUps(experiencePoints, newExp);
     experiencePoints += increment;
-    GD.Print(experiencePoints);
-    // TODO: Handle Level Up Logic:
+    foreach(int level in levelsGained)
+    {
+      GD.Print($"Leveled Up! New level [{level}]!");
+    } 
   }
 
   public override void _PhysicsProcess(double delta)
@@ -148,7 +153,7 @@ public partial class Player : CharacterBody2D
 
   public void IncreaseStatsFromDictionary(object sender, object[] args)
   {
-    if (args[0] is Dictionary<string, int> statIncreases)
+    if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
     {
       var healthbar = GetNode<Healthbar>("Healthbar");
 

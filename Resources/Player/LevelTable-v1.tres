@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource("1_oum8k")
 levels = {
-1: [0, 100],
-2: [101, 300]
+1: [0, 20],
+2: [21, 100]
 }
