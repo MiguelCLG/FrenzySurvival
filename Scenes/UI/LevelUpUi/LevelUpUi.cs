@@ -29,7 +29,7 @@ public partial class LevelUpUi : CanvasLayer
   public void RefetchAbilities()
   {
     RemoveAbilitiesFromContainer();
-    var abilitiesToShow = playerResource.Abilities.GetRandomAbilities(3);
+    var abilitiesToShow = playerResource.Abilities.GetRandomAbilities(3, false);
     var verticalContainer = GetNode<Control>("%VerticalContainer");
 
     Control row = abilityRow.Instantiate<Control>();
