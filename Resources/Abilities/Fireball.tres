@@ -1,12 +1,15 @@
-[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://bf0v7h5midfbe"]
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://bf0v7h5midfbe"]
 
+[ext_resource type="Texture2D" uid="uid://cuu2q1n83pwgk" path="res://Assets/Icons/fireball.png" id="1_4e4qk"]
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_rby3w"]
 
 [resource]
 script = ExtResource("1_rby3w")
 Name = "Fireball"
 Cooldown = 2
+CastTime = 0.2
 Value = 10
 Damage = 10
+Icon = ExtResource("1_4e4qk")
 isSuperAbility = true
 kiRequired = 10

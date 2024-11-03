@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dlklg2bwfao0p"]
+
+[ext_resource type="PackedScene" uid="uid://chtn7ge3t1j1v" path="res://Scenes/UI/LevelUpUi/AbilityUIButton.tscn" id="1_pc35v"]
+
+[node name="AbilityRow" type="HBoxContainer"]
+offset_right = 8.0
+size_flags_vertical = 3
+
+[node name="AbilityUIButton" parent="." instance=ExtResource("1_pc35v")]
+layout_mode = 2
+
+[node name="AbilityUIButton2" parent="." instance=ExtResource("1_pc35v")]
+layout_mode = 2
+
+[node name="AbilityUIButton3" parent="." instance=ExtResource("1_pc35v")]
+layout_mode = 2

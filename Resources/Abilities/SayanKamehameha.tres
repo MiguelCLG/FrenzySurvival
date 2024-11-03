@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://c4r6dt0yn5dle"]
 
-[ext_resource type="Texture2D" uid="uid://cgv73f8ngcrwc" path="res://Assets/CharacterAssets/Sayan/sayanp_punch2.png" id="1_0ryko"]
+[ext_resource type="Texture2D" uid="uid://cwswglsbi7xvc" path="res://Assets/Icons/laser.png" id="1_qttdi"]
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_xbgrv"]
 
 [resource]
@@ -10,6 +10,6 @@ Cooldown = 1
 CastTime = 4.0
 Value = 100
 Damage = 70
-Icon = ExtResource("1_0ryko")
+Icon = ExtResource("1_qttdi")
 isSuperAbility = true
 kiRequired = 50

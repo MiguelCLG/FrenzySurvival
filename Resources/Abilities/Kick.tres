@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://o132q28lnjpm"]
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://pqb4bdfaydlb"]
 
-[ext_resource type="Texture2D" uid="uid://g3ppk5ebr723" path="res://Assets/CharacterAssets/Sayan/sayanp_kick.png" id="1_ltipu"]
+[ext_resource type="Texture2D" uid="uid://bg5sevgjtfodj" path="res://Assets/Icons/kick.png" id="1_7pui3"]
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_rhw0s"]
 
 [resource]
 script = ExtResource("1_rhw0s")
-Name = ""
+Name = "Kick"
 Cooldown = 1
+CastTime = 0.3
 Value = 100
 Damage = 30
-Icon = ExtResource("1_ltipu")
+Icon = ExtResource("1_7pui3")
 isSuperAbility = false
 kiRequired = 0

@@ -1,17 +1,48 @@
-[gd_scene load_steps=2 format=3 uid="uid://ddm8b3qk8htao"]
+[gd_scene load_steps=4 format=3 uid="uid://ddm8b3qk8htao"]
 
+[ext_resource type="Script" path="res://Scenes/UI/LevelUpUi/LevelUpUi.cs" id="1_3h8jk"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_a8h6o"]
+[ext_resource type="PackedScene" uid="uid://dlklg2bwfao0p" path="res://Scenes/UI/LevelUpUi/AbilityRowUI.tscn" id="3_kw6pi"]
 
 [node name="LevelUpUI" type="CanvasLayer"]
+script = ExtResource("1_3h8jk")
+abilityRow = ExtResource("3_kw6pi")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-anchors_preset = -1
-anchor_left = 0.219
-anchor_right = 0.781
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -0.28801
-offset_right = 0.287964
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 6
 theme = ExtResource("1_a8h6o")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VerticalContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VerticalContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderLarge"
+text = "Level Up!"
+horizontal_alignment = 1
+
+[node name="Spacer2" type="Control" parent="PanelContainer/MarginContainer/VerticalContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="PanelContainer/MarginContainer/VerticalContainer"]
+layout_mode = 2
+theme_type_variation = &"HeaderMedium"
+text = "Choose an Ability"
+horizontal_alignment = 1
+
+[node name="Spacer" type="Control" parent="PanelContainer/MarginContainer/VerticalContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
