@@ -1,19 +1,8 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=6 format=3 uid="uid://bhfenastadlvk"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://bhfenastadlvk"]
 
-[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_7st2x"]
 [ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="2_7h2jt"]
 [ext_resource type="Resource" uid="uid://c33iqisjm77do" path="res://Resources/LootTables/PotLootTable.tres" id="3_7ript"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_kg0n4"]
-
-[sub_resource type="Resource" id="Resource_yfgwj"]
-script = ExtResource("1_7st2x")
-Name = "Punch"
-Cooldown = 1
-CastTime = 0.0
-Value = 30
-Damage = 30
-isSuperAbility = false
-kiRequired = 0
 
 [resource]
 script = ExtResource("4_kg0n4")
@@ -26,6 +15,6 @@ KI = 0
 MaxKI = 0
 AnimatedFrames = ExtResource("2_7h2jt")
 ShowHealBar = false
-Abilities = Array[Object]([SubResource("Resource_yfgwj")])
+MobAttacks = null
 LootTables = Array[Resource]([ExtResource("3_7ript")])
 ExpDropValue = 0

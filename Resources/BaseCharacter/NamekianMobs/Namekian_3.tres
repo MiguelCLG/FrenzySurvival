@@ -17,6 +17,6 @@ MaxKI = 0
 AnimatedFrames = ExtResource("2_3nwla")
 ShowHealBar = true
 Portrait = ExtResource("3_cuqdc")
-Abilities = Array[Object]([ExtResource("1_48t5v")])
+MobAttacks = Array[Object]([ExtResource("1_48t5v")])
 LootTables = null
 ExpDropValue = 300

@@ -78,7 +78,7 @@ public partial class Mob : CharacterBody2D
 
       // Optionally perform other actions like attacking when close enough
       timer += delta;
-      if (timer > mobResource.Abilities[0].Cooldown)
+      if (timer > mobResource.MobAttacks[0].Cooldown)
       {
         Attack();
         timer = 0;
@@ -103,7 +103,7 @@ public partial class Mob : CharacterBody2D
           if (!targetHealthbar.IsQueuedForDeletion())
             EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               targetHealthbar,
-              mobResource.Abilities[0].Damage
+              mobResource.MobAttacks[0].Damage
             });
           //targetHealthbar.TakeDamage(mobResource.Abilities[0].Damage);
           AnimationPlayer.Play("default");

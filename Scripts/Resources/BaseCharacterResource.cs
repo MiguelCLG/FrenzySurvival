@@ -14,7 +14,7 @@ public partial class BaseCharacterResource : Resource
   [Export] public SpriteFrames AnimatedFrames;
   [Export] public bool ShowHealBar = true;
   [Export] public Texture2D Portrait;
-  [Export] public Array<AbilityResource> Abilities;
+  [Export] public Array<AbilityResource> MobAttacks;
   [Export] public Array<LootTable> LootTables;
 
   [Export] public int ExpDropValue = 0;

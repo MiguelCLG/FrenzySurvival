@@ -40,7 +40,6 @@ public partial class Player : CharacterBody2D
     };
   }
 
-
   public async void TakeDamage(object sender, object[] args)
   {
     if (args[0] is Healthbar healthbar)
