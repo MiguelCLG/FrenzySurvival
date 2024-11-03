@@ -23,6 +23,6 @@ MaxKI = 100
 AnimatedFrames = SubResource("SpriteFrames_s6bm7")
 ShowHealBar = true
 Portrait = ExtResource("3_ea6ps")
-MobAttacks = null
+MobAttacks = Array[Object]([])
 LootTables = Array[Resource]([])
 ExpDropValue = 0
