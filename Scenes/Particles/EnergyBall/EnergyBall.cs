@@ -16,6 +16,12 @@ public partial class EnergyBall : Node2D
   public override void _Ready()
   {
     energyBallParticles = GetNode<CpuParticles2D>("CPUParticles2D");
+    for (int i = 0; i < numBeamLines; i++)
+    {
+      // Instantiate the beam line and add it to the scene
+      Line2D beamLine = beamLineScene.Instantiate<Line2D>();
+      beamLines.Add(beamLine);
+    }
   }
 
   public void ActivateEnergyBall()
@@ -31,12 +37,10 @@ public partial class EnergyBall : Node2D
   }
   public void ActivateBeamLines()
   {
-    for (int i = 0; i < numBeamLines; i++)
+    foreach (Line2D beamLine in beamLines)
     {
       // Instantiate the beam line and add it to the scene
-      Line2D beamLine = beamLineScene.Instantiate<Line2D>();
       AddChild(beamLine);
-      beamLines.Add(beamLine);
 
       // Define the start and end points of the beam
       beamLine.ClearPoints(); // Clear any existing points
@@ -45,7 +49,7 @@ public partial class EnergyBall : Node2D
       beamLine.AddPoint(Vector2.Zero);
 
       // End point in a circular pattern around the center
-      float angle = Mathf.Tau / numBeamLines * i; // Evenly spread angle
+      float angle = Mathf.Tau / numBeamLines * beamLine.GetIndex(); // Evenly spread angle
       Vector2 endPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * beamLength;
       beamLine.AddPoint(endPoint);
       beamLine.Modulate = Color.Color8(255, 255, 255, 50);
@@ -57,7 +61,9 @@ public partial class EnergyBall : Node2D
     foreach (var child in GetChildren())
     {
       if (child is Line2D beamLine)
+      {
         RemoveChild(beamLine);
+      }
     }
   }
 
