@@ -16,6 +16,7 @@ public partial class Laser : RayCast2D
   [Export] int direction = 1;
   Line2D beamLine;
   Area2D area;
+  EnergyBall energyBall;
   GpuParticles2D castingParticlesBegin;
   GpuParticles2D collisionParticles;
   GpuParticles2D beamParticles;
@@ -30,6 +31,7 @@ public partial class Laser : RayCast2D
     collisionParticles = GetNode<GpuParticles2D>("%CollisionParticles");
     beamParticles = GetNode<GpuParticles2D>("%BeamParticles");
     worldEnvironment = GetNode<WorldEnvironment>("LaserEnvironment");
+    energyBall = GetNode<EnergyBall>("EnergyBall");
     beamLine.Width = 0;
     collisionPoint = beamLine.Points[3];
     initialPos = Position;
@@ -45,8 +47,8 @@ public partial class Laser : RayCast2D
     ParticleProcessMaterial collisionParticlesMaterial = (ParticleProcessMaterial)collisionParticles.ProcessMaterial;
     collisionParticlesMaterial.ColorRamp.Set("gradient", laserGradient);
     collisionParticles.ProcessMaterial = collisionParticlesMaterial;
-
     beamLine.Gradient = laserGradient;
+    energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ColorRamp = laserGradient;
 
   }
 

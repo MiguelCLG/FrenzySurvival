@@ -9,7 +9,7 @@ public partial class EnergyBall : Node2D
   [Export] private int numBeamLines = 5; // Number of beam lines
   [Export] private float beamLength = 500f; // Length of the beams
   [Export] private float rotationSpeed = 1f; // Speed of rotation
-  CpuParticles2D energyBallParticles;
+  public CpuParticles2D energyBallParticles;
   private float fadeSpeed = 100f;
   bool isDecreasing = false;
 

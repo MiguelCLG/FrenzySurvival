@@ -47,7 +47,7 @@ public partial class LevelUpUi : CanvasLayer
   }
   public void OnLevelUp(object sender, object[] args)
   {
-    currentLevel = (int)  args[0];
+    currentLevel = (int)args[0];
     GetTree().Paused = true;
     Visible = true;
     RefetchAbilities();
@@ -56,5 +56,11 @@ public partial class LevelUpUi : CanvasLayer
   {
     GetTree().Paused = false;
     Visible = false;
+  }
+
+  public override void _ExitTree()
+  {
+    EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
+    EventSubscriber.UnsubscribeFromEvent("OnLevelUp", OnLevelUp);
   }
 }
