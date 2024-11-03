@@ -5,6 +5,7 @@ using System.Linq;
 public partial class Laser : RayCast2D
 {
   [Export] Godot.Environment laserEnvironment;
+  [Export] Gradient laserGradient;
   WorldEnvironment worldEnvironment;
   bool IsCasting { get; set; }
   Vector2 maxPosition = new(500, 0);
@@ -33,8 +34,19 @@ public partial class Laser : RayCast2D
     collisionPoint = beamLine.Points[3];
     initialPos = Position;
     worldEnvironment.Environment = null;
-
     beamLineOriginalPoints = beamLine.Points;
+
+    ParticleProcessMaterial castingParticlesBeginMaterial = (ParticleProcessMaterial)castingParticlesBegin.ProcessMaterial;
+    castingParticlesBeginMaterial.ColorRamp.Set("gradient", laserGradient);
+    castingParticlesBegin.ProcessMaterial = castingParticlesBeginMaterial;
+    ParticleProcessMaterial beamParticlesMaterial = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
+    beamParticlesMaterial.ColorRamp.Set("gradient", laserGradient);
+    beamParticles.ProcessMaterial = beamParticlesMaterial;
+    ParticleProcessMaterial collisionParticlesMaterial = (ParticleProcessMaterial)collisionParticles.ProcessMaterial;
+    collisionParticlesMaterial.ColorRamp.Set("gradient", laserGradient);
+    collisionParticles.ProcessMaterial = collisionParticlesMaterial;
+
+    beamLine.Gradient = laserGradient;
 
   }
 
@@ -123,7 +135,7 @@ public partial class Laser : RayCast2D
     tween.Parallel().TweenProperty(beamLine, "width_curve", curve, 0.2);
 
     // Convert position.x to scale.x based on the initial width
-    float scaleX = TargetPosition.X * direction * .05f;
+    float scaleX = TargetPosition.X * direction * .045f;
 
     // Tween the area's scale (will now grow from the left)
     tween.Parallel().TweenProperty(area, "scale", new Vector2(scaleX, area.Scale.Y), 0.2);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dgxub8yjvhnxn"]
+[gd_scene load_steps=10 format=3 uid="uid://dgxub8yjvhnxn"]
 
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
@@ -7,10 +7,7 @@
 [ext_resource type="Script" path="res://Scenes/Abilities/AbilityManager.cs" id="5_60arm"]
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="6_jh7fk"]
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="7_5v6vx"]
-[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="7_mmtn7"]
-[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="8_xvjg7"]
 [ext_resource type="PackedScene" uid="uid://4cgaxihbvw23" path="res://Scenes/Abilities/Laser/kamehameha.tscn" id="9_wkxk2"]
-[ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="17_bu3g1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
 radius = 3.0
@@ -46,9 +43,3 @@ abilityResource = ExtResource("7_5v6vx")
 
 [node name="Kamehameha" parent="Abilities" instance=ExtResource("9_wkxk2")]
 position = Vector2(28, 0)
-
-[node name="EnergyBarrier" parent="Abilities" instance=ExtResource("17_bu3g1")]
-
-[node name="Kick" parent="Abilities" instance=ExtResource("8_xvjg7")]
-
-[node name="Punch2" parent="Abilities" instance=ExtResource("7_mmtn7")]

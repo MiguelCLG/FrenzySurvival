@@ -24,3 +24,4 @@ ShowHealBar = true
 Portrait = ExtResource("3_ea6ps")
 Abilities = Array[Object]([ExtResource("1_n6yx3"), ExtResource("1_n6yx3")])
 LootTables = Array[Resource]([])
+ExpDropValue = 0

@@ -1,8 +1,10 @@
-[gd_scene load_steps=23 format=3 uid="uid://dihogff886yg0"]
+[gd_scene load_steps=26 format=3 uid="uid://dihogff886yg0"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="1_ir8nx"]
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="3_001iv"]
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="3_2ordb"]
+[ext_resource type="Gradient" uid="uid://dfpvudfglp1ti" path="res://Assets/Gradients/Blue_Gradient.tres" id="3_gu47s"]
+[ext_resource type="Gradient" uid="uid://ort4b4gq1m2s" path="res://Assets/Gradients/Yellow_Gradient.tres" id="3_jl0y2"]
 [ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBall.cs" id="4_3q06x"]
 [ext_resource type="PackedScene" uid="uid://nnvpi5hi8qwy" path="res://Scenes/Particles/EnergyBall/BeamLine.tscn" id="5_t22gj"]
 
@@ -50,8 +52,12 @@ scale_max = 0.3
 scale_curve = SubResource("CurveXYZTexture_pcnyw")
 color_ramp = SubResource("GradientTexture1D_rr5eq")
 
+[sub_resource type="Gradient" id="Gradient_lyprm"]
+offsets = PackedFloat32Array(0, 0.503896, 1)
+colors = PackedColorArray(2.00224e-05, 0.534757, 0.880918, 1, 0.639216, 0.823529, 1, 1, 9.14484e-06, 0.624848, 0.835809, 1)
+
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_yqi8y"]
-gradient = SubResource("Gradient_b7h5w")
+gradient = SubResource("Gradient_lyprm")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_erfar"]
 particle_flag_disable_z = true
@@ -102,6 +108,7 @@ position = Vector2(584, 304)
 target_position = Vector2(500, 0)
 script = ExtResource("1_ir8nx")
 laserEnvironment = ExtResource("3_2ordb")
+laserGradient = ExtResource("3_jl0y2")
 
 [node name="BeamLine" type="Line2D" parent="."]
 unique_name_in_owner = true
@@ -160,7 +167,7 @@ radial_accel_max = 100.0
 scale_amount_min = 0.5
 scale_amount_max = 0.5
 scale_amount_curve = SubResource("Curve_waixf")
-color_ramp = SubResource("Gradient_b7h5w")
+color_ramp = ExtResource("3_gu47s")
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 unique_name_in_owner = true
