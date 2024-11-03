@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="3_7gu2d"]
 [ext_resource type="PackedScene" uid="uid://4cgaxihbvw23" path="res://Scenes/Abilities/Laser/kamehameha.tscn" id="4_heu3g"]
 [ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="5_kyroa"]
-[ext_resource type="PackedScene" uid="uid://bpw30mhlwbchh" path="res://Scenes/Abilities/Laser/masenko.tscn" id="6_1osm0"]
+[ext_resource type="PackedScene" path="res://Scenes/Abilities/Laser/masenko.tscn" id="6_1osm0"]
 
 [resource]
 script = ExtResource("1_kxw46")
