@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="LevelTableResource" load_steps=2 format=3 uid="uid://cjws25j88ygjs"]
+[gd_resource type="Resource" script_class="LevelTableResource" load_steps=2 format=3 uid="uid://bsjou14wb657w"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/LevelTableResource.cs" id="1_fb3wn"]
 

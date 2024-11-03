@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=23 format=4 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_4s73o"]
 [ext_resource type="PackedScene" uid="uid://dgxub8yjvhnxn" path="res://Scenes/Player/player.tscn" id="1_miebb"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://b1fsgfpehbep8" path="res://Scenes/UI/KIBar/KIBar.tscn" id="10_r72bm"]
 [ext_resource type="PackedScene" uid="uid://cavnmq2kd8cir" path="res://Scenes/Pot/Pot.tscn" id="14_evdip"]
 [ext_resource type="PackedScene" uid="uid://whaov63lotkn" path="res://Scenes/UI/ExperienceBar/ExperienceBar.tscn" id="16_iiy4e"]
+[ext_resource type="PackedScene" uid="uid://ddm8b3qk8htao" path="res://Scenes/UI/LevelUpUi/LevelUpUI.tscn" id="17_cynhb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmpq7"]
 texture = ExtResource("5_d1uv5")
@@ -714,6 +715,10 @@ layout_mode = 1
 
 [node name="ExperienceBar" parent="UI/MainUI" instance=ExtResource("16_iiy4e")]
 layout_mode = 1
+
+[node name="LevelUpUI" parent="." instance=ExtResource("17_cynhb")]
+unique_name_in_owner = true
+visible = false
 
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button" to="." method="Restart"]
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=6 format=3 uid="uid://chn7yd7a3v1gk"]
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://chn7yd7a3v1gk"]
 
 [ext_resource type="FontFile" uid="uid://ctk2dh6ij1mye" path="res://Fonts/njnaruto.ttf" id="1_4vato"]
 
@@ -38,6 +38,19 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjs46"]
+bg_color = Color(0.627451, 0.627451, 0.627451, 0.352941)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oyv48"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p7jmm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fujxh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8i3tb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oddww"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0o0u"]
 bg_color = Color(1, 1, 1, 1)
 border_width_left = 2
@@ -63,6 +76,12 @@ Button/fonts/font = ExtResource("1_4vato")
 Button/styles/focus = SubResource("StyleBoxFlat_lceiu")
 Button/styles/hover = SubResource("StyleBoxFlat_jpstx")
 Button/styles/normal = SubResource("StyleBoxFlat_luyiu")
+FlatButton/styles/disabled = SubResource("StyleBoxFlat_cjs46")
+FlatButton/styles/focus = SubResource("StyleBoxEmpty_oyv48")
+FlatButton/styles/hover = SubResource("StyleBoxEmpty_p7jmm")
+FlatButton/styles/hover_pressed = SubResource("StyleBoxEmpty_fujxh")
+FlatButton/styles/normal = SubResource("StyleBoxEmpty_8i3tb")
+FlatButton/styles/pressed = SubResource("StyleBoxEmpty_oddww")
 HeaderLarge/colors/font_color = Color(0, 0, 0, 1)
 HeaderLarge/font_sizes/font_size = 28
 HeaderMedium/colors/font_color = Color(0, 0, 0, 1)

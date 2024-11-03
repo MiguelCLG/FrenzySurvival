@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_wu2kt")
-Name = "SayanPunch2"
+Name = "Punch 2"
 Cooldown = 1
 CastTime = 0.2
 Value = 30

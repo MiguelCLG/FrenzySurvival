@@ -41,14 +41,9 @@ public partial class Player : CharacterBody2D
     {
       SetInitialKIValue();
       SetInitialExperienceValue();
-      
-      PackedScene a = playerResource.Abilities.GetRandomAbilities(1).FirstOrDefault();
-      Ability ab = a.Instantiate<Ability>();
-      GD.Print(ab.abilityResource.Name);
-      abilityManager.AddAbility(ab);
     };
 
-    
+
   }
 
   public async void TakeDamage(object sender, object[] args)
@@ -224,8 +219,9 @@ public partial class Player : CharacterBody2D
 
   public void AbilitySelected(object sender, object[] args)
   {
-    /* TODO */
-    GD.Print($"An ability was selected: {args[0]}");
+    PackedScene a = args[0] as PackedScene;
+    Ability ab = a.Instantiate<Ability>();
+    abilityManager.AddAbility(ab);
   }
 
   public override void _ExitTree()

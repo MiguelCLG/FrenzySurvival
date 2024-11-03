@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://chtn7ge3t1j1v"]
+[gd_scene load_steps=4 format=3 uid="uid://chtn7ge3t1j1v"]
 
 [ext_resource type="Texture2D" uid="uid://b4hrhccq4e2e0" path="res://Assets/Icons/punch.png" id="1_bsls2"]
 [ext_resource type="Script" path="res://Scenes/UI/LevelUpUi/AbilityUiButton.cs" id="1_n7dwt"]
+[ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="3_i11o4"]
 
 [node name="AbilityUIButton" type="Control" node_paths=PackedStringArray("iconUI", "nameUI", "coolDownUI", "castTimeUI", "damageUI", "kiRequiredUI")]
 layout_mode = 3
@@ -26,9 +27,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Button" type="Button" parent="PanelContainer"]
-layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
@@ -94,5 +92,10 @@ size_flags_horizontal = 3
 theme_type_variation = &"HeaderMedium"
 text = "KI: 0"
 horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer"]
+layout_mode = 2
+theme = ExtResource("3_i11o4")
+theme_type_variation = &"FlatButton"
 
 [connection signal="pressed" from="PanelContainer/Button" to="." method="OnClickButton"]

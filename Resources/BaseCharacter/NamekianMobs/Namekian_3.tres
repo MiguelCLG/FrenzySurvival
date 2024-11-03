@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://bauccg67skhm0"]
 
-[ext_resource type="Resource" uid="uid://2l71ng11ql21" path="res://Resources/Abilities/Namekian/punch.tres" id="1_48t5v"]
 [ext_resource type="SpriteFrames" uid="uid://f8grogvdsd5l" path="res://Assets/CharacterAssets/Namekian/Namekian_3.tres" id="2_3nwla"]
+[ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="2_nftxk"]
 [ext_resource type="Texture2D" uid="uid://cojqc5efeee3p" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_stand.png" id="3_cuqdc"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_vo1ox"]
 
@@ -17,6 +17,6 @@ MaxKI = 0
 AnimatedFrames = ExtResource("2_3nwla")
 ShowHealBar = true
 Portrait = ExtResource("3_cuqdc")
-MobAttacks = Array[Object]([ExtResource("1_48t5v")])
+MobAttacks = Array[Object]([ExtResource("2_nftxk")])
 LootTables = null
 ExpDropValue = 300

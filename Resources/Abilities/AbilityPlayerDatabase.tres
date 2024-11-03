@@ -1,12 +1,18 @@
-[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=4 format=3 uid="uid://12g3agsk60a3"]
+[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=7 format=3 uid="uid://db5bmprurtbdd"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityDatabaseResource.cs" id="1_kxw46"]
-[ext_resource type="PackedScene" uid="uid://c2lp5jt5u3p7t" path="res://Scenes/Abilities/Punch/punch.tscn" id="1_sdbqm"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="1_sdbqm"]
 [ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="2_mlaoh"]
+[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="3_7gu2d"]
+[ext_resource type="PackedScene" uid="uid://4cgaxihbvw23" path="res://Scenes/Abilities/Laser/kamehameha.tscn" id="4_heu3g"]
+[ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="5_kyroa"]
 
 [resource]
 script = ExtResource("1_kxw46")
 Abilities = {
+"energybarrier": ExtResource("5_kyroa"),
+"kamehame": ExtResource("4_heu3g"),
+"kick": ExtResource("3_7gu2d"),
 "punch": ExtResource("1_sdbqm"),
 "punchtwo": ExtResource("2_mlaoh")
 }
