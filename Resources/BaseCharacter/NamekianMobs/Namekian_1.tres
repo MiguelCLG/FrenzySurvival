@@ -9,8 +9,8 @@
 
 [resource]
 script = ExtResource("1_tml6u")
-HP = 80
-MaxHP = 80
+HP = 40
+MaxHP = 40
 Speed = 60
 Shield = 0
 MaxShield = 0

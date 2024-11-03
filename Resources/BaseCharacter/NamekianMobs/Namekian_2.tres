@@ -7,8 +7,8 @@
 
 [resource]
 script = ExtResource("4_6xd2l")
-HP = 160
-MaxHP = 160
+HP = 70
+MaxHP = 70
 Speed = 70
 Shield = 0
 MaxShield = 0
