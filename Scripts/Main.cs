@@ -2,6 +2,7 @@ using Algos;
 using Godot;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 
 public partial class Main : Node2D
 {
@@ -128,7 +129,25 @@ public partial class Main : Node2D
     await ToSignal(GetTree().CreateTimer(5f), "timeout");
 
     GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
+    MatchClient client = new();
+    var newMatch = new Match
+    {
+        GameId = 9,
+        MatchDate = DateTime.UtcNow,
+        Notes = "Innitial test match",
+        IsFinished = true
+    };
 
+    var dataPoint = new MatchDataPoint
+    {
+        PlayerName = "John Doe",
+        GamePoints = (int) enemiesKilled,
+        PointsDescription = "Kills",
+        CreatedDate = DateTime.UtcNow
+    };
+    var i = await client.PostMatchAsync(newMatch);
+    
+    await client.PostMatchDataPointAsync((int) i, dataPoint);
     GD.Print("Jogo Terminado");
     PauseGame();
   }
