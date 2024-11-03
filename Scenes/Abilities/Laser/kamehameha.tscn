@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://4cgaxihbvw23"]
+[gd_scene load_steps=3 format=3 uid="uid://d2bnwgbvbo40l"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_k7mjl"]
 [ext_resource type="PackedScene" uid="uid://dihogff886yg0" path="res://Scenes/Abilities/Laser/Laser.tscn" id="3_qrrlu"]

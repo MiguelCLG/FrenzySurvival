@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="PickUpResource" load_steps=3 format=3 uid="uid://d0wvh7cqjqan1"]
+[gd_resource type="Resource" script_class="PickUpResource" load_steps=2 format=3 uid="uid://d0wvh7cqjqan1"]
 
-[ext_resource type="PackedScene" uid="uid://c6oynrigi7xv7" path="res://Scenes/Particles/Pickups/Pickup.tscn" id="1_3sqyg"]
 [ext_resource type="Script" path="res://Scripts/Resources/PickUpResource.cs" id="2_2nfa7"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("2_2nfa7")
-pickUpObj = ExtResource("1_3sqyg")
 statChange = {
 "experience": 10
 }

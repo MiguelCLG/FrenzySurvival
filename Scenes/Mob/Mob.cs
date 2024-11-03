@@ -173,6 +173,10 @@ public partial class Mob : CharacterBody2D
       {
         Node2D pickup = dropItem.Instantiate<Node2D>();
         pickup.GlobalPosition = GlobalPosition;
+        if(pickup is Pickup realPickup)
+        {
+          realPickup.ChangeStatChangeValue("experience", mobResource.ExpDropValue);
+        }
         GetTree().Root.AddChild(pickup);
       }
     }

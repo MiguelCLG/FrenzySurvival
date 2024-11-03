@@ -30,3 +30,4 @@ ShowHealBar = true
 Portrait = ExtResource("2_ptymd")
 Abilities = Array[Object]([SubResource("Resource_sefrc")])
 LootTables = null
+ExpDropValue = 0
