@@ -1,11 +1,9 @@
-[gd_resource type="Resource" script_class="PickUpResource" load_steps=3 format=3 uid="uid://d2xfl575cquaw"]
+[gd_resource type="Resource" script_class="PickUpResource" load_steps=2 format=3 uid="uid://d2xfl575cquaw"]
 
-[ext_resource type="PackedScene" uid="uid://c6oynrigi7xv7" path="res://Scenes/Particles/Pickups/Pickup.tscn" id="1_4wv35"]
 [ext_resource type="Script" path="res://Scripts/Resources/PickUpResource.cs" id="2_s7800"]
 
 [resource]
 script = ExtResource("2_s7800")
-pickUpObj = ExtResource("1_4wv35")
 statChange = {
 "ki": 30.0
 }

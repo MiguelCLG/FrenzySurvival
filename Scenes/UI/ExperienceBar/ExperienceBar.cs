@@ -23,10 +23,11 @@ public partial class ExperienceBar : ProgressBar
 
   private void SetInitialExpValue(object sender, object[] args)
   {
-    if (args[0] is int newExp && args[1] is int MaxExpLevelAnterior && args[2] is int MaxXpBarra)
+    if (args[0] is int newExp && args[1] is int MaxExpLevelAnterior && args[2] is int MaxXpBarra && args[3] is int level)
     {
       Value = ConvertXPToPercentage(newExp, MaxExpLevelAnterior, MaxXpBarra);
       MaxValue = 100;
+      levelLbl.Text = level.ToString();
     }
   }
 
@@ -49,6 +50,7 @@ public partial class ExperienceBar : ProgressBar
     } 
     /* if (args[0] is int expValue)
     {
+
       GD.Print(expValue);
       Experience += expValue;
       UpdateUI();

@@ -158,7 +158,7 @@ public partial class Player : CharacterBody2D
     int MaxExpLevelAnterior = playerResource.LevelUpTables.levels[levelDepoisExp][0] == 0 ? 0 : playerResource.LevelUpTables.levels[levelDepoisExp][0] - 1;
     int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1] - playerResource.LevelUpTables.levels[levelDepoisExp][0]; 
 
-    EventRegistry.GetEventPublisher("SetInitialExpValue").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra });
+    EventRegistry.GetEventPublisher("SetInitialExpValue").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra , levelDepoisExp});
   }
 
   public void SetKI(object sender, object[] args)
