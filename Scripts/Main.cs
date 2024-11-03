@@ -7,6 +7,7 @@ public partial class Main : Node2D
 {
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
+  LevelUpUi levelUpUi;
   Node2D playerReference;
   PackedScene mobScene;
   CanvasLayer UI;
@@ -18,6 +19,7 @@ public partial class Main : Node2D
   double enemiesKilled = 0;
   public override void _Ready()
   {
+    levelUpUi = GetNode<LevelUpUi>("%LevelUpUI");
     mobScene = GD.Load<PackedScene>("res://Scenes/Mob/Mob.tscn");
     mobContainer = GetNode<Node2D>("%MobContainer");
     playerReference = GetNode<Player>("Player");
@@ -27,6 +29,8 @@ public partial class Main : Node2D
     EventSubscriber.SubscribeToEvent("OnMobDeath", OnMobDeath);
     EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
+    GetTree().Paused = true;
+    levelUpUi.Visible = true;
   }
 
   public override void _Process(double delta)
@@ -40,7 +44,7 @@ public partial class Main : Node2D
     //}
     HandleSpawnRules();
     currentEnemies = mobContainer.GetChildren().Count;
-    
+
     UI.GetNode<Label>("%EnemyCountLabel").Text = $"Enemies: {currentEnemies}";
     // Convert 'time' to minutes and seconds
     int minutes = (int)(time / 60);  // Divide by 60 to get minutes
@@ -63,9 +67,9 @@ public partial class Main : Node2D
   {
     for (int i = 0; i < mobSpawnRules.Length; i++)
       foreach (var kvp in mobSpawnRules[i].GetUnitsToSpawn(time))
-      { 
+      {
         int numToSpawn = kvp.Key - CountSpawnedMobsWithResource(kvp.Value);
-        if(numToSpawn > 0)
+        if (numToSpawn > 0)
           for (int j = 0; j < numToSpawn; j++)
             CreateMobOfResource(kvp.Value);
       }
@@ -104,17 +108,17 @@ public partial class Main : Node2D
 
   private int CountSpawnedMobsWithResource(BaseCharacterResource targetResource)
   {
-      int count = 0;
+    int count = 0;
 
-      foreach (var child in mobContainer.GetChildren())
+    foreach (var child in mobContainer.GetChildren())
+    {
+      if (child is Mob mob && mob.mobResource == targetResource)
       {
-          if (child is Mob mob && mob.mobResource == targetResource)
-          {
-              count++;
-          }
+        count++;
       }
+    }
 
-      return count;
+    return count;
   }
 
   public async void OnPlayerDeath(object sender, object[] args)

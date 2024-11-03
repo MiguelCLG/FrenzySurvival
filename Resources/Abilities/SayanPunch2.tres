@@ -1,14 +1,15 @@
 [gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://dk8t824tcqpq8"]
 
-[ext_resource type="Texture2D" uid="uid://cklkvmbix7ity" path="res://Assets/CharacterAssets/Sayan/sayan_punch2.png" id="1_8odsf"]
+[ext_resource type="Texture2D" uid="uid://doglrtqgw0nqr" path="res://Assets/Icons/punch_2.png" id="1_kqy7s"]
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_wu2kt"]
 
 [resource]
 script = ExtResource("2_wu2kt")
-Name = "SayanPunch2"
+Name = "Punch 2"
 Cooldown = 1
+CastTime = 0.2
 Value = 30
 Damage = 20
-Icon = ExtResource("1_8odsf")
+Icon = ExtResource("1_kqy7s")
 isSuperAbility = false
 kiRequired = 0

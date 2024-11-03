@@ -33,19 +33,17 @@ public partial class Player : CharacterBody2D
     //EventSubscriber.SubscribeToEvent("SetKI", SetKI);
     EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
     EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
+    EventRegistry.RegisterEvent("AbilitySelected");
+    EventSubscriber.SubscribeToEvent("AbilitySelected", AbilitySelected);
+
 
     GetTree().CreateTimer(.5f, false, true).Timeout += () =>
     {
       SetInitialKIValue();
       SetInitialExperienceValue();
-      
-      PackedScene a = playerResource.Abilities.GetRandomAbilities(1).FirstOrDefault();
-      Ability ab = a.Instantiate<Ability>();
-      GD.Print(ab.abilityResource.Name);
-      abilityManager.AddAbility(ab);
     };
 
-    
+
   }
 
   public async void TakeDamage(object sender, object[] args)
@@ -78,24 +76,24 @@ public partial class Player : CharacterBody2D
 
   private void HandleExpIncrease(int increment)
   {
-    
-    int newExp = experiencePoints + increment; 
+
+    int newExp = experiencePoints + increment;
     int levelDepoisExp = playerResource.LevelUpTables.GetCurrentLevel(experiencePoints);
-    
+
     List<int> levelsGained = playerResource.LevelUpTables.GetLevelUps(experiencePoints, newExp);
     experiencePoints += increment;
-    
+
     GD.Print();
-    
+
     int MaxExpLevelAnterior = playerResource.LevelUpTables.levels[levelDepoisExp][0] == 0 ? 0 : playerResource.LevelUpTables.levels[levelDepoisExp][0] - 1;
-    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1]; 
+    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1];
     EventRegistry.GetEventPublisher("OnExperienceChanged").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra });
 
-    foreach(int level in levelsGained)
+    foreach (int level in levelsGained)
     {
       EventRegistry.GetEventPublisher("OnLevelUp").RaiseEvent(new object[] { level });
       GD.Print($"Leveled Up! New level [{level}]!");
-    } 
+    }
   }
 
   public override void _PhysicsProcess(double delta)
@@ -160,12 +158,12 @@ public partial class Player : CharacterBody2D
   }
   public void SetInitialExperienceValue()
   {
-    int newExp = experiencePoints; 
+    int newExp = experiencePoints;
     int levelDepoisExp = playerResource.LevelUpTables.GetCurrentLevel(experiencePoints);
     int MaxExpLevelAnterior = playerResource.LevelUpTables.levels[levelDepoisExp][0] == 0 ? 0 : playerResource.LevelUpTables.levels[levelDepoisExp][0] - 1;
-    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1] - playerResource.LevelUpTables.levels[levelDepoisExp][0]; 
+    int MaxXpBarra = playerResource.LevelUpTables.levels[levelDepoisExp][1] - playerResource.LevelUpTables.levels[levelDepoisExp][0];
 
-    EventRegistry.GetEventPublisher("SetInitialExpValue").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra , levelDepoisExp});
+    EventRegistry.GetEventPublisher("SetInitialExpValue").RaiseEvent(new object[] { newExp, MaxExpLevelAnterior, MaxXpBarra, levelDepoisExp });
   }
 
   public void SetKI(object sender, object[] args)
@@ -201,15 +199,15 @@ public partial class Player : CharacterBody2D
             playerResource.HP = newHealth;
             healthbar.Heal(kvp.Value);
             break;
-          
+
           case "damage":
             abilityManager.AddDamage(kvp.Value);
             break;
-          
+
           case "experience":
             HandleExpIncrease(kvp.Value);
             break;
-          
+
           default:
             break;
         }
@@ -219,12 +217,19 @@ public partial class Player : CharacterBody2D
     }
   }
 
+  public void AbilitySelected(object sender, object[] args)
+  {
+    PackedScene a = args[0] as PackedScene;
+    Ability ab = a.Instantiate<Ability>();
+    abilityManager.AddAbility(ab);
+  }
+
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", OnComboFinished);
     EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
-
+    EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
   }
 }

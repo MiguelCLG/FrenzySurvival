@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2lp5jt5u3p7t"]
+[gd_scene load_steps=3 format=3 uid="uid://btuvr7gvcu8w8"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Punch/Punch.cs" id="1_nwbql"]
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="2_hp4k4"]
