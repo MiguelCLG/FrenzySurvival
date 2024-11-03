@@ -10,6 +10,8 @@ public partial class Ability : Node2D
 
   public AnimatedSprite2D AnimationPlayer;
 
+  private protected SceneTreeTimer cooldownTimer;
+
 
   public int facingDirection = 1;
 

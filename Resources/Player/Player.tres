@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://db5bmprurtbdd" path="res://Resources/Abilities/AbilityPlayerDatabase.tres" id="1_mixou"]
 [ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
-[ext_resource type="Resource" uid="uid://bsjou14wb657w" path="res://Resources/Player/LevelTable-v2.tres" id="2_wputw"]
+[ext_resource type="Resource" uid="uid://balrfea2u6oiu" path="res://Resources/Player/LevelTable-v1.tres" id="2_jf7s1"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
 [ext_resource type="Texture2D" uid="uid://btt1s3n87is20" path="res://Assets/CharacterAssets/Sayan/sayanp_punch.png" id="3_ea6ps"]
 
@@ -11,7 +11,7 @@
 [resource]
 script = ExtResource("3_byggt")
 Race = ExtResource("2_a2w3a")
-LevelUpTables = ExtResource("2_wputw")
+LevelUpTables = ExtResource("2_jf7s1")
 Abilities = ExtResource("1_mixou")
 HP = 200
 MaxHP = 200

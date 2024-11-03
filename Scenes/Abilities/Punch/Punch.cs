@@ -10,9 +10,15 @@ public partial class Punch : Ability
   [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
 
+
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
+    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+    AnimationPlayer.Play("default");
+    cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);
+    await ToSignal(cooldownTimer, "timeout"); 
+
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -51,9 +57,6 @@ public partial class Punch : Ability
       }
     }
 
-    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
-    AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }
@@ -74,6 +77,7 @@ public partial class Punch : Ability
 
     if (isDoingAction)
     {
+
       // Use character's movement direction as forward direction
       Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
       // Calculate the cone's half-angle in radians
@@ -86,17 +90,21 @@ public partial class Punch : Ability
       Color lineColor = new Color(0, 0, 0, 0.1f);
       DrawLine(Position, leftDir, lineColor, 2);   // Left boundary
       DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
-      DrawLine(leftDir, rightDir, lineColor, 2);         // Closing line
+      DrawLine(leftDir, rightDir, lineColor, 2);   // Closing line
 
-      // Optionally fill the cone area (as a polygon)
-      Color fillColor = new Color(0.8f, 0.8f, 0.8f, 0.1f);  // Light gray with transparency
-      Vector2[] points = { Position, leftDir, rightDir };
-      DrawPolygon(points, new Color[] { fillColor });
+      if(cooldownTimer is not null)
+      {
+        // Optionally fill the cone area (as a polygon)
+        Color fillColor = new Color(0.8f, 0.8f, 0.8f, abilityResource.Cooldown - (float)cooldownTimer.TimeLeft);  // Light gray with transparency
+        Vector2[] points = { Position, leftDir, rightDir };
+        DrawPolygon(points, new Color[] { fillColor });
+      }
 
     }
     // Visualize enemies detected within the cone
     DetectInConeVisual();
   }
+
   // Helper method to visualize enemies detected in the cone
   private void DetectInConeVisual()
   {

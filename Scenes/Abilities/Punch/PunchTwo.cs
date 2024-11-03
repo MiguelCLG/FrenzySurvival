@@ -13,6 +13,11 @@ public partial class PunchTwo : Ability
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
+    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+    AnimationPlayer.Play("default");
+    cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);    // Use character's movement direction as forward direction
+    await ToSignal(cooldownTimer, "timeout"); 
+
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
@@ -51,11 +56,9 @@ public partial class PunchTwo : Ability
       }
     }
 
-    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
-    AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+
   }
 
   public override void _Process(double delta)
@@ -87,10 +90,13 @@ public partial class PunchTwo : Ability
       DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
       DrawLine(leftDir, rightDir, lineColor, 2);         // Closing line
 
-      // Optionally fill the cone area (as a polygon)
-      Color fillColor = new Color(1f, 0.0f, 0.8f, 0.1f);  // Light gray with transparency
-      Vector2[] points = { Position, leftDir, rightDir };
-      DrawPolygon(points, new Color[] { fillColor });
+      if(cooldownTimer is not null)
+      {
+        // Optionally fill the cone area (as a polygon)
+        Color fillColor = new Color(1f, 0.8f, 0.8f, abilityResource.Cooldown - (float)cooldownTimer.TimeLeft);  // Light gray with transparency
+        Vector2[] points = { Position, leftDir, rightDir };
+        DrawPolygon(points, new Color[] { fillColor });
+      }
     }
     // Visualize enemies detected within the cone
     DetectInConeVisual();

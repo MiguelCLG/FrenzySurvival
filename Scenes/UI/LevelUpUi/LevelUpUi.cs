@@ -6,6 +6,7 @@ public partial class LevelUpUi : CanvasLayer
   [Export] PackedScene abilityRow;
   [Export] PackedScene abilityUIButton;
   [Export] PlayerResource playerResource;
+  private int currentLevel = 1;
   public override void _Ready()
   {
     RefetchAbilities();
@@ -29,7 +30,7 @@ public partial class LevelUpUi : CanvasLayer
   public void RefetchAbilities()
   {
     RemoveAbilitiesFromContainer();
-    var abilitiesToShow = playerResource.Abilities.GetRandomAbilities(3, false);
+    var abilitiesToShow = playerResource.Abilities.GetRandomAbilities(3, currentLevel % 5 == 0);
     var verticalContainer = GetNode<Control>("%VerticalContainer");
 
     Control row = abilityRow.Instantiate<Control>();
@@ -46,6 +47,7 @@ public partial class LevelUpUi : CanvasLayer
   }
   public void OnLevelUp(object sender, object[] args)
   {
+    currentLevel = (int)  args[0];
     GetTree().Paused = true;
     Visible = true;
     RefetchAbilities();
