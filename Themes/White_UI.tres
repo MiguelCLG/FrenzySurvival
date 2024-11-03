@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=3 uid="uid://chn7yd7a3v1gk"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://chn7yd7a3v1gk"]
 
 [ext_resource type="FontFile" uid="uid://ctk2dh6ij1mye" path="res://Fonts/njnaruto.ttf" id="1_4vato"]
 
@@ -51,6 +51,9 @@ bg_color = Color(0.627451, 0.627451, 0.627451, 0.352941)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oddww"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_htj44"]
+bg_color = Color(1, 1, 1, 0.196078)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j0o0u"]
 bg_color = Color(1, 1, 1, 1)
 border_width_left = 2
@@ -82,6 +85,8 @@ FlatButton/styles/hover = SubResource("StyleBoxEmpty_p7jmm")
 FlatButton/styles/hover_pressed = SubResource("StyleBoxEmpty_fujxh")
 FlatButton/styles/normal = SubResource("StyleBoxEmpty_8i3tb")
 FlatButton/styles/pressed = SubResource("StyleBoxEmpty_oddww")
+FlatPanelContainer/base_type = &"PanelContainer"
+FlatPanelContainer/styles/panel = SubResource("StyleBoxFlat_htj44")
 HeaderLarge/colors/font_color = Color(0, 0, 0, 1)
 HeaderLarge/font_sizes/font_size = 28
 HeaderMedium/colors/font_color = Color(0, 0, 0, 1)
