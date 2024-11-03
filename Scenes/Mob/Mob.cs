@@ -34,7 +34,8 @@ public partial class Mob : CharacterBody2D
     if (healthbar.IsAlive && isTargetAlive)
     {
       UpdateTarget();
-      Movement(delta);
+      if(mobResource.Speed > 0)
+        Movement(delta);
     }
     else if (AnimationPlayer.Animation != "death" && isTargetAlive)
     {
