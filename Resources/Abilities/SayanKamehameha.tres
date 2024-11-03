@@ -11,5 +11,5 @@ CastTime = 4.0
 Value = 100
 Damage = 70
 Icon = ExtResource("1_0ryko")
-isSuperAbility = false
+isSuperAbility = true
 kiRequired = 50

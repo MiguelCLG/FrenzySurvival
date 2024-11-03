@@ -9,6 +9,7 @@
 script = ExtResource("1_7st2x")
 Name = "Punch"
 Cooldown = 1
+CastTime = 0.0
 Value = 30
 Damage = 30
 isSuperAbility = false
@@ -24,7 +25,7 @@ MaxShield = 0
 KI = 0
 MaxKI = 0
 AnimatedFrames = ExtResource("2_7h2jt")
-ShowHealBar = true
+ShowHealBar = false
 Abilities = Array[Object]([SubResource("Resource_yfgwj")])
 LootTables = Array[Resource]([ExtResource("3_7ript")])
 ExpDropValue = 0
