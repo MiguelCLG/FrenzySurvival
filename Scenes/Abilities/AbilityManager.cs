@@ -22,8 +22,13 @@ public partial class AbilityManager : Node2D
     }
     EventRegistry.RegisterEvent("ActionFinished");
     EventSubscriber.SubscribeToEvent("ActionFinished", DoNextActionAsync);
+  }
 
-
+  public void AddAbility(Ability ability)
+  {
+    ability.AnimationPlayer = AnimationPlayer;
+    abilityArray.Add(ability);
+    AddChild(ability);
   }
 
   public void SetKI(int newKi)
