@@ -5,8 +5,9 @@
 
 [resource]
 script = ExtResource("1_dqi8e")
-Name = ""
+Name = "Punch"
 Cooldown = 1
+CastTime = 0.0
 Value = 30
 Damage = 20
 Icon = ExtResource("1_t42dw")

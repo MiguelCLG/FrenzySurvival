@@ -575,6 +575,7 @@ tile_map_data = PackedByteArray("AADu//b/AAAAAAUAAADu//f/AAAHAAQAAADu//j/AAAPAAc
 tile_set = SubResource("TileSet_p2flj")
 
 [node name="Player" parent="." instance=ExtResource("1_miebb")]
+position = Vector2(1, 0)
 disable_mode = 0
 motion_mode = 1
 

@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="PlayerResource" load_steps=6 format=3 uid="uid://s4myc45rkqu2"]
+[gd_resource type="Resource" script_class="PlayerResource" load_steps=7 format=3 uid="uid://s4myc45rkqu2"]
 
+[ext_resource type="Resource" uid="uid://12g3agsk60a3" path="res://Resources/Abilities/AbilityPlayerDatabase.tres" id="1_mixou"]
 [ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
 [ext_resource type="Resource" uid="uid://cjws25j88ygjs" path="res://Resources/Player/LevelTable-v2.tres" id="2_qaa6s"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
@@ -11,6 +12,7 @@
 script = ExtResource("3_byggt")
 Race = ExtResource("2_a2w3a")
 LevelUpTables = ExtResource("2_qaa6s")
+Abilities = ExtResource("1_mixou")
 HP = 200
 MaxHP = 200
 Speed = 100

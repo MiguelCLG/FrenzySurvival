@@ -4,7 +4,8 @@ using Godot.Collections;
 
 public partial class Ability : Node2D
 {
-  [Export] public AbilityResource abilityResource;
+  [Export] public AbilityResource abilityResource;  
+  
   public Vector2 CurrentVelocity = Vector2.Zero;
 
   public AnimatedSprite2D AnimationPlayer;

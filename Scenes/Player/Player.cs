@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
@@ -37,7 +38,14 @@ public partial class Player : CharacterBody2D
     {
       SetInitialKIValue();
       SetInitialExperienceValue();
+      
+      PackedScene a = playerResource.Abilities.GetRandomAbilities(1).FirstOrDefault();
+      Ability ab = a.Instantiate<Ability>();
+      GD.Print(ab.abilityResource.Name);
+      abilityManager.AddAbility(ab);
     };
+
+    
   }
 
   public async void TakeDamage(object sender, object[] args)
