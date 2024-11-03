@@ -719,6 +719,66 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 
+[node name="PauseScreen" type="PanelContainer" parent="UI/MainUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 408.0
+offset_top = 104.0
+offset_right = -408.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/MainUI/PauseScreen"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/MainUI/PauseScreen/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.3
+theme_type_variation = &"HeaderLarge"
+text = "Pause"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/MainUI/PauseScreen/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
+
+[node name="Button" type="Button" parent="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Resume"
+
+[node name="Button3" type="Button" parent="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Restart"
+
+[node name="Button2" type="Button" parent="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer"]
+process_mode = 2
+custom_minimum_size = Vector2(150, 75)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quit"
+
+[node name="Spacer" type="Control" parent="UI/MainUI/PauseScreen/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
 [node name="KiBar" parent="UI/MainUI" instance=ExtResource("10_r72bm")]
 layout_mode = 1
 
@@ -731,3 +791,6 @@ visible = false
 
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button" to="." method="Restart"]
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]
+[connection signal="pressed" from="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer/Button" to="." method="HandlePause"]
+[connection signal="pressed" from="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer/Button3" to="." method="Restart"]
+[connection signal="pressed" from="UI/MainUI/PauseScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]

@@ -23,8 +23,8 @@ public partial class Main : Node2D
     mobScene = GD.Load<PackedScene>("res://Scenes/Mob/Mob.tscn");
     mobContainer = GetNode<Node2D>("%MobContainer");
     playerReference = GetNode<Player>("Player");
-    spawnCooldown = time = 0;
     UI = GetNode<CanvasLayer>("%UI");
+    spawnCooldown = time = 0;
     EventRegistry.RegisterEvent("OnMobDeath");
     EventSubscriber.SubscribeToEvent("OnMobDeath", OnMobDeath);
     EventRegistry.RegisterEvent("OnPlayerDeath");
@@ -168,6 +168,20 @@ public partial class Main : Node2D
   {
     GetTree().Paused = false;
     GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
+  }
+
+  public override void _UnhandledKeyInput(InputEvent @event)
+  {
+    if (Input.IsActionPressed("ui_cancel"))
+    {
+      HandlePause();
+    }
+  }
+
+  public void HandlePause()
+  {
+    GetTree().Paused = !GetTree().Paused;
+    UI.GetNode<Control>("%PauseScreen").Visible = GetTree().Paused;
   }
 
   public override void _ExitTree()
