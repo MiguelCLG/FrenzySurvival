@@ -9,10 +9,27 @@ public partial class EnergyBall : Node2D
   [Export] private int numBeamLines = 5; // Number of beam lines
   [Export] private float beamLength = 500f; // Length of the beams
   [Export] private float rotationSpeed = 1f; // Speed of rotation
+  CpuParticles2D energyBallParticles;
   private float fadeSpeed = 100f;
   bool isDecreasing = false;
 
   public override void _Ready()
+  {
+    energyBallParticles = GetNode<CpuParticles2D>("CPUParticles2D");
+  }
+
+  public void ActivateEnergyBall()
+  {
+    energyBallParticles.Emitting = true;
+    ActivateBeamLines();
+  }
+
+  public void DeactivateEnergyBall()
+  {
+    energyBallParticles.Emitting = false;
+    DeactivateBeamLines();
+  }
+  public void ActivateBeamLines()
   {
     for (int i = 0; i < numBeamLines; i++)
     {
@@ -32,6 +49,15 @@ public partial class EnergyBall : Node2D
       Vector2 endPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * beamLength;
       beamLine.AddPoint(endPoint);
       beamLine.Modulate = Color.Color8(255, 255, 255, 50);
+    }
+  }
+
+  public void DeactivateBeamLines()
+  {
+    foreach (var child in GetChildren())
+    {
+      if (child is Line2D beamLine)
+        RemoveChild(beamLine);
     }
   }
 

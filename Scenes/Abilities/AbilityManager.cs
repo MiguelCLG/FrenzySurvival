@@ -42,6 +42,11 @@ public partial class AbilityManager : Node2D
   public void SetFacingDirection(int direction)
   {
     facingDirection = direction;
+
+    foreach (Ability ability in abilityArray)
+    {
+      ability.SetFacingDirection(direction);
+    }
   }
 
   public void DoNextActionAsync()

@@ -9,6 +9,7 @@
 script = ExtResource("1_7st2x")
 Name = "Punch"
 Cooldown = 1
+CastTime = 0.0
 Value = 30
 Damage = 30
 isSuperAbility = false

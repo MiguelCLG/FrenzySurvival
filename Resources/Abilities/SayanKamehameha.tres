@@ -6,7 +6,8 @@
 [resource]
 script = ExtResource("1_xbgrv")
 Name = ""
-Cooldown = 5
+Cooldown = 1
+CastTime = 4.0
 Value = 100
 Damage = 70
 Icon = ExtResource("1_0ryko")

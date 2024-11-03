@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class Laser : RayCast2D
 {
@@ -17,6 +18,7 @@ public partial class Laser : RayCast2D
   GpuParticles2D castingParticlesBegin;
   GpuParticles2D collisionParticles;
   GpuParticles2D beamParticles;
+  Vector2[] beamLineOriginalPoints;
   public override void _Ready()
   {
     SetPhysicsProcess(false);
@@ -28,9 +30,11 @@ public partial class Laser : RayCast2D
     beamParticles = GetNode<GpuParticles2D>("%BeamParticles");
     worldEnvironment = GetNode<WorldEnvironment>("LaserEnvironment");
     beamLine.Width = 0;
-    collisionPoint = beamLine.Points[1];
+    collisionPoint = beamLine.Points[3];
     initialPos = Position;
     worldEnvironment.Environment = null;
+
+    beamLineOriginalPoints = beamLine.Points;
 
   }
 
@@ -46,9 +50,10 @@ public partial class Laser : RayCast2D
     collisionParticles.Emitting = true;
 
     if (MathF.Abs(collisionPoint.X) < maxPosition.X)
-      collisionPoint += Vector2.Right * direction * (float)delta * beamSpeed;
+      collisionPoint *= (float)delta * beamSpeed;
     collisionParticles.GlobalRotation = collisionPoint.AngleTo(Vector2.Left * direction);
-    collisionParticles.Position = collisionPoint;
+    castingParticlesBegin.GlobalRotation = collisionPoint.AngleTo(Vector2.Right * direction);
+    collisionParticles.Position = collisionPoint * direction;
     if (IsColliding())
     {
       //if (MathF.Abs(collisionPoint.X) < GetCollisionPoint().X * direction)
@@ -57,19 +62,20 @@ public partial class Laser : RayCast2D
       //collisionParticles.Position = collisionPoint;
     }
     Position = new Vector2(initialPos.X * direction, initialPos.Y);
-    for (int i = 0; i < beamLine.Points.Length; i++)
-      beamLine.RemovePoint(i);
-    
-    beamLine.AddPoint(Vector2.Zero);
-    beamLine.AddPoint(collisionPoint / 4);
-    beamLine.AddPoint(collisionPoint - collisionPoint / 4);
-    beamLine.AddPoint(collisionPoint);
-    beamParticles.Position = collisionPoint * .5f;
 
-    ParticleProcessMaterial material = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
-    material.EmissionBoxExtents = new(collisionPoint.X * .5f, material.EmissionBoxExtents.Y, material.EmissionBoxExtents.Z);
+    beamLine.ClearPoints();
+    beamLine.AddPoint(beamLineOriginalPoints[0]);
+    beamLine.AddPoint(TargetPosition * direction / 4);
+    beamLine.AddPoint(TargetPosition * direction - TargetPosition * direction / 4);
+    beamLine.AddPoint(TargetPosition * direction);
 
-    beamParticles.ProcessMaterial = material;
+    beamParticles.Position = collisionPoint * direction * .5f;
+
+    ParticleProcessMaterial beamParticlesMaterial = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
+    beamParticlesMaterial.EmissionBoxExtents = new(collisionPoint.X * direction * .5f, beamParticlesMaterial.EmissionBoxExtents.Y, beamParticlesMaterial.EmissionBoxExtents.Z);
+
+    beamParticles.ProcessMaterial = beamParticlesMaterial;
+
   }
 
   public void SetIsCasting(bool isCasting)
@@ -77,6 +83,7 @@ public partial class Laser : RayCast2D
     IsCasting = isCasting;
     beamParticles.Emitting = IsCasting;
     castingParticlesBegin.Emitting = IsCasting;
+    SetPhysicsProcess(IsCasting);
 
     if (IsCasting)
       AppearBeam();
@@ -85,7 +92,6 @@ public partial class Laser : RayCast2D
       collisionParticles.Emitting = false;
       DisappearBeam();
     }
-    SetPhysicsProcess(IsCasting);
 
   }
 
@@ -97,21 +103,37 @@ public partial class Laser : RayCast2D
 
   public void AppearBeam()
   {
+    // Get the CollisionShape2D and enable it
     area.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = false;
+
+    // Create a curve for the width animation
     Tween tween;
     Curve curve = new();
-    curve.AddPoint(new Vector2(0, 0.75f));
+    curve.AddPoint(new Vector2(0, 0.50f));
     curve.AddPoint(new Vector2(0.25f, 0.25f));
     curve.AddPoint(new Vector2(0.75f, 0.25f));
     curve.AddPoint(new Vector2(1, 0.75f));
+
     tween = CreateTween();
     tween.Stop();
     tween.SetParallel(true);
+
+    // Tween the beam's width
     tween.Parallel().TweenProperty(beamLine, "width", beamWidth, 0.2);
     tween.Parallel().TweenProperty(beamLine, "width_curve", curve, 0.2);
-    tween.Parallel().TweenProperty(area, "scale", new Vector2(beamWidth * direction, area.Scale.Y), 0.2);
+
+    // Convert position.x to scale.x based on the initial width
+    float scaleX = TargetPosition.X * direction * .05f;
+
+    // Tween the area's scale (will now grow from the left)
+    tween.Parallel().TweenProperty(area, "scale", new Vector2(scaleX, area.Scale.Y), 0.2);
+    tween.Parallel().TweenProperty(area, "position", area.Position + new Vector2(TargetPosition.X * direction * .5f, 0), 0.2);
+
+    // Play the tween
     tween.Play();
+    collisionPoint = TargetPosition;
   }
+
 
   public async void DisappearBeam()
   {
@@ -121,9 +143,10 @@ public partial class Laser : RayCast2D
     tween.SetParallel(true);
     tween.Parallel().TweenProperty(beamLine, "width", 0, 0.2);
     tween.Parallel().TweenProperty(area, "scale", new Vector2(0, area.Scale.Y), 0.2);
-    collisionPoint = Vector2.Zero;
+    tween.Parallel().TweenProperty(area, "position", new Vector2(0, 0), 0.2);
     tween.Play();
     await ToSignal(tween, "finished");
+    collisionPoint = beamLine.Points[3];
     area.GetNode<CollisionShape2D>("CollisionShape2D").Disabled = true;
 
   }

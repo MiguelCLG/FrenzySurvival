@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="1_n6yx3"]
 [ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
-[ext_resource type="Resource" uid="uid://cjws25j88ygjs" path="res://Resources/Player/LevelTable-v2.tres" id="2_qaa6s"]
+[ext_resource type="Resource" path="res://Resources/Player/LevelTable-v2.tres" id="2_qaa6s"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
 [ext_resource type="Texture2D" uid="uid://btt1s3n87is20" path="res://Assets/CharacterAssets/Sayan/sayanp_punch.png" id="3_ea6ps"]
 
@@ -24,4 +24,3 @@ ShowHealBar = true
 Portrait = ExtResource("3_ea6ps")
 Abilities = Array[Object]([ExtResource("1_n6yx3"), ExtResource("1_n6yx3")])
 LootTables = Array[Resource]([])
-ExpDropValue = 0

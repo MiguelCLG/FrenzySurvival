@@ -50,7 +50,7 @@ public partial class Kick : Ability
       }
     }
 
-    await ToSignal(GetTree().CreateTimer(.1f, false, true), "timeout");
+    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     isDoingAction = false;
