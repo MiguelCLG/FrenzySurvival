@@ -8,6 +8,8 @@ public partial class AbilityResource : Resource
 
   [Export]
   public int Cooldown { get; set; }
+  [Export]
+  public float CastTime { get; set; }
 
   [Export]
   public int Value { get; set; }

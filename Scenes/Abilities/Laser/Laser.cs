@@ -50,9 +50,10 @@ public partial class Laser : RayCast2D
     collisionParticles.Emitting = true;
 
     if (MathF.Abs(collisionPoint.X) < maxPosition.X)
-      collisionPoint += Vector2.Right * direction * (float)delta * beamSpeed;
+      collisionPoint *= (float)delta * beamSpeed;
     collisionParticles.GlobalRotation = collisionPoint.AngleTo(Vector2.Left * direction);
-    collisionParticles.Position = collisionPoint;
+    castingParticlesBegin.GlobalRotation = collisionPoint.AngleTo(Vector2.Right * direction);
+    collisionParticles.Position = collisionPoint * direction;
     if (IsColliding())
     {
       //if (MathF.Abs(collisionPoint.X) < GetCollisionPoint().X * direction)
@@ -68,12 +69,13 @@ public partial class Laser : RayCast2D
     beamLine.AddPoint(TargetPosition * direction - TargetPosition * direction / 4);
     beamLine.AddPoint(TargetPosition * direction);
 
-    beamParticles.Position = collisionPoint * .5f;
+    beamParticles.Position = collisionPoint * direction * .5f;
 
-    ParticleProcessMaterial material = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
-    material.EmissionBoxExtents = new(collisionPoint.X * .5f, material.EmissionBoxExtents.Y, material.EmissionBoxExtents.Z);
+    ParticleProcessMaterial beamParticlesMaterial = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
+    beamParticlesMaterial.EmissionBoxExtents = new(collisionPoint.X * direction * .5f, beamParticlesMaterial.EmissionBoxExtents.Y, beamParticlesMaterial.EmissionBoxExtents.Z);
 
-    beamParticles.ProcessMaterial = material;
+    beamParticles.ProcessMaterial = beamParticlesMaterial;
+
   }
 
   public void SetIsCasting(bool isCasting)
@@ -129,6 +131,7 @@ public partial class Laser : RayCast2D
 
     // Play the tween
     tween.Play();
+    collisionPoint = TargetPosition;
   }
 
 

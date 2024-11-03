@@ -10,14 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dnayby67rhbyp" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_punch1.png" id="8_niy13"]
 [ext_resource type="Texture2D" uid="uid://cy8t7oeng8dxd" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_punch2.png" id="9_e6yap"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_33g3l"]
-atlas = ExtResource("1_jktij")
-region = Rect2(0, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yalbg"]
-atlas = ExtResource("1_jktij")
-region = Rect2(32, 0, 32, 32)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_2p3lq"]
 atlas = ExtResource("1_jktij")
 region = Rect2(64, 0, 32, 32)
@@ -33,6 +25,14 @@ region = Rect2(128, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_12vbt"]
 atlas = ExtResource("1_jktij")
 region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtgwu"]
+atlas = ExtResource("1_jktij")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qljjo"]
+atlas = ExtResource("1_jktij")
+region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b4r4u"]
 atlas = ExtResource("2_21u7n")
@@ -122,12 +122,6 @@ region = Rect2(0, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_33g3l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yalbg")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_2p3lq")
 }, {
 "duration": 1.0,
@@ -142,6 +136,17 @@ animations = [{
 "loop": false,
 "name": &"beam",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtgwu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qljjo")
+}],
+"loop": true,
+"name": &"beam_charge",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,

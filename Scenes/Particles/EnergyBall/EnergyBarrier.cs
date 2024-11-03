@@ -50,14 +50,12 @@ public partial class EnergyBarrier : Ability
           mob.TakeDamage(this, new object[] { this, abilityResource.Damage });
           mob.KnockBack(-mob.Velocity, abilityResource.Value);
         }
-        SetEmitting(false);
         isAscending = true;
         radius = 1;
         (collisionShape2D.Shape as CircleShape2D).Radius = radius;
-
-
       }
       EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+      SetEmitting(false);
     }
 
   }

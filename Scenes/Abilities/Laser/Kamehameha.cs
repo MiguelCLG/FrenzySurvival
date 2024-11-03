@@ -5,6 +5,7 @@ public partial class Kamehameha : Ability
 {
 
   Laser Laser;
+
   public override void _Ready()
   {
     Laser = GetNode<Laser>("%LaserRaycast");
@@ -14,21 +15,28 @@ public partial class Kamehameha : Ability
 
   public async void FireLaser()
   {
+    EnergyBall energyBall = Laser.GetNode<EnergyBall>("EnergyBall");
+    AnimationPlayer.Play("beam_charge");
+
+    // Set the energy ball's position based on the facing direction
+    Vector2 energyBallPosition = new Vector2(13 * -facingDirection, 0) - Position;
+    energyBall.Position = energyBallPosition;
+
+    energyBall.ActivateEnergyBall();
+    await ToSignal(GetTree().CreateTimer(2f, false, true), "timeout");
+    energyBall.DeactivateEnergyBall();
+
     Laser.SetDirection(facingDirection);
     AnimationPlayer.Play("beam");
-    void action()
-    {
-      if (AnimationPlayer.Frame == 3)
-        Laser.SetIsCasting(true);
-    }
-    AnimationPlayer.FrameChanged += action;
-    await ToSignal(GetTree().CreateTimer(1.5f, false, true), "timeout");
+    Laser.SetIsCasting(true);
+    Position = new Vector2(-28 * -facingDirection, 0);
+    await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
     Laser.SetIsCasting(false);
-    AnimationPlayer.FrameChanged -= action;
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
   }
+
   public override void Action()
   {
 
