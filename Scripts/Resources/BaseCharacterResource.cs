@@ -17,6 +17,6 @@ public partial class BaseCharacterResource : Resource
   [Export] public Array<AbilityResource> Abilities;
   [Export] public Array<LootTable> LootTables;
 
-
+  [Export] public int ExpDropValue = 0;
 
 }
