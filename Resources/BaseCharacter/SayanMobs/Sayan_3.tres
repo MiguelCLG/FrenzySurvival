@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://dw7fcg3fx56fi"]
+
+[ext_resource type="SpriteFrames" uid="uid://d2firu6pqdskc" path="res://Assets/CharacterAssets/Sayan/SayanP.tres" id="1_gxkgj"]
+[ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_d0p8i"]
+[ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_12ucc"]
+[ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="4_vo51t"]
+[ext_resource type="Texture2D" uid="uid://dt34a4tmkkj62" path="res://Assets/CharacterAssets/Sayan/sayanp_move.png" id="4_vy573"]
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="5_v8qak"]
+
+[resource]
+script = ExtResource("5_v8qak")
+HP = 100
+MaxHP = 100
+Speed = 60
+Shield = 0
+MaxShield = 0
+KI = 0
+MaxKI = 0
+AnimatedFrames = ExtResource("1_gxkgj")
+ShowHealBar = true
+Portrait = ExtResource("4_vy573")
+MobAttacks = Array[Object]([ExtResource("4_vo51t")])
+LootTables = Array[Resource]([ExtResource("2_d0p8i"), ExtResource("3_12ucc")])
+ExpDropValue = 0

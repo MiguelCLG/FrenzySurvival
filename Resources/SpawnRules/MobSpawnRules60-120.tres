@@ -3,11 +3,11 @@
 [ext_resource type="Resource" uid="uid://cjsxx5bkrptff" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_1.tres" id="1_aj5xr"]
 [ext_resource type="Resource" uid="uid://b777ofptysvqh" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_2.tres" id="2_2rnov"]
 [ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="2_w3cav"]
-[ext_resource type="Resource" uid="uid://bauccg67skhm0" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_3.tres" id="3_vo14s"]
+[ext_resource type="Resource" uid="uid://3ij2ajj82a8r" path="res://Resources/BaseCharacter/SayanMobs/Sayan_2.tres" id="3_kqgcl"]
 
 [resource]
 script = ExtResource("2_w3cav")
-StartTimeInSeconds = 60.0
+StartTimeInSeconds = 61.0
 FinishTimeInSeconds = 120.0
-MobsToSpawn = Array[Object]([ExtResource("1_aj5xr"), ExtResource("2_2rnov"), ExtResource("3_vo14s")])
+MobsToSpawn = Array[Object]([ExtResource("1_aj5xr"), ExtResource("2_2rnov"), ExtResource("3_kqgcl")])
 SpawnNumbers = PackedInt32Array(5, 3, 1)

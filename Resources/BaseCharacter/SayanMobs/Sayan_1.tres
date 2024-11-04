@@ -1,18 +1,24 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://dfbwf6gk25vf3"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://dfbwf6gk25vf3"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_fv6kt"]
-[ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="1_rnsck"]
+[ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_1yx26"]
+[ext_resource type="Texture2D" uid="uid://dr71txwicwh1k" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_move.png" id="2_alqvf"]
 [ext_resource type="SpriteFrames" uid="uid://c6j7k6bgmbvmi" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/Sayan_1.tres" id="2_wx5nq"]
+[ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_snf3k"]
+[ext_resource type="Resource" uid="uid://pqb4bdfaydlb" path="res://Resources/Abilities/Kick.tres" id="4_fag58"]
 
 [resource]
 script = ExtResource("1_fv6kt")
-HP = 100
-MaxHP = 100
-Speed = 50
+HP = 320
+MaxHP = 320
+Speed = 80
 Shield = 0
 MaxShield = 0
 KI = 0
 MaxKI = 0
 AnimatedFrames = ExtResource("2_wx5nq")
-Abilities = Array[Object]([ExtResource("1_rnsck")])
-LootTables = null
+ShowHealBar = true
+Portrait = ExtResource("2_alqvf")
+MobAttacks = Array[Object]([ExtResource("4_fag58")])
+LootTables = Array[Resource]([ExtResource("2_1yx26"), ExtResource("3_snf3k")])
+ExpDropValue = 0
