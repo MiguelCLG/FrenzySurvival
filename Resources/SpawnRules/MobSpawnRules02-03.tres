@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dh86l6tkmxf4f"]
+
+[ext_resource type="Resource" uid="uid://cjsxx5bkrptff" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_1.tres" id="1_25qnk"]
+[ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="2_6k4ri"]
+
+[resource]
+script = ExtResource("2_6k4ri")
+StartTimeInSeconds = 2.0
+FinishTimeInSeconds = 3.0
+MobsToSpawn = Array[Object]([ExtResource("1_25qnk")])
+SpawnNumbers = PackedInt32Array(2)

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dtjarip5odqhp" path="res://Assets/grass-flowered.png" id="4_b5n5g"]
 [ext_resource type="Resource" uid="uid://bauccg67skhm0" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_3.tres" id="4_qwj7o"]
 [ext_resource type="Texture2D" uid="uid://c5fdrwbnq6cdb" path="res://Assets/TX Tileset Grass.png" id="5_d1uv5"]
-[ext_resource type="Resource" uid="uid://du1815xo5nhsw" path="res://Resources/SpawnRules/MobSpawnRules0-10.tres" id="5_nl3cc"]
+[ext_resource type="Resource" uid="uid://du1815xo5nhsw" path="res://Resources/SpawnRules/MobSpawnRules10-20.tres" id="5_nl3cc"]
 [ext_resource type="Resource" uid="uid://dhr3eaib48y3p" path="res://Resources/SpawnRules/MobSpawnRules60-120.tres" id="6_3kosg"]
 [ext_resource type="Resource" uid="uid://ckey3gjmffkdh" path="res://Resources/SpawnRules/MobSpawnRules20-60.tres" id="6_jmle1"]
 [ext_resource type="Texture2D" uid="uid://b3ywthjgplt4u" path="res://Assets/TX Plant.png" id="7_3q4o0"]
