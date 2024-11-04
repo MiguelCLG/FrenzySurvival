@@ -21,4 +21,4 @@ ShowHealBar = true
 Portrait = ExtResource("4_vy573")
 MobAttacks = Array[Object]([ExtResource("4_vo51t")])
 LootTables = Array[Resource]([ExtResource("2_d0p8i"), ExtResource("3_12ucc")])
-ExpDropValue = 0
+ExpDropValue = 200

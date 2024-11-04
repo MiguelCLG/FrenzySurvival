@@ -9,7 +9,6 @@ public partial class Mob : CharacterBody2D
   Node2D target;
   public Healthbar healthbar;
   double timer = 0;
-  bool isTargetAlive = true;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
   private float stopDistance = 30f;
 
@@ -22,6 +21,8 @@ public partial class Mob : CharacterBody2D
     AnimationPlayer.SpriteFrames = mobResource.AnimatedFrames;
     //Need an event to change the hp values in the resource
     healthbar.SetInitialValues(mobResource);
+
+
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
 
@@ -29,15 +30,15 @@ public partial class Mob : CharacterBody2D
 
   public override void _Process(double delta)
   {
-    if(!mobResource.ShowHealBar)
+    if (!mobResource.ShowHealBar)
       healthbar.Visible = false;
-    if (healthbar.IsAlive && isTargetAlive)
+    if (healthbar.IsAlive)
     {
       UpdateTarget();
-      if(mobResource.Speed > 0)
+      if (mobResource.Speed > 0)
         Movement(delta);
     }
-    else if (AnimationPlayer.Animation != "death" && isTargetAlive)
+    else
     {
       Die();
     }
@@ -157,7 +158,8 @@ public partial class Mob : CharacterBody2D
 
   public void OnPlayerDeath(object sender, object[] args)
   {
-    isTargetAlive = false;
+    SetProcess(false);
+    SetPhysicsProcess(false);
   }
 
   public void HandleLootDrop()
@@ -174,7 +176,7 @@ public partial class Mob : CharacterBody2D
       {
         Node2D pickup = dropItem.Instantiate<Node2D>();
         pickup.GlobalPosition = GlobalPosition;
-        if(pickup is Pickup realPickup)
+        if (pickup is Pickup realPickup)
         {
           realPickup.ChangeStatChangeValue("experience", mobResource.ExpDropValue);
         }
