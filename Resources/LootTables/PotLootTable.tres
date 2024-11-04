@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://mm4nu47rrfkn" path="res://Scenes/Particles/Pickups/KiPickup.tscn" id="1_ujhlf"]
 [ext_resource type="PackedScene" uid="uid://dhkl45jn32c2r" path="res://Scenes/Particles/Pickups/HealthPickup.tscn" id="2_nex11"]
-[ext_resource type="PackedScene" path="res://Scenes/Particles/Pickups/DamagePickup.tscn" id="3_6b3dc"]
+[ext_resource type="PackedScene" uid="uid://u86fim80usry" path="res://Scenes/Particles/Pickups/DamagePickup.tscn" id="3_6b3dc"]
 [ext_resource type="Script" path="res://Scripts/Resources/LootTable.cs" id="4_tca03"]
 
 [resource]

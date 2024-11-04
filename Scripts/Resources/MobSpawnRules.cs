@@ -12,15 +12,15 @@ public partial class MobSpawnRules : Resource
     [Export] public int[] SpawnNumbers { get; set; }
 
     // Method to validate spawn rules for each unit type
-    public Dictionary<int, BaseCharacterResource> GetUnitsToSpawn(double currentTime)
+    public Dictionary<BaseCharacterResource, int> GetUnitsToSpawn(double currentTime)
     {
         //GD.Print($"StartTimeInSeconds[{StartTimeInSeconds}] - currentTime[{currentTime}] - FinishTimeInSeconds[{FinishTimeInSeconds}]");
         //if(StartTimeInSeconds > currentTime || currentTime > FinishTimeInSeconds)
         if(StartTimeInSeconds <= currentTime && currentTime <= FinishTimeInSeconds)
         {
-            Dictionary<int, BaseCharacterResource> mobsToSpawn = new();
+            Dictionary<BaseCharacterResource, int> mobsToSpawn = new();
             for (int i = 0; i < MobsToSpawn.Length; i++)
-                mobsToSpawn.Add(SpawnNumbers[i], MobsToSpawn[i]);    
+                mobsToSpawn.Add(MobsToSpawn[i], SpawnNumbers[i]);    
             return mobsToSpawn;
         }
         return new();

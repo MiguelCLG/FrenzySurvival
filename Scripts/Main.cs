@@ -68,10 +68,10 @@ public partial class Main : Node2D
     for (int i = 0; i < mobSpawnRules.Length; i++)
       foreach (var kvp in mobSpawnRules[i].GetUnitsToSpawn(time))
       {
-        int numToSpawn = kvp.Key - CountSpawnedMobsWithResource(kvp.Value);
+        int numToSpawn = kvp.Value - CountSpawnedMobsWithResource(kvp.Key);
         if (numToSpawn > 0)
           for (int j = 0; j < numToSpawn; j++)
-            CreateMobOfResource(kvp.Value);
+            CreateMobOfResource(kvp.Key);
       }
   }
 
