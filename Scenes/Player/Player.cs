@@ -16,6 +16,7 @@ public partial class Player : CharacterBody2D
   AbilityManager abilityManager;
   double timer = 5;
   bool isDoingCombo = false;
+  bool isDoingAction = false;
   bool isGettingHurt = false;
   int facingDirection = 1;
   private int experiencePoints = 0;
@@ -35,6 +36,9 @@ public partial class Player : CharacterBody2D
     EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventRegistry.RegisterEvent("AbilitySelected");
     EventSubscriber.SubscribeToEvent("AbilitySelected", AbilitySelected);
+    EventRegistry.RegisterEvent("IsDoingAction");
+    EventSubscriber.SubscribeToEvent("IsDoingAction", SetIsDoingAction);
+    EventRegistry.RegisterEvent("DirectionChanged");
 
 
     GetTree().CreateTimer(.5f, false, true).Timeout += () =>
@@ -112,7 +116,11 @@ public partial class Player : CharacterBody2D
 
     isDoingCombo = false;
     timer = 0;
+  }
 
+  public void SetIsDoingAction(object sender, object[] args)
+  {
+    isDoingAction = (bool)args[0];
   }
   public void Movement(double delta)
   {
@@ -142,10 +150,11 @@ public partial class Player : CharacterBody2D
     }
 
     // Optionally, use MoveAndSlide to handle movement with collisions
-    if (Velocity.X != 0)
+    if (Velocity.X != 0 && !isDoingAction)
     {
       AnimationPlayer.FlipH = Velocity.X < 0;
       abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);
+      EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { Velocity.X < 0 ? -1 : 1 });
     }
     MoveAndSlide();
 
@@ -224,6 +233,7 @@ public partial class Player : CharacterBody2D
     abilityManager.AddAbility(ab);
   }
 
+
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
@@ -231,5 +241,7 @@ public partial class Player : CharacterBody2D
     EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
+    EventSubscriber.UnsubscribeFromEvent("IsDoingAction", SetIsDoingAction);
+    EventRegistry.UnregisterEvent("RegisterEvent");
   }
 }

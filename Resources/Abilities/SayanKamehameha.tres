@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_xbgrv")
 Name = "Kamehameha"
-Cooldown = 1
+Cooldown = 4
 CastTime = 4.0
 Value = 100
 Damage = 70

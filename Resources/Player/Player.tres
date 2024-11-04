@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bsjou14wb657w" path="res://Resources/Player/LevelTable-v2.tres" id="2_62khh"]
 [ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="2_a2w3a"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="3_byggt"]
-[ext_resource type="Texture2D" uid="uid://btt1s3n87is20" path="res://Assets/CharacterAssets/Sayan/sayanp_punch.png" id="3_ea6ps"]
+[ext_resource type="Texture2D" uid="uid://cmy7kl0k6b4wa" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_kick.png" id="3_k73p5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_s6bm7"]
 
@@ -22,7 +22,7 @@ KI = 100
 MaxKI = 100
 AnimatedFrames = SubResource("SpriteFrames_s6bm7")
 ShowHealBar = true
-Portrait = ExtResource("3_ea6ps")
+Portrait = ExtResource("3_k73p5")
 MobAttacks = Array[Object]([])
 LootTables = Array[Resource]([])
 ExpDropValue = 0

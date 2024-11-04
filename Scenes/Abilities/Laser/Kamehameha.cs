@@ -1,9 +1,11 @@
 using Godot;
 using System;
+using System.ComponentModel;
 
 public partial class Kamehameha : Ability
-{
 
+{
+  [Export] public Vector2 EnergyBallPosition = new(13, 0);
   Laser Laser;
 
   public override void _Ready()
@@ -11,6 +13,7 @@ public partial class Kamehameha : Ability
     Laser = GetNode<Laser>("%LaserRaycast");
     EventRegistry.RegisterEvent("KamehameHit");
     EventSubscriber.SubscribeToEvent("KamehameHit", KamehameHit);
+    EventSubscriber.SubscribeToEvent("DirectionChanged", DirectionChanged);
   }
 
   public async void FireLaser()
@@ -19,11 +22,12 @@ public partial class Kamehameha : Ability
     AnimationPlayer.Play("beam_charge");
 
     // Set the energy ball's position based on the facing direction
-    Vector2 energyBallPosition = new Vector2(13 * -facingDirection, 0) - Position;
+    Vector2 energyBallPosition = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
     energyBall.Position = energyBallPosition;
 
     energyBall.ActivateEnergyBall();
     await ToSignal(GetTree().CreateTimer(2f, false, true), "timeout");
+    EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { true }); // Locks the character in animation
     energyBall.DeactivateEnergyBall();
 
     Laser.SetDirection(facingDirection);
@@ -32,6 +36,7 @@ public partial class Kamehameha : Ability
     Position = new Vector2(-28 * -facingDirection, 0);
     await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
     Laser.SetIsCasting(false);
+    EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { false }); // unlocks character in animation
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
@@ -69,9 +74,17 @@ public partial class Kamehameha : Ability
     }
   }
 
+  public void DirectionChanged(object sender, object[] args)
+  {
+    facingDirection = (int)args[0];
+    Laser.GetNode<EnergyBall>("EnergyBall").Position = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
+  }
+
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("KamehameHit", KamehameHit);
     EventRegistry.UnregisterEvent("KamehameHit");
+    EventSubscriber.UnsubscribeFromEvent("DirectionChanged", DirectionChanged);
+
   }
 }

@@ -6,9 +6,9 @@ public partial class Laser : RayCast2D
 {
   [Export] Godot.Environment laserEnvironment;
   [Export] Gradient laserGradient;
+  [Export] Vector2 maxPosition = new(500, 0);
   WorldEnvironment worldEnvironment;
   bool IsCasting { get; set; }
-  Vector2 maxPosition = new(500, 0);
   Vector2 collisionPoint;
   Vector2 initialPos;
   [Export] float beamSpeed = 2000f;
@@ -23,6 +23,7 @@ public partial class Laser : RayCast2D
   Vector2[] beamLineOriginalPoints;
   public override void _Ready()
   {
+    TargetPosition = maxPosition;
     SetPhysicsProcess(false);
     beamLine = GetNode<Line2D>("%BeamLine");
     area = GetNode<Area2D>("%CollisionArea");
@@ -86,7 +87,7 @@ public partial class Laser : RayCast2D
     beamParticles.Position = collisionPoint * direction * .5f;
 
     ParticleProcessMaterial beamParticlesMaterial = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
-    beamParticlesMaterial.EmissionBoxExtents = new(collisionPoint.X * direction * .5f, beamParticlesMaterial.EmissionBoxExtents.Y, beamParticlesMaterial.EmissionBoxExtents.Z);
+    beamParticlesMaterial.EmissionBoxExtents = new(collisionPoint.X * direction * .5f, beamWidth / 3, beamParticlesMaterial.EmissionBoxExtents.Z);
 
     beamParticles.ProcessMaterial = beamParticlesMaterial;
 
@@ -132,15 +133,16 @@ public partial class Laser : RayCast2D
     tween.Stop();
     tween.SetParallel(true);
 
-    // Tween the beam's width
-    tween.Parallel().TweenProperty(beamLine, "width", beamWidth, 0.2);
-    tween.Parallel().TweenProperty(beamLine, "width_curve", curve, 0.2);
+    // Tween the beam's width - This is the line width, we might  just want the particles themselves to be visible
+    /*   tween.Parallel().TweenProperty(beamLine, "width", beamWidth, 0.2);
+      tween.Parallel().TweenProperty(beamLine, "width_curve", curve, 0.2); */
 
     // Convert position.x to scale.x based on the initial width
     float scaleX = TargetPosition.X * direction * .045f;
+    float scaleY = beamWidth * .04f;
 
     // Tween the area's scale (will now grow from the left)
-    tween.Parallel().TweenProperty(area, "scale", new Vector2(scaleX, area.Scale.Y), 0.2);
+    tween.Parallel().TweenProperty(area, "scale", new Vector2(scaleX, scaleY), 0.2);
     tween.Parallel().TweenProperty(area, "position", area.Position + new Vector2(TargetPosition.X * direction * .5f, 0), 0.2);
 
     // Play the tween

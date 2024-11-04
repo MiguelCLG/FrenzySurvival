@@ -12,7 +12,7 @@ offsets = PackedFloat32Array(0.268765, 0.447942, 0.680614, 0.690073, 0.876513, 1
 colors = PackedColorArray(1, 0.854902, 0.180392, 0, 0.323549, 0.832216, 0.145609, 1, 0.434787, 0.679226, 0.153901, 1, 0.414398, 0.678492, 0.141875, 1, 0.5135, 0.742098, 3.85046e-07, 1, 0.378613, 0.647343, 0.136618, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_t6a06"]
-radius = 8.06226
+radius = 40.0
 
 [sub_resource type="Animation" id="Animation_5vu5q"]
 length = 0.001

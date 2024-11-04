@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_foqyb")
 Name = "Masenko"
-Cooldown = 1
+Cooldown = 2
 CastTime = 3.0
 Value = 100
 Damage = 50
