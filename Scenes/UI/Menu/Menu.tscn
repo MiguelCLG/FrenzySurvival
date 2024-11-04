@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=8 format=3 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_cdah4"]
 [ext_resource type="Script" path="res://Scenes/UI/Menu/Menu.cs" id="2_r5yip"]
 [ext_resource type="Texture2D" uid="uid://cgds1mpxcyj1l" path="res://Assets/loading_screen_animation_1.png" id="3_k0e0m"]
 [ext_resource type="Texture2D" uid="uid://dfssavipfpa3v" path="res://Assets/loading_screen_animation_2.png" id="4_rkxu2"]
 [ext_resource type="Texture2D" uid="uid://ba1sp1nnsep1r" path="res://Assets/loading_screen_animation_3.png" id="5_5qitk"]
+[ext_resource type="AudioStream" uid="uid://b3aarwvv76wws" path="res://Assets/Sound/Happy Dragon Ball Music.mp3" id="6_otfi6"]
 
 [sub_resource type="AnimatedTexture" id="AnimatedTexture_y8cbf"]
 frames = 4
@@ -89,6 +90,11 @@ offset_bottom = -37.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = SubResource("AnimatedTexture_y8cbf")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_otfi6")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnStartPressed"]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
