@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_0fd2i")
-StartTimeInSeconds = 11.0
+StartTimeInSeconds = 21.0
 FinishTimeInSeconds = 60.0
 MobsToSpawn = Array[Object]([ExtResource("1_nq723")])
 SpawnNumbers = PackedInt32Array(10)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://cgtvg1jyddivl"]
+[gd_scene load_steps=33 format=4 uid="uid://cgtvg1jyddivl"]
 
 [ext_resource type="Script" path="res://Scripts/Main.cs" id="1_4s73o"]
 [ext_resource type="PackedScene" uid="uid://dgxub8yjvhnxn" path="res://Scenes/Player/player.tscn" id="1_miebb"]
@@ -8,21 +8,25 @@
 [ext_resource type="Resource" uid="uid://bauccg67skhm0" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_3.tres" id="4_qwj7o"]
 [ext_resource type="Resource" uid="uid://dfbwf6gk25vf3" path="res://Resources/BaseCharacter/SayanMobs/Sayan_1.tres" id="5_akl6k"]
 [ext_resource type="Texture2D" uid="uid://c5fdrwbnq6cdb" path="res://Assets/TX Tileset Grass.png" id="5_d1uv5"]
-[ext_resource type="Resource" uid="uid://du1815xo5nhsw" path="res://Resources/SpawnRules/MobSpawnRules0-10.tres" id="5_nl3cc"]
+[ext_resource type="Resource" uid="uid://du1815xo5nhsw" path="res://Resources/SpawnRules/MobSpawnRules10-20.tres" id="5_nl3cc"]
 [ext_resource type="Resource" uid="uid://dhr3eaib48y3p" path="res://Resources/SpawnRules/MobSpawnRules60-120.tres" id="6_3kosg"]
 [ext_resource type="Resource" uid="uid://ckey3gjmffkdh" path="res://Resources/SpawnRules/MobSpawnRules20-60.tres" id="6_jmle1"]
 [ext_resource type="Resource" uid="uid://3ij2ajj82a8r" path="res://Resources/BaseCharacter/SayanMobs/Sayan_2.tres" id="6_x5d4t"]
 [ext_resource type="Texture2D" uid="uid://b3ywthjgplt4u" path="res://Assets/TX Plant.png" id="7_3q4o0"]
 [ext_resource type="Resource" uid="uid://dw7fcg3fx56fi" path="res://Resources/BaseCharacter/SayanMobs/Sayan_3.tres" id="7_bjj1v"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="7_ep2n3"]
+[ext_resource type="Resource" uid="uid://d231wwbpdj2ma" path="res://Resources/SpawnRules/MobSpawnRules0-02.tres" id="8_2h6is"]
 [ext_resource type="Resource" uid="uid://6ie0s4s0ml2x" path="res://Resources/SpawnRules/PotSpawnRules.tres" id="8_4nifb"]
+[ext_resource type="Resource" uid="uid://dh86l6tkmxf4f" path="res://Resources/SpawnRules/MobSpawnRules02-03.tres" id="9_glnuk"]
 [ext_resource type="Resource" uid="uid://b70lk7bdgcjtt" path="res://Resources/SpawnRules/MobSpawnRules120-180.tres" id="9_kpfa0"]
+[ext_resource type="Resource" uid="uid://pwi1w4p46vkm" path="res://Resources/SpawnRules/MobSpawnRules04-09.tres" id="10_2v8cf"]
 [ext_resource type="Resource" uid="uid://du5j008moywhi" path="res://Resources/SpawnRules/MobSpawnRules180-300.tres" id="10_b6iev"]
 [ext_resource type="PackedScene" uid="uid://b1fsgfpehbep8" path="res://Scenes/UI/KIBar/KIBar.tscn" id="10_r72bm"]
 [ext_resource type="PackedScene" uid="uid://cavnmq2kd8cir" path="res://Scenes/Pot/Pot.tscn" id="14_evdip"]
 [ext_resource type="PackedScene" uid="uid://cysh6hdcgl1to" path="res://Scenes/UI/AbilityBar/AbilityBar.tscn" id="15_v2a6h"]
 [ext_resource type="PackedScene" uid="uid://whaov63lotkn" path="res://Scenes/UI/ExperienceBar/ExperienceBar.tscn" id="16_iiy4e"]
 [ext_resource type="PackedScene" uid="uid://ddm8b3qk8htao" path="res://Scenes/UI/LevelUpUi/LevelUpUI.tscn" id="17_cynhb"]
+[ext_resource type="AudioStream" uid="uid://cyy22log6d2u4" path="res://Assets/Sound/DBZ-Super Namek Theme.mp3" id="24_vgn6v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bmpq7"]
 texture = ExtResource("5_d1uv5")
@@ -574,7 +578,7 @@ sources/0 = SubResource("TileSetAtlasSource_vf8yb")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_4s73o")
 mobsResourceReference = Array[Object]([ExtResource("2_ok34s"), ExtResource("3_40odt"), ExtResource("4_qwj7o"), ExtResource("5_akl6k"), ExtResource("6_x5d4t"), ExtResource("7_bjj1v")])
-mobSpawnRules = Array[Resource]([ExtResource("5_nl3cc"), ExtResource("6_jmle1"), ExtResource("6_3kosg"), ExtResource("9_kpfa0"), ExtResource("10_b6iev"), ExtResource("8_4nifb")])
+mobSpawnRules = Array[Resource]([ExtResource("8_2h6is"), ExtResource("9_glnuk"), ExtResource("10_2v8cf"), ExtResource("5_nl3cc"), ExtResource("6_jmle1"), ExtResource("6_3kosg"), ExtResource("9_kpfa0"), ExtResource("10_b6iev"), ExtResource("8_4nifb")])
 
 [node name="BaseLayer" type="TileMapLayer" parent="."]
 position = Vector2(-10, -25)
@@ -793,6 +797,11 @@ layout_mode = 1
 [node name="LevelUpUI" parent="." instance=ExtResource("17_cynhb")]
 unique_name_in_owner = true
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("24_vgn6v")
+volume_db = -30.0
+autoplay = true
 
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button" to="." method="Restart"]
 [connection signal="pressed" from="UI/MainUI/GameOverScreen/VBoxContainer2/VBoxContainer/Button2" to="." method="Exit"]
