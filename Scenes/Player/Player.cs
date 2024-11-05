@@ -241,6 +241,5 @@ public partial class Player : CharacterBody2D
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
     EventSubscriber.UnsubscribeFromEvent("IsDoingAction", SetIsDoingAction);
-    EventRegistry.UnregisterEvent("RegisterEvent");
   }
 }

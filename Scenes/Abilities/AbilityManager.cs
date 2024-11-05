@@ -64,16 +64,17 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      if (!abilityArray[actionindex].abilityResource.isSuperAbility)
+      if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is not a super
       {
         abilityArray[actionindex].SetFacingDirection(facingDirection);
         abilityArray[actionindex].Action();
+        abilityArray[actionindex].SpendKi(-abilityArray[actionindex].abilityResource.kiRequired);
       }
-      else if (abilityArray[actionindex].abilityResource.kiRequired <= ki)
+      else
       {
-        abilityArray[actionindex].SetFacingDirection(facingDirection);
-        abilityArray[actionindex].Action();
-        abilityArray[actionindex].SpendKi(ki);
+        actionindex++;
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        return;
       }
       actionindex++;
     }
@@ -90,12 +91,7 @@ public partial class AbilityManager : Node2D
     }
     else
     {
-      if (!abilityArray[actionindex].abilityResource.isSuperAbility) // it is not a super
-      {
-        abilityArray[actionindex].SetFacingDirection(facingDirection);
-        abilityArray[actionindex].Action();
-      }
-      else if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is a super and has ki to spend
+      if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is not a super
       {
         abilityArray[actionindex].SetFacingDirection(facingDirection);
         abilityArray[actionindex].Action();

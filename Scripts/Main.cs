@@ -196,11 +196,13 @@ public partial class Main : Node2D
   {
     EventSubscriber.UnsubscribeFromEvent("OnMobDeath", OnMobDeath);
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
+    EventSubscriber.UnsubscribeFromEvent("CharacterSelected", PlayerCharacterSelected);
     EventRegistry.UnregisterEvent("OnMobDeath");
     EventRegistry.UnregisterEvent("OnPlayerDeath");
     EventRegistry.UnregisterEvent("ActionFinished");
     EventRegistry.UnregisterEvent("TakeDamage");
     EventRegistry.UnregisterEvent("OnComboFinished");
-
+    EventRegistry.UnregisterEvent("OnComboFinished");
+    EventRegistry.UnregisterEvent("CharacterSelected");
   }
 }
