@@ -2,7 +2,7 @@
 
 [ext_resource type="SpriteFrames" uid="uid://djdhtfhrfs1y" path="res://Assets/CharacterAssets/Namekian/Namekian_2.tres" id="2_ejqwk"]
 [ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="2_nan31"]
-[ext_resource type="Texture2D" uid="uid://ctuv52qe3r5mw" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek_stand.png" id="3_tjsg3"]
+[ext_resource type="Texture2D" uid="uid://cdttql2mna4g8" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_portrait.png" id="3_stxav"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_6xd2l"]
 
 [resource]
@@ -16,7 +16,7 @@ KI = 0
 MaxKI = 0
 AnimatedFrames = ExtResource("2_ejqwk")
 ShowHealBar = true
-Portrait = ExtResource("3_tjsg3")
+Portrait = ExtResource("3_stxav")
 MobAttacks = Array[Object]([ExtResource("2_nan31")])
 LootTables = null
 ExpDropValue = 200

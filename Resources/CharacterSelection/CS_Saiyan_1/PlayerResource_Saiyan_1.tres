@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PlayerResource" load_steps=7 format=3 uid="uid://b2ujaus01w206"]
+
+[ext_resource type="Resource" uid="uid://b0bghkax3cf2j" path="res://Resources/CharacterSelection/CS_Saiyan_1/AbilityResourceDatabase_Saiyan_1.tres" id="1_lr2qo"]
+[ext_resource type="SpriteFrames" uid="uid://c6j7k6bgmbvmi" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/Sayan_1.tres" id="2_7ps5x"]
+[ext_resource type="Resource" uid="uid://bsjou14wb657w" path="res://Resources/Player/LevelTable-v2.tres" id="3_dwkaw"]
+[ext_resource type="Texture2D" uid="uid://coci5cgt2qwky" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_portrait.png" id="4_5ybev"]
+[ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="5_n74ti"]
+[ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="6_f4msd"]
+
+[resource]
+script = ExtResource("6_f4msd")
+Race = ExtResource("5_n74ti")
+LevelUpTables = ExtResource("3_dwkaw")
+Abilities = ExtResource("1_lr2qo")
+HP = 200
+MaxHP = 200
+Speed = 100
+Shield = 0
+MaxShield = 50
+KI = 100
+MaxKI = 100
+AnimatedFrames = ExtResource("2_7ps5x")
+Portrait = ExtResource("4_5ybev")
+MobAttacks = Array[Object]([])
+LootTables = Array[Resource]([])
+ShowHealBar = true
+ExpDropValue = 0

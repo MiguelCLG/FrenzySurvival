@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterSelectionResource" load_steps=5 format=3 uid="uid://v24hlcxmahyd"]
+
+[ext_resource type="Resource" uid="uid://b1rdp8mjfrtbn" path="res://Resources/CharacterSelection/CS_Saiyan_2/AbilityResourceDatabase_Saiyan_2.tres" id="1_11dow"]
+[ext_resource type="Resource" uid="uid://84ypxwbem3i6" path="res://Resources/CharacterSelection/CS_Saiyan_2/PlayerResource_Saiyan_2.tres" id="2_vhkkm"]
+[ext_resource type="Texture2D" uid="uid://cdic8y2q41ynf" path="res://Assets/CharacterAssets/Sayan/Saiyan_2/sayan2_portrait.png" id="3_0bcpe"]
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterSelectionResource.cs" id="4_2ary0"]
+
+[resource]
+script = ExtResource("4_2ary0")
+Name = "Nappa"
+Portrait = ExtResource("3_0bcpe")
+Abilities = ExtResource("1_11dow")
+CharacterResource = ExtResource("2_vhkkm")

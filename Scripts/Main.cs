@@ -8,6 +8,7 @@ public partial class Main : Node2D
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
   LevelUpUi levelUpUi;
+  CharacterSelectionScreen characterSelectionScreen;
   Node2D playerReference;
   PackedScene mobScene;
   CanvasLayer UI;
@@ -20,6 +21,7 @@ public partial class Main : Node2D
   public override void _Ready()
   {
     levelUpUi = GetNode<LevelUpUi>("%LevelUpUI");
+    characterSelectionScreen = GetNode<CharacterSelectionScreen>("%CharacterSelectionScreen");
     mobScene = GD.Load<PackedScene>("res://Scenes/Mob/Mob.tscn");
     mobContainer = GetNode<Node2D>("%MobContainer");
     playerReference = GetNode<Player>("Player");
@@ -27,10 +29,12 @@ public partial class Main : Node2D
     spawnCooldown = time = 0;
     EventRegistry.RegisterEvent("OnMobDeath");
     EventSubscriber.SubscribeToEvent("OnMobDeath", OnMobDeath);
+    EventRegistry.RegisterEvent("CharacterSelected");
+    EventSubscriber.SubscribeToEvent("CharacterSelected", PlayerCharacterSelected);
     EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
     GetTree().Paused = true;
-    levelUpUi.Visible = true;
+    characterSelectionScreen.Visible = true;
   }
 
   public override void _Process(double delta)
@@ -105,7 +109,6 @@ public partial class Main : Node2D
 
     // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
   }
-
   private int CountSpawnedMobsWithResource(BaseCharacterResource targetResource)
   {
     int count = 0;
@@ -120,7 +123,6 @@ public partial class Main : Node2D
 
     return count;
   }
-
   public async void OnPlayerDeath(object sender, object[] args)
   {
     await ToSignal(GetTree().CreateTimer(5f), "timeout");
@@ -136,6 +138,12 @@ public partial class Main : Node2D
     GetTree().Paused = true;
   }
 
+  public void PlayerCharacterSelected(object sender, object[] args)
+  {
+    (playerReference as Player).playerResource = (args[0] as CharacterSelectionResource).CharacterResource;
+    (playerReference as Player).PrepareCharacter();
+    levelUpUi.Visible = true;
+  }
   public async void OnMobDeath(object sender, object[] args)
   {
     if (args[0] is Mob mob)

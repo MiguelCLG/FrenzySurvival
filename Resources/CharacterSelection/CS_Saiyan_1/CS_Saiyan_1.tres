@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterSelectionResource" load_steps=5 format=3 uid="uid://h74ryrlg7u0o"]
+
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterSelectionResource.cs" id="1_iu3x1"]
+[ext_resource type="Resource" uid="uid://b0bghkax3cf2j" path="res://Resources/CharacterSelection/CS_Saiyan_1/AbilityResourceDatabase_Saiyan_1.tres" id="1_vnglg"]
+[ext_resource type="Resource" uid="uid://b2ujaus01w206" path="res://Resources/CharacterSelection/CS_Saiyan_1/PlayerResource_Saiyan_1.tres" id="2_3ijw3"]
+[ext_resource type="Texture2D" uid="uid://coci5cgt2qwky" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_portrait.png" id="3_g04aa"]
+
+[resource]
+script = ExtResource("1_iu3x1")
+Name = "Raditz"
+Portrait = ExtResource("3_g04aa")
+Abilities = ExtResource("1_vnglg")
+CharacterResource = ExtResource("2_3ijw3")

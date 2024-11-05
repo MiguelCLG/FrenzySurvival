@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=7 format=3 uid="uid://b0bghkax3cf2j"]
+
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="1_rdxwu"]
+[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="2_f8w2s"]
+[ext_resource type="PackedScene" uid="uid://bpw30mhlwbchh" path="res://Scenes/Abilities/Laser/masenko.tscn" id="3_ebock"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_1gc4r"]
+[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="5_6x5wv"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityDatabaseResource.cs" id="6_trl2q"]
+
+[resource]
+script = ExtResource("6_trl2q")
+Abilities = {
+"EnergyBarrage": ExtResource("1_rdxwu"),
+"kick": ExtResource("2_f8w2s"),
+"masenko": ExtResource("3_ebock"),
+"punch": ExtResource("4_1gc4r"),
+"punchtwo": ExtResource("5_6x5wv")
+}
