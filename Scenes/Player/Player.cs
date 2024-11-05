@@ -151,7 +151,7 @@ public partial class Player : CharacterBody2D
     }
 
     // Optionally, use MoveAndSlide to handle movement with collisions
-    if (Velocity.X != 0 && !isDoingAction)
+    if (Velocity.X != 0 && AnimationPlayer.FlipH == Velocity.X > 0 && !isDoingAction)
     {
       AnimationPlayer.FlipH = Velocity.X < 0;
       abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);

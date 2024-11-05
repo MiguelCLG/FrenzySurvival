@@ -117,7 +117,8 @@ size = Vector2(23, 20)
 
 [node name="SpecialBeamCannon" type="Node2D"]
 script = ExtResource("1_huaqd")
-EnergyBallScale = Vector2(0.2, 0.3)
+EnergyBallPosition = Vector2(-8, -6)
+EnergyBallScale = Vector2(0.1, 0.2)
 abilityResource = ExtResource("2_ybset")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
@@ -126,7 +127,7 @@ target_position = Vector2(500, 0)
 script = ExtResource("3_24pw2")
 laserEnvironment = ExtResource("4_dexg6")
 laserGradient = ExtResource("5_a2v3f")
-beamWidth = 20.0
+beamWidth = 10.0
 
 [node name="BeamLine" type="Line2D" parent="LaserRaycast"]
 unique_name_in_owner = true
@@ -158,7 +159,6 @@ fixed_fps = 60
 local_coords = true
 
 [node name="EnergyBall" type="Node2D" parent="LaserRaycast"]
-position = Vector2(-41, 0)
 script = ExtResource("7_avuu6")
 beamLineScene = ExtResource("8_qrbag")
 

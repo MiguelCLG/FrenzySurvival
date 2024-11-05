@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=37 format=3 uid="uid://bq5l07jlroepc"]
+[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://bq5l07jlroepc"]
 
 [ext_resource type="Texture2D" uid="uid://bt80hlfxwkhf8" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek_ko.png" id="1_a8iwm"]
 [ext_resource type="Texture2D" uid="uid://dy6eptrhq5h4c" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek1_ki_beam_animation.png" id="1_lnpe4"]
@@ -10,11 +10,11 @@
 [ext_resource type="Texture2D" uid="uid://beqnjfhm4uf40" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek1_punch1.png" id="6_s8lwu"]
 [ext_resource type="Texture2D" uid="uid://dvlyi3ci7anca" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek1_punch2.png" id="7_5bn4p"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dx3mb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bwym"]
 atlas = ExtResource("1_lnpe4")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q2rqa"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_vq1yc"]
 atlas = ExtResource("1_lnpe4")
 region = Rect2(160, 0, 32, 32)
 
@@ -29,10 +29,6 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwmv3"]
 atlas = ExtResource("1_lnpe4")
 region = Rect2(64, 0, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qadw4"]
-atlas = ExtResource("1_lnpe4")
-region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_roo28"]
 atlas = ExtResource("1_a8iwm")
@@ -122,10 +118,22 @@ region = Rect2(0, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dx3mb")
+"texture": SubResource("AtlasTexture_8bwym")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q2rqa")
+"texture": SubResource("AtlasTexture_vq1yc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bwym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vq1yc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bwym")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vq1yc")
 }],
 "loop": false,
 "name": &"beam",
@@ -140,9 +148,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pwmv3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qadw4")
 }],
 "loop": false,
 "name": &"beam_charge",

@@ -14,6 +14,8 @@ public partial class Kamehameha : Ability
     Laser = GetNode<Laser>("%LaserRaycast");
     EventRegistry.RegisterEvent("KamehameHit");
     EventSubscriber.SubscribeToEvent("KamehameHit", KamehameHit);
+    if (!EventRegistry.HasEventBeenRegistered("DirectionChanged"))
+      EventRegistry.RegisterEvent("DirectionChanged");
     EventSubscriber.SubscribeToEvent("DirectionChanged", DirectionChanged);
   }
 
