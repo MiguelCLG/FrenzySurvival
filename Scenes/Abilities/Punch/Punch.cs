@@ -17,7 +17,7 @@ public partial class Punch : Ability
     await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
     AnimationPlayer.Play("default");
     cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);
-    await ToSignal(cooldownTimer, "timeout"); 
+    await ToSignal(cooldownTimer, "timeout");
 
     // Use character's movement direction as forward direction
     Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
@@ -88,16 +88,28 @@ public partial class Punch : Ability
 
       // Draw the cone boundaries, anchored to the player's position
       Color lineColor = new Color(0, 0, 0, 0.1f);
-      DrawLine(Position, leftDir, lineColor, 2);   // Left boundary
-      DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
-      DrawLine(leftDir, rightDir, lineColor, 2);   // Closing line
+      Color transparentColor = new Color(0, 0, 0, 0);
 
-      if(cooldownTimer is not null)
+      if (cooldownTimer is not null)
       {
         // Optionally fill the cone area (as a polygon)
         Color fillColor = new Color(0.8f, 0.8f, 0.8f, abilityResource.Cooldown - (float)cooldownTimer.TimeLeft);  // Light gray with transparency
         Vector2[] points = { Position, leftDir, rightDir };
-        DrawPolygon(points, new Color[] { fillColor });
+        if (cooldownTimer.TimeLeft == 0)
+        {
+          DrawLine(Position, leftDir, transparentColor, 2);   // Left boundary
+          DrawLine(Position, rightDir, transparentColor, 2);  // Right boundary
+          DrawLine(leftDir, rightDir, transparentColor, 2);    //Clearing line
+          DrawPolygon(points, new Color[] { transparentColor });
+
+        }
+        else
+        {
+          DrawLine(Position, leftDir, lineColor, 2);   // Left boundary
+          DrawLine(Position, rightDir, lineColor, 2);  // Right boundary
+          DrawLine(leftDir, rightDir, lineColor, 2);         // Closing line
+          DrawPolygon(points, new Color[] { fillColor });
+        }
       }
 
     }
