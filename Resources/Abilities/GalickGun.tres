@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://t8pat3edeppc"]
+
+[ext_resource type="Texture2D" uid="uid://cwswglsbi7xvc" path="res://Assets/Icons/laser.png" id="1_1ew8j"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_7fqe8"]
+
+[resource]
+script = ExtResource("2_7fqe8")
+Name = "Galick Gun"
+Cooldown = 3
+CastTime = 5.0
+Value = 100
+Damage = 60
+Icon = ExtResource("1_1ew8j")
+isSuperAbility = true
+kiRequired = 40

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=8 format=3 uid="uid://clcj8ylej2y3h"]
+
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="1_gtob5"]
+[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="2_7gtsw"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_rfsd5"]
+[ext_resource type="PackedScene" uid="uid://bhkhwuha4lequ" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="5_5a1s5"]
+[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="5_c6f5v"]
+[ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="6_7tt0w"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityDatabaseResource.cs" id="6_ggifh"]
+
+[resource]
+script = ExtResource("6_ggifh")
+Abilities = {
+"EnergyBarrage": ExtResource("1_gtob5"),
+"EnergyBarrier": ExtResource("6_7tt0w"),
+"GalickGun": ExtResource("5_5a1s5"),
+"kick": ExtResource("2_7gtsw"),
+"punch": ExtResource("4_rfsd5"),
+"punchtwo": ExtResource("5_c6f5v")
+}

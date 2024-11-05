@@ -21,9 +21,9 @@ public partial class Mob : CharacterBody2D
     AnimationPlayer.SpriteFrames = mobResource.AnimatedFrames;
     //Need an event to change the hp values in the resource
     healthbar.SetInitialValues(mobResource);
-
-
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
+    if (!EventRegistry.HasEventBeenRegistered("OnPlayerDeath"))
+      EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
 
   }

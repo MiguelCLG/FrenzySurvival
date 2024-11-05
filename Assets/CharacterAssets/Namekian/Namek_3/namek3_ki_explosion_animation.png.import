@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blaxkg48ba1ts"
-path="res://.godot/imported/Namekian_stand.png-e4df526006c43d66e97df855f6918a22.ctex"
+uid="uid://bg0jxyvn7fedc"
+path="res://.godot/imported/namek3_ki_explosion_animation.png-fdee233a1ebe07def60908c16a751c36.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/CharacterAssets/Namekian/Namekian_stand.png"
-dest_files=["res://.godot/imported/Namekian_stand.png-e4df526006c43d66e97df855f6918a22.ctex"]
+source_file="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_ki_explosion_animation.png"
+dest_files=["res://.godot/imported/namek3_ki_explosion_animation.png-fdee233a1ebe07def60908c16a751c36.ctex"]
 
 [params]
 

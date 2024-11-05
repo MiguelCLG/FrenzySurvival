@@ -1,9 +1,5 @@
 using Godot;
-using Godot.Collections;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 public partial class Player : CharacterBody2D
 {
@@ -25,7 +21,6 @@ public partial class Player : CharacterBody2D
   {
     abilityManager = GetNode<AbilityManager>("%Abilities");
     AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
-    GetNode<Healthbar>("Healthbar").SetInitialValues(playerResource);
     EventRegistry.RegisterEvent("TakeDamage");
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventRegistry.RegisterEvent("OnComboFinished");
@@ -41,15 +36,19 @@ public partial class Player : CharacterBody2D
     EventRegistry.RegisterEvent("DirectionChanged");
 
 
+    PrepareCharacter();
+  }
+
+  public void PrepareCharacter()
+  {
+    AnimationPlayer.SpriteFrames = playerResource.AnimatedFrames;
+    GetNode<Healthbar>("Healthbar").SetInitialValues(playerResource);
     GetTree().CreateTimer(.5f, false, true).Timeout += () =>
     {
       SetInitialKIValue();
       SetInitialExperienceValue();
     };
-
-
   }
-
   public async void TakeDamage(object sender, object[] args)
   {
     if (args[0] is Healthbar healthbar)
@@ -150,7 +149,7 @@ public partial class Player : CharacterBody2D
     }
 
     // Optionally, use MoveAndSlide to handle movement with collisions
-    if (Velocity.X != 0 && !isDoingAction)
+    if (Velocity.X != 0 && AnimationPlayer.FlipH == Velocity.X > 0 && !isDoingAction)
     {
       AnimationPlayer.FlipH = Velocity.X < 0;
       abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);
@@ -242,6 +241,5 @@ public partial class Player : CharacterBody2D
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
     EventSubscriber.UnsubscribeFromEvent("IsDoingAction", SetIsDoingAction);
-    EventRegistry.UnregisterEvent("RegisterEvent");
   }
 }

@@ -1,12 +1,34 @@
-[gd_resource type="SpriteFrames" load_steps=25 format=3 uid="uid://f8grogvdsd5l"]
+[gd_resource type="SpriteFrames" load_steps=36 format=3 uid="uid://f8grogvdsd5l"]
 
 [ext_resource type="Texture2D" uid="uid://diiinp1vbwvrd" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_ko.png" id="1_bf8pa"]
+[ext_resource type="Texture2D" uid="uid://b8fwxwyj8xg26" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_ki_beam_animation.png" id="1_q8b4c"]
 [ext_resource type="Texture2D" uid="uid://cojqc5efeee3p" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_stand.png" id="2_c85dg"]
 [ext_resource type="Texture2D" uid="uid://bclgjx2svo0qk" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_hurt.png" id="3_3a4gl"]
 [ext_resource type="Texture2D" uid="uid://b5a58xl7itqmo" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_kick.png" id="4_n58rc"]
+[ext_resource type="Texture2D" uid="uid://bg0jxyvn7fedc" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_ki_explosion_animation.png" id="4_tv2x6"]
 [ext_resource type="Texture2D" uid="uid://53n5urrwykf6" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_move.png" id="5_qu7g0"]
 [ext_resource type="Texture2D" uid="uid://cm86sby1dij2v" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_punch1.png" id="6_glo6e"]
 [ext_resource type="Texture2D" uid="uid://bpx25tr8jwkwy" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_punch2.png" id="7_k0ai8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yryjw"]
+atlas = ExtResource("1_q8b4c")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqypg"]
+atlas = ExtResource("1_q8b4c")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dvps8"]
+atlas = ExtResource("1_q8b4c")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spw4a"]
+atlas = ExtResource("1_q8b4c")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l8qvd"]
+atlas = ExtResource("1_q8b4c")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dlop2"]
 atlas = ExtResource("1_bf8pa")
@@ -35,6 +57,22 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ylj6"]
 atlas = ExtResource("2_c85dg")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bka7p"]
+atlas = ExtResource("4_tv2x6")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aniiq"]
+atlas = ExtResource("4_tv2x6")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rai2p"]
+atlas = ExtResource("4_tv2x6")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tfcx"]
+atlas = ExtResource("4_tv2x6")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_08frn"]
 atlas = ExtResource("3_3a4gl")
@@ -80,6 +118,31 @@ region = Rect2(0, 0, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_yryjw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqypg")
+}],
+"loop": true,
+"name": &"beam",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dvps8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spw4a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l8qvd")
+}],
+"loop": true,
+"name": &"beam_charge",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_dlop2")
 }, {
 "duration": 1.0,
@@ -107,6 +170,35 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bka7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aniiq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rai2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tfcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rai2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tfcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rai2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tfcx")
+}],
+"loop": false,
+"name": &"explosion",
 "speed": 3.0
 }, {
 "frames": [{

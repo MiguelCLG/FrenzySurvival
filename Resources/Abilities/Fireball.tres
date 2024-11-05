@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_rby3w")
 Name = "Energy Barrage"
+Icon = ExtResource("1_4e4qk")
 Cooldown = 2
 CastTime = 0.2
-Value = 10
+Value = 20
 Damage = 10
-Icon = ExtResource("1_4e4qk")
-isSuperAbility = true
 kiRequired = 10
+isSuperAbility = false

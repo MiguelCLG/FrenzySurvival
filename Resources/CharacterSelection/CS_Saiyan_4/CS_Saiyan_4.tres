@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterSelectionResource" load_steps=5 format=3 uid="uid://duwywx6uvbspc"]
+
+[ext_resource type="Resource" uid="uid://clcj8ylej2y3h" path="res://Resources/CharacterSelection/CS_Saiyan_4/AbilityResourceDatabase_Saiyan_4.tres" id="1_7ww7p"]
+[ext_resource type="Resource" uid="uid://x3yatm7j4ouo" path="res://Resources/CharacterSelection/CS_Saiyan_4/PlayerResource_Saiyan_4.tres" id="2_5okek"]
+[ext_resource type="Texture2D" uid="uid://bvvyieyesorfc" path="res://Assets/CharacterAssets/Sayan/Saiyan_4/sayan4_portrait.png" id="3_8smk8"]
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterSelectionResource.cs" id="4_de6gi"]
+
+[resource]
+script = ExtResource("4_de6gi")
+Name = "Vegeta"
+Portrait = ExtResource("3_8smk8")
+Abilities = ExtResource("1_7ww7p")
+CharacterResource = ExtResource("2_5okek")

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=9 format=3 uid="uid://db5bmprurtbdd"]
+[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=11 format=3 uid="uid://db5bmprurtbdd"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/AbilityDatabaseResource.cs" id="1_kxw46"]
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="1_sdbqm"]
@@ -8,11 +8,15 @@
 [ext_resource type="PackedScene" uid="uid://drjkqatxwdqfm" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.tscn" id="5_kyroa"]
 [ext_resource type="PackedScene" uid="uid://bpw30mhlwbchh" path="res://Scenes/Abilities/Laser/masenko.tscn" id="6_1osm0"]
 [ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="7_te4io"]
+[ext_resource type="PackedScene" uid="uid://bo40kckcbb26x" path="res://Scenes/Abilities/Laser/SpecialBeamCannon.tscn" id="8_3aalk"]
+[ext_resource type="PackedScene" uid="uid://bhkhwuha4lequ" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="9_6smbu"]
 
 [resource]
 script = ExtResource("1_kxw46")
 Abilities = {
 "EnergyBarrage": ExtResource("7_te4io"),
+"GalickGun": ExtResource("9_6smbu"),
+"SpecialBeamCannon": ExtResource("8_3aalk"),
 "energybarrier": ExtResource("5_kyroa"),
 "kamehame": ExtResource("4_heu3g"),
 "kick": ExtResource("3_7gu2d"),

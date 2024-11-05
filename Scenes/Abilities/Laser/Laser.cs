@@ -39,14 +39,22 @@ public partial class Laser : RayCast2D
     worldEnvironment.Environment = null;
     beamLineOriginalPoints = beamLine.Points;
 
+    castingParticlesBegin.Lifetime = beamWidth / 100f > .3f ? .3f : beamWidth / 100f;
+    collisionParticles.Lifetime = beamWidth / 100f > .3f ? .3f : beamWidth / 100f;
+
     ParticleProcessMaterial castingParticlesBeginMaterial = (ParticleProcessMaterial)castingParticlesBegin.ProcessMaterial;
     castingParticlesBeginMaterial.ColorRamp.Set("gradient", laserGradient);
+    castingParticlesBeginMaterial.EmissionSphereRadius = beamWidth / 2;
     castingParticlesBegin.ProcessMaterial = castingParticlesBeginMaterial;
+
     ParticleProcessMaterial beamParticlesMaterial = (ParticleProcessMaterial)beamParticles.ProcessMaterial;
     beamParticlesMaterial.ColorRamp.Set("gradient", laserGradient);
     beamParticles.ProcessMaterial = beamParticlesMaterial;
+
     ParticleProcessMaterial collisionParticlesMaterial = (ParticleProcessMaterial)collisionParticles.ProcessMaterial;
     collisionParticlesMaterial.ColorRamp.Set("gradient", laserGradient);
+    collisionParticlesMaterial.EmissionSphereRadius = beamWidth / 2;
+
     collisionParticles.ProcessMaterial = collisionParticlesMaterial;
     beamLine.Gradient = laserGradient;
     energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ColorRamp = laserGradient;

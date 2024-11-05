@@ -6,6 +6,7 @@ public partial class Kamehameha : Ability
 
 {
   [Export] public Vector2 EnergyBallPosition = new(13, 0);
+  [Export] public Vector2 EnergyBallScale = new(.1f, .5f);
   Laser Laser;
 
   public override void _Ready()
@@ -13,12 +14,16 @@ public partial class Kamehameha : Ability
     Laser = GetNode<Laser>("%LaserRaycast");
     EventRegistry.RegisterEvent("KamehameHit");
     EventSubscriber.SubscribeToEvent("KamehameHit", KamehameHit);
+    if (!EventRegistry.HasEventBeenRegistered("DirectionChanged"))
+      EventRegistry.RegisterEvent("DirectionChanged");
     EventSubscriber.SubscribeToEvent("DirectionChanged", DirectionChanged);
   }
 
   public async void FireLaser()
   {
     EnergyBall energyBall = Laser.GetNode<EnergyBall>("EnergyBall");
+    energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMin = EnergyBallScale.X;
+    energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMax = EnergyBallScale.Y;
     AnimationPlayer.Play("beam_charge");
 
     // Set the energy ball's position based on the facing direction
