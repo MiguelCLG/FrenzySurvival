@@ -71,11 +71,9 @@ gradient = SubResource("Gradient_lyprm")
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_erfar"]
 particle_flag_disable_z = true
 emission_shape = 2
-emission_sphere_radius = 10.0
-initial_velocity_min = 54.46
-initial_velocity_max = 120.0
-orbit_velocity_min = 9.49949e-08
-orbit_velocity_max = 9.49949e-08
+emission_sphere_radius = 20.0
+initial_velocity_min = 120.0
+initial_velocity_max = 250.0
 radial_velocity_min = -2.23517e-05
 radial_velocity_max = 100.0
 gravity = Vector3(0, 0, 0)
@@ -116,6 +114,7 @@ size = Vector2(23, 20)
 
 [node name="Kamehameha" type="Node2D"]
 script = ExtResource("1_k7mjl")
+EnergyBallScale = Vector2(0.5, 0.5)
 abilityResource = ExtResource("2_byprf")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
@@ -124,7 +123,6 @@ target_position = Vector2(500, 0)
 script = ExtResource("3_tbm1m")
 laserEnvironment = ExtResource("4_l4nt2")
 laserGradient = ExtResource("5_b0prk")
-beamWidth = 70.0
 
 [node name="BeamLine" type="Line2D" parent="LaserRaycast"]
 unique_name_in_owner = true

@@ -25,6 +25,7 @@ public partial class Player : CharacterBody2D
   {
     abilityManager = GetNode<AbilityManager>("%Abilities");
     AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
+    AnimationPlayer.SpriteFrames = playerResource.AnimatedFrames;
     GetNode<Healthbar>("Healthbar").SetInitialValues(playerResource);
     EventRegistry.RegisterEvent("TakeDamage");
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);

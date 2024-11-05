@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://cvxq1ux03f6ai"]
+[gd_resource type="SpriteFrames" load_steps=17 format=3 uid="uid://b3c70pixcw5yl"]
 
 [ext_resource type="Texture2D" uid="uid://diiinp1vbwvrd" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_ko.png" id="1_l2irg"]
 [ext_resource type="Texture2D" uid="uid://cojqc5efeee3p" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek_stand.png" id="2_d1luf"]
