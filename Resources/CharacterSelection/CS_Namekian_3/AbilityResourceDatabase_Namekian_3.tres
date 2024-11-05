@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityDatabaseResource" load_steps=6 format=3 uid="uid://t52yhohqsci8"]
+
+[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="2_ux54p"]
+[ext_resource type="PackedScene" uid="uid://bo40kckcbb26x" path="res://Scenes/Abilities/Laser/SpecialBeamCannon.tscn" id="4_7jvxm"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_oc4ns"]
+[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="5_ru0to"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityDatabaseResource.cs" id="6_8ojvh"]
+
+[resource]
+script = ExtResource("6_8ojvh")
+Abilities = {
+"SpecialBeamCannon": ExtResource("4_7jvxm"),
+"kick": ExtResource("2_ux54p"),
+"punch": ExtResource("4_oc4ns"),
+"punchtwo": ExtResource("5_ru0to")
+}

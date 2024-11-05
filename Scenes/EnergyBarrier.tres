@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_8f8b3")
 Name = "EnergyBarrier"
+Icon = ExtResource("1_oko4j")
 Cooldown = 2
 CastTime = 2.0
 Value = 80
 Damage = 50
-Icon = ExtResource("1_oko4j")
-isSuperAbility = true
 kiRequired = 30
+isSuperAbility = true
