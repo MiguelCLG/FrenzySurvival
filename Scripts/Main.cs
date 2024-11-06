@@ -7,6 +7,9 @@ public partial class Main : Node2D
 {
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
+  [Export] AudioStream music;
+  private AudioManager audioManager;
+
   LevelUpUi levelUpUi;
   CharacterSelectionScreen characterSelectionScreen;
   Node2D playerReference;
@@ -33,7 +36,10 @@ public partial class Main : Node2D
     EventSubscriber.SubscribeToEvent("CharacterSelected", PlayerCharacterSelected);
     EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
+
     GetTree().Paused = true;
+    audioManager = GetNode<AudioManager>("/root/AudioManager");
+    audioManager?.Play(music, this);
     characterSelectionScreen.Visible = true;
   }
 
@@ -205,5 +211,6 @@ public partial class Main : Node2D
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("CharacterSelected");
+    audioManager?.StopSound(this);
   }
 }

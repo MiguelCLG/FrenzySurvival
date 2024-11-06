@@ -8,6 +8,10 @@ public partial class Menu : Control
   [Export] Control QuitButton;
   [Export] Control Title;
 
+  [Export] AudioStream music;
+
+  private AudioManager audioManager;
+
   public override void _Ready()
   {
     /* Tween tween;
@@ -16,6 +20,14 @@ public partial class Menu : Control
     tween.TweenProperty(StartButton, "position", new Vector2(500, 100), .2f);
     tween.TweenProperty(OptionsButton, "position", new Vector2(500, 180), .2f);
     tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f); */
+    audioManager = GetNode<AudioManager>("/root/AudioManager");
+    audioManager?.Play(music, this);
+
+  }
+  public override void _ExitTree()
+  {
+      // Stop any sound associated with this node
+      audioManager?.StopSound(this);
   }
   public void OnStartPressed() { GetTree().ChangeSceneToFile("res://Scenes/Main.tscn"); }
   public void OnOptionsPressed() { GD.Print("NOT IMPLEMENTED"); }

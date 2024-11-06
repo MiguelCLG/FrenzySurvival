@@ -27,6 +27,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_cdah4")
 script = ExtResource("2_r5yip")
+music = ExtResource("6_otfi6")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -90,11 +91,6 @@ offset_bottom = -37.0
 grow_horizontal = 0
 grow_vertical = 0
 texture = SubResource("AnimatedTexture_y8cbf")
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_otfi6")
-volume_db = -30.0
-autoplay = true
 
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnStartPressed"]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
