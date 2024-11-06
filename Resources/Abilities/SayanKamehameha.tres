@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_xbgrv")
 Name = "Kamehameha"
+Icon = ExtResource("1_qttdi")
 Cooldown = 4
 CastTime = 4.0
 Value = 100
 Damage = 70
-Icon = ExtResource("1_qttdi")
-isSuperAbility = true
 kiRequired = 50
+isSuperAbility = true
