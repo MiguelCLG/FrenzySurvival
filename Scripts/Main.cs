@@ -142,6 +142,7 @@ public partial class Main : Node2D
   {
     (playerReference as Player).playerResource = (args[0] as CharacterSelectionResource).CharacterResource;
     (playerReference as Player).PrepareCharacter();
+    levelUpUi.SetPlayerResource((args[0] as CharacterSelectionResource).CharacterResource);
     levelUpUi.Visible = true;
   }
   public async void OnMobDeath(object sender, object[] args)

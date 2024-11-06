@@ -14,6 +14,12 @@ public partial class LevelUpUi : CanvasLayer
     EventSubscriber.SubscribeToEvent("OnLevelUp", OnLevelUp);
 
   }
+
+  public void SetPlayerResource(PlayerResource resource)
+  {
+    playerResource = resource;
+    RefetchAbilities();
+  }
   public void RemoveAbilitiesFromContainer()
   {
     var verticalContainer = GetNode<Control>("%VerticalContainer");
