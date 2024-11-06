@@ -88,4 +88,9 @@ public partial class EnergyBall : Node2D
       beamLine.Modulate = Color.Color8(255, 255, 255, (byte)MathF.Round(newAlpha));
     }
   }
+  public void OnBodyEntered(Node2D bodyEntered)
+  {
+    EventRegistry.GetEventPublisher("OnEnergyBallHit").RaiseEvent(new object[] { bodyEntered, this });
+  }
+
 }

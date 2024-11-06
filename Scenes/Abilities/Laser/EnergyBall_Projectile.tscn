@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://6ktvpipb3uua"]
+
+[ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBall.cs" id="1_qd4hw"]
+[ext_resource type="PackedScene" uid="uid://nnvpi5hi8qwy" path="res://Scenes/Particles/EnergyBall/BeamLine.tscn" id="2_uuktq"]
+[ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="3_jrbqe"]
+[ext_resource type="Gradient" uid="uid://dfpvudfglp1ti" path="res://Assets/Gradients/Blue_Gradient.tres" id="4_ybh83"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dkerc"]
+radius = 40.0
+
+[sub_resource type="Curve" id="Curve_waixf"]
+_data = [Vector2(0, 0.27716), 0.0, -0.27716, 0, 1, Vector2(1, 0), -0.27716, 0.0, 1, 0]
+point_count = 2
+
+[node name="EnergyBall" type="Node2D"]
+script = ExtResource("1_qd4hw")
+beamLineScene = ExtResource("2_uuktq")
+rotationSpeed = 0.0
+
+[node name="CollisionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+scale = Vector2(1e-05, 1e-05)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionArea"]
+shape = SubResource("CircleShape2D_dkerc")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 2000
+lifetime = 0.3
+fixed_fps = 60
+texture = ExtResource("3_jrbqe")
+emission_shape = 1
+emission_sphere_radius = 30.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 180.0
+angular_velocity_min = -40.0
+angular_velocity_max = 100.0
+orbit_velocity_min = -20.0
+orbit_velocity_max = 20.0
+radial_accel_min = -90.0
+radial_accel_max = 100.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_waixf")
+color_ramp = ExtResource("4_ybh83")
+
+[connection signal="body_entered" from="CollisionArea" to="." method="OnBodyEntered"]

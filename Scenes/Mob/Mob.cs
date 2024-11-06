@@ -30,6 +30,8 @@ public partial class Mob : CharacterBody2D
 
   public override void _Process(double delta)
   {
+    if (AnimationPlayer.Animation == "death") return;
+    UpdatePositions();
     if (!mobResource.ShowHealBar)
       healthbar.Visible = false;
     if (healthbar.IsAlive)
@@ -46,9 +48,23 @@ public partial class Mob : CharacterBody2D
 
   public override void _PhysicsProcess(double delta)
   {
+    if (AnimationPlayer.Animation == "death") return;
+
     MoveAndSlide();
   }
-
+  private void UpdatePositions()
+  {
+    if (GlobalPosition.DistanceTo(target.GlobalPosition) > 700)
+    {
+      SetProcess(false);
+      SetPhysicsProcess(false);
+      Vector2 randomPositionPositive = target.GlobalPosition + new Vector2(Random.Shared.Next(100, 400), Random.Shared.Next(100, 400));
+      Vector2 randomPositionNegative = target.GlobalPosition + new Vector2(Random.Shared.Next(-400, -100), Random.Shared.Next(-400, -100));
+      GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+      SetProcess(true);
+      SetPhysicsProcess(true);
+    }
+  }
   private void Movement(double delta)
   {
     // Calculate direction towards the target

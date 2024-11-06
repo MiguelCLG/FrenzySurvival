@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterSelectionResource" load_steps=5 format=3 uid="uid://cq5jicavqwu6m"]
+
+[ext_resource type="Resource" uid="uid://xwjs4q00c8qq" path="res://Resources/CharacterSelection/CS_Freeza_Soldier_1/AbilityResourceDatabase_Freeza_Soldier_1.tres" id="1_cx0i2"]
+[ext_resource type="Resource" uid="uid://c1qfiiwuerlmy" path="res://Resources/CharacterSelection/CS_Freeza_Soldier_1/PlayerResource_Freeza_Soldier_1.tres" id="2_oiuti"]
+[ext_resource type="Texture2D" uid="uid://dosie2rn4hd1h" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1/fsoldier1_portrait.png" id="3_ra5pk"]
+[ext_resource type="Script" path="res://Scripts/Resources/CharacterSelectionResource.cs" id="4_vnote"]
+
+[resource]
+script = ExtResource("4_vnote")
+Name = "Frieza Soldier 1"
+Portrait = ExtResource("3_ra5pk")
+Abilities = ExtResource("1_cx0i2")
+CharacterResource = ExtResource("2_oiuti")

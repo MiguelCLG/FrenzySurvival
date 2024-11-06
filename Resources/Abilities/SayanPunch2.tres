@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("2_wu2kt")
 Name = "Punch 2"
+Icon = ExtResource("1_kqy7s")
 Cooldown = 1
 CastTime = 0.2
 Value = 30
 Damage = 20
-Icon = ExtResource("1_kqy7s")
-isSuperAbility = false
 kiRequired = 0
+isSuperAbility = false

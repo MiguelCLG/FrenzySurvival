@@ -6,10 +6,10 @@
 [resource]
 script = ExtResource("1_rhw0s")
 Name = "Kick"
-Cooldown = 1
+Icon = ExtResource("1_7pui3")
+Cooldown = 2
 CastTime = 0.3
 Value = 100
-Damage = 30
-Icon = ExtResource("1_7pui3")
-isSuperAbility = false
+Damage = 45
 kiRequired = 0
+isSuperAbility = false

@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="PlayerResource" load_steps=7 format=3 uid="uid://c1qfiiwuerlmy"]
+
+[ext_resource type="Resource" uid="uid://xwjs4q00c8qq" path="res://Resources/CharacterSelection/CS_Freeza_Soldier_1/AbilityResourceDatabase_Freeza_Soldier_1.tres" id="1_bsj2n"]
+[ext_resource type="SpriteFrames" uid="uid://cccnbri4ggfsf" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1.tres" id="2_hh1yg"]
+[ext_resource type="Resource" uid="uid://bsjou14wb657w" path="res://Resources/Player/LevelTable-v2.tres" id="3_undaw"]
+[ext_resource type="Texture2D" uid="uid://dosie2rn4hd1h" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1/fsoldier1_portrait.png" id="4_njafy"]
+[ext_resource type="Resource" uid="uid://crqcas6d8c3aq" path="res://Resources/Race/Sayan.tres" id="5_gjm7a"]
+[ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="6_ent1o"]
+
+[resource]
+script = ExtResource("6_ent1o")
+Race = ExtResource("5_gjm7a")
+LevelUpTables = ExtResource("3_undaw")
+Abilities = ExtResource("1_bsj2n")
+HP = 200
+MaxHP = 200
+Speed = 100
+Shield = 0
+MaxShield = 50
+KI = 100
+MaxKI = 100
+AnimatedFrames = ExtResource("2_hh1yg")
+Portrait = ExtResource("4_njafy")
+MobAttacks = Array[Object]([])
+LootTables = Array[Resource]([])
+ShowHealBar = true
+ExpDropValue = 0

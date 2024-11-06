@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://csi8xu3bkvwkq"]
+
+[ext_resource type="Texture2D" uid="uid://cuu2q1n83pwgk" path="res://Assets/Icons/fireball.png" id="1_6jo5h"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_obltv"]
+
+[resource]
+script = ExtResource("2_obltv")
+Name = "Energy Blast"
+Icon = ExtResource("1_6jo5h")
+Cooldown = 2
+CastTime = 2.0
+Value = 0
+Damage = 40
+kiRequired = 40
+isSuperAbility = true

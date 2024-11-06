@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvxyr2o2po7cf"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/Laser/EnergyBlast.cs" id="1_33013"]
+[ext_resource type="Resource" uid="uid://csi8xu3bkvwkq" path="res://Resources/Abilities/EnergyBlast.tres" id="2_lqlgt"]
+[ext_resource type="PackedScene" uid="uid://6ktvpipb3uua" path="res://Scenes/Abilities/Laser/EnergyBall_Projectile.tscn" id="3_v3ur4"]
+[ext_resource type="Gradient" uid="uid://c6h3rk20m61h1" path="res://Assets/Gradients/Purple_Gradient.tres" id="5_yntqj"]
+
+[node name="EnergyBlast" type="Node2D"]
+script = ExtResource("1_33013")
+speed = 250.0
+maxPosition = Vector2(50, 0)
+energyBlastGradient = ExtResource("5_yntqj")
+EnergyBallPosition = Vector2(-37, 37)
+energyBallScene = ExtResource("3_v3ur4")
+abilityResource = ExtResource("2_lqlgt")
