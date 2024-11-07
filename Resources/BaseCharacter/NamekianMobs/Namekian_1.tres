@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="4_1m1fc"]
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_j525w"]
 [ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="4_o5cbc"]
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="4_wt7ti"]
 [ext_resource type="Texture2D" uid="uid://gmqvhpy8ifiw" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek1_portrait.png" id="5_eltx7"]
+[ext_resource type="PackedScene" uid="uid://bo40kckcbb26x" path="res://Scenes/Abilities/Laser/SpecialBeamCannon.tscn" id="5_qs5um"]
 
 [resource]
 script = ExtResource("1_tml6u")

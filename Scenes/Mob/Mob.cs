@@ -23,6 +23,7 @@ public partial class Mob : CharacterBody2D
 
   private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
+
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;

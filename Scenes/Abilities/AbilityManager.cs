@@ -176,7 +176,6 @@ public partial class AbilityManager : Node2D
   {
     EventSubscriber.UnsubscribeFromEvent("ActionFinished", DoNextActionAsync);
   }
-
   public override void _ExitTree()
   {
     UnsubscribeFromEvents();
