@@ -112,9 +112,16 @@ public partial class Player : CharacterBody2D
 
   public void OnComboFinished(object sender, object[] args)
   {
-
-    isDoingCombo = false;
-    timer = 0;
+    if (args[0] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+      isDoingCombo = false;
+      timer = 0;
+    }
   }
 
   public void SetIsDoingAction(object sender, object[] args)
@@ -230,6 +237,7 @@ public partial class Player : CharacterBody2D
     PackedScene a = args[0] as PackedScene;
     Ability ab = a.Instantiate<Ability>();
     abilityManager.AddAbility(ab);
+    abilityManager.SetTargetGroup("Enemies");
   }
 
 

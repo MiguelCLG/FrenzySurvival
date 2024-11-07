@@ -1,8 +1,24 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://cckvc2yvvfj3o"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://cckvc2yvvfj3o"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_3pdoh"]
+[ext_resource type="SpriteFrames" uid="uid://brp7hsh2smf35" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/Sayan_Boss_1.tres" id="1_vd88t"]
+[ext_resource type="Texture2D" uid="uid://b4hrhccq4e2e0" path="res://Assets/Icons/punch.png" id="2_ksgn2"]
 [ext_resource type="Texture2D" uid="uid://bt4tergubmseq" path="res://Assets/CharacterAssets/Sayan/Sayan_stand.png" id="2_ptymd"]
-[ext_resource type="SpriteFrames" uid="uid://7aoet3rsyt51" path="res://Assets/CharacterAssets/Sayan/Sayan.tres" id="3_qhc5k"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="3_pck8v"]
+[ext_resource type="Resource" uid="uid://t8pat3edeppc" path="res://Resources/Abilities/GalickGun.tres" id="4_qqrls"]
+[ext_resource type="Resource" uid="uid://dnkjdl1axmvl4" path="res://Resources/Abilities/Masenko.tres" id="5_revvv"]
+
+[sub_resource type="Resource" id="Resource_o34jb"]
+script = ExtResource("3_pck8v")
+Name = "Punch_boss"
+Icon = ExtResource("2_ksgn2")
+Cooldown = 1
+CastTime = 0.3
+Value = 30
+Damage = 25
+kiRequired = 0
+isSuperAbility = false
+isRangedAbility = false
 
 [resource]
 script = ExtResource("1_3pdoh")
@@ -13,9 +29,9 @@ Shield = 50
 MaxShield = 50
 KI = 100
 MaxKI = 100
-AnimatedFrames = ExtResource("3_qhc5k")
-ShowHealBar = true
+AnimatedFrames = ExtResource("1_vd88t")
 Portrait = ExtResource("2_ptymd")
-MobAttacks = null
+MobAttacks = Array[Object]([SubResource("Resource_o34jb"), ExtResource("4_qqrls"), ExtResource("5_revvv"), null])
 LootTables = null
+ShowHealBar = true
 ExpDropValue = 0

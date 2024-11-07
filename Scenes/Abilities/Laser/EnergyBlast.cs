@@ -62,7 +62,7 @@ public partial class EnergyBlast : Ability
     EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { false }); // unlocks character in animation
     AnimationPlayer?.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
-    EventRegistry.GetEventPublisher("ActionFinished")?.RaiseEvent(new object[] { });
+    EventRegistry.GetEventPublisher("ActionFinished")?.RaiseEvent(new object[] { this });
 
   }
 
@@ -83,7 +83,7 @@ public partial class EnergyBlast : Ability
   public void OnEnergyBallHit(object sender, object[] args)
   {
     if (args[0] is Node2D bodyEntered)
-      if (bodyEntered.IsInGroup("Enemies"))
+      if (bodyEntered.IsInGroup(targetGroup))
       {
         var healthbar = bodyEntered.GetNode<Healthbar>("Healthbar");
         if (!healthbar.IsAlive) return;

@@ -104,10 +104,10 @@ public partial class Main : Node2D
   public void CreateMobOfResource(BaseCharacterResource charResourse)
   {
     var mob = mobScene.Instantiate<Mob>();
-    mobContainer.AddChild(mob);
     mob.mobResource = charResourse;
-    mob.healthbar.SetInitialValues(mob.mobResource);
     mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
+    mobContainer.AddChild(mob);
+    mob.healthbar.SetInitialValues(mob.mobResource);
 
 
     Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));

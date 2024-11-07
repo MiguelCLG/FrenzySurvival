@@ -31,9 +31,21 @@ public partial class AbilityManager : Node2D
     AddChild(ability);
   }
 
+  public void SetTargetGroup(string targetGroup)
+  {
+    foreach (Ability ability in abilityArray)
+    {
+      ability.targetGroup = targetGroup;
+    }
+  }
+
   public void SetKI(int newKi)
   {
     ki = newKi;
+  }
+  public int GetKI()
+  {
+    return ki;
   }
   public void AddDamage(int newDamage)
   {
@@ -60,7 +72,7 @@ public partial class AbilityManager : Node2D
     {
       actionindex = 0;
 
-      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
+      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { this });
     }
     else
     {
@@ -73,7 +85,7 @@ public partial class AbilityManager : Node2D
       else
       {
         actionindex++;
-        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
         return;
       }
       actionindex++;
@@ -82,11 +94,18 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync(object sender, object[] args)
   {
-
+    if (args[0] is Node2D node)
+    {
+      var isInChildren = GetChildren().Contains(node);
+      var isThisAbilityManager = node == this;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+    }
     if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
-      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
+      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { this });
 
     }
     else
@@ -100,15 +119,25 @@ public partial class AbilityManager : Node2D
       else // it is a super but does not have enough ki
       {
         actionindex++;
-        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
         return;
       }
       actionindex++;
     }
   }
 
-  public override void _ExitTree()
+  public AbilityResource GetNextAbility()
+  {
+    var i = actionindex < abilityArray.Count ? actionindex : 0;
+    return abilityArray[i].abilityResource;
+  }
+
+  public void UnsubscribeFromEvents()
   {
     EventSubscriber.UnsubscribeFromEvent("ActionFinished", DoNextActionAsync);
+  }
+  public override void _ExitTree()
+  {
+    UnsubscribeFromEvents();
   }
 }

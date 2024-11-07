@@ -54,7 +54,7 @@ public partial class EnergyBarrier : Ability
         radius = 1;
         (collisionShape2D.Shape as CircleShape2D).Radius = radius;
       }
-      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
       SetEmitting(false);
     }
 
@@ -74,7 +74,7 @@ public partial class EnergyBarrier : Ability
   }
   public void OnBodyEntered(Node2D body)
   {
-    if (!body.IsInGroup("Enemies")) return;
+    if (!body.IsInGroup(targetGroup)) return;
     var healthbar = body.GetNode<Healthbar>("Healthbar");
 
     // If the object gets out and gets in again, he gets hit again
@@ -96,7 +96,7 @@ public partial class EnergyBarrier : Ability
   }
   public void OnBodyExited(Node2D body)
   {
-    if (!body.IsInGroup("Enemies")) return;
+    if (!body.IsInGroup(targetGroup)) return;
 
     if (body is Mob mob)
     {

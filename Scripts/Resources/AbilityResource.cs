@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Godot;
 
 [GlobalClass]
@@ -22,5 +23,6 @@ public partial class AbilityResource : Resource
   public int kiRequired { get; set; }
   [Export]
   public bool isSuperAbility { get; set; }
-
+  [Export]
+  public bool isRangedAbility { get; set; } = false;
 }

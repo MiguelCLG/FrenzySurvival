@@ -1,7 +1,5 @@
-using Algos;
 using Godot;
 using System;
-using System.Threading.Tasks;
 
 public partial class Punch : Ability
 {
@@ -9,7 +7,6 @@ public partial class Punch : Ability
   double timer = 0;
   [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
-
 
   // Call this function to detect objects in the cone
   public async void DetectInCone()
@@ -38,7 +35,7 @@ public partial class Punch : Ability
       if (result["collider"] is Variant body)
       {
         // The object is within the cone, call its method
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
+        if (!body.As<Node2D>().IsInGroup(targetGroup))
           continue;
         var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
         // Vector from the character to the object
@@ -60,7 +57,7 @@ public partial class Punch : Ability
     }
 
     isDoingAction = false;
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
   }
 
   public override void _Process(double delta)
@@ -137,7 +134,7 @@ public partial class Punch : Ability
     {
       if (result["collider"] is Variant body)
       {
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
+        if (!body.As<Node2D>().IsInGroup(targetGroup))
           continue;
 
         // Vector from the character to the object

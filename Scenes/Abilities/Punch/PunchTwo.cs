@@ -38,7 +38,7 @@ public partial class PunchTwo : Ability
       if (result["collider"] is Variant body)
       {
         // The object is within the cone, call its method
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
+        if (!body.As<Node2D>().IsInGroup(targetGroup))
           continue;
         var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
         // Vector from the character to the object
@@ -60,7 +60,7 @@ public partial class PunchTwo : Ability
     }
 
     isDoingAction = false;
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
 
   }
 
@@ -135,7 +135,7 @@ public partial class PunchTwo : Ability
     {
       if (result["collider"] is Variant body)
       {
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
+        if (!body.As<Node2D>().IsInGroup(targetGroup))
           continue;
 
         // Vector from the character to the object

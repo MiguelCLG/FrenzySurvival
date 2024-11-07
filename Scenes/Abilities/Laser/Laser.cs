@@ -21,6 +21,7 @@ public partial class Laser : RayCast2D
   GpuParticles2D collisionParticles;
   GpuParticles2D beamParticles;
   Vector2[] beamLineOriginalPoints;
+  public string targetGroup = "Enemies";
   public override void _Ready()
   {
     TargetPosition = maxPosition;
@@ -177,7 +178,7 @@ public partial class Laser : RayCast2D
 
   public void OnAreaEntered(Node2D bodyEntered)
   {
-    if (bodyEntered.IsInGroup("Enemies"))
+    if (bodyEntered.IsInGroup(targetGroup))
     {
       EventRegistry.GetEventPublisher("KamehameHit").RaiseEvent(new object[] { bodyEntered });
     }

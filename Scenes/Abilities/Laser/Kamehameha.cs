@@ -13,6 +13,7 @@ public partial class Kamehameha : Ability
   {
     base._Ready();
     Laser = GetNode<Laser>("%LaserRaycast");
+    Laser.targetGroup = targetGroup;
     EventRegistry.RegisterEvent("KamehameHit");
     EventSubscriber.SubscribeToEvent("KamehameHit", KamehameHit);
     if (!EventRegistry.HasEventBeenRegistered("DirectionChanged"))
@@ -46,7 +47,7 @@ public partial class Kamehameha : Ability
     EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { false }); // unlocks character in animation
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
   }
 
   public override void Action()

@@ -31,7 +31,7 @@ public partial class EnergyBarrage : Ability
     
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
 
   }
   public override void Action()
@@ -43,7 +43,7 @@ public partial class EnergyBarrage : Ability
   {
     if (args[0] is Node2D body)
     {
-      if (!body.IsInGroup("Enemies")) return;
+      if (!body.IsInGroup(targetGroup)) return;
       var healthbar = body.GetNode<Healthbar>("Healthbar");
       if (!healthbar.IsAlive) return;
       if (body is Mob mob)
