@@ -1,13 +1,13 @@
-using Algos;
 using Godot;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+
 
 public partial class Main : Node2D
 {
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
-  [Export] AudioStream music;
+  [Export] Godot.Collections.Dictionary<string, AudioOptionsResource> mainSounds;
+  
   private AudioManager audioManager;
 
   LevelUpUi levelUpUi;
@@ -39,7 +39,7 @@ public partial class Main : Node2D
 
     GetTree().Paused = true;
     audioManager = GetNode<AudioManager>("/root/AudioManager");
-    audioManager?.Play(music, this);
+    //audioManager?.Play(music, this);
     characterSelectionScreen.Visible = true;
   }
 
@@ -211,6 +211,6 @@ public partial class Main : Node2D
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("CharacterSelected");
-    audioManager?.StopSound(this);
+    //audioManager?.StopSound(this);
   }
 }

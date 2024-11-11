@@ -4,13 +4,10 @@ using System.Collections.Generic;
 public partial class AudioManager : Node
 {
     [Export] public int NumPlayers = 8;
-    [Export] public string Bus = "Master";
 
     private List<AudioStreamPlayer> available = new List<AudioStreamPlayer>();
-    private Queue<AudioStream> queue = new Queue<AudioStream>(); // Queue now stores AudioStreams
+    private Queue<AudioOptionsResource> queue = new Queue<AudioOptionsResource>(); // Queue now holds AudioOptionsResource
 
-
-    // Add this dictionary to track sounds by their ID or some reference
     private Dictionary<Node, AudioStreamPlayer> nodeToPlayer = new Dictionary<Node, AudioStreamPlayer>();
 
     public override void _Ready()
@@ -22,25 +19,21 @@ public partial class AudioManager : Node
             AddChild(player);
             available.Add(player);
             player.Finished += () => OnStreamFinished(player); // Connect signal
-            player.Bus = Bus;
         }
     }
 
     private void OnStreamFinished(AudioStreamPlayer player)
     {
-        // Make the player available again when finished
-        available.Add(player);
+        available.Add(player); // Make the player available again
     }
 
-    public void Play(string soundPath, Node requestingNode)
+    public void Play(AudioOptionsResource options, Node requestingNode)
     {
-        // Load the AudioStream from path and enqueue it
-        var stream = GD.Load<AudioStream>(soundPath);
-        if (stream != null)
+        if (options != null && options.AudioStream != null)
         {
-            queue.Enqueue(stream);
+            queue.Enqueue(options);
 
-            // Track the node that requested the sound
+            // Track the node and associate the player
             if (!nodeToPlayer.ContainsKey(requestingNode))
             {
                 nodeToPlayer.Add(requestingNode, available[0]); // Assign the player to the node
@@ -48,26 +41,7 @@ public partial class AudioManager : Node
         }
         else
         {
-            GD.PrintErr($"Failed to load audio from path: {soundPath}");
-        }
-    }
-
-    public void Play(AudioStream audioStream, Node requestingNode)
-    {
-        // Enqueue the provided AudioStream directly and associate it with a node
-        if (audioStream != null)
-        {
-            queue.Enqueue(audioStream);
-
-            // Track the node that requested the sound
-            if (!nodeToPlayer.ContainsKey(requestingNode))
-            {
-                nodeToPlayer.Add(requestingNode, available[0]); // Assign the player to the node
-            }
-        }
-        else
-        {
-            GD.PrintErr("Null AudioStream provided.");
+            GD.PrintErr("Invalid AudioOptionsResource provided.");
         }
     }
 
@@ -92,11 +66,50 @@ public partial class AudioManager : Node
         // Play a queued sound if any players are available
         if (queue.Count > 0 && available.Count > 0)
         {
-            var audioStream = queue.Dequeue();
+            var options = queue.Dequeue();
             var player = available[0];
-            player.Stream = audioStream;
-            player.VolumeDb = -20;
-            player.Play();
+            
+            // Set up player properties from AudioOptionsResource
+            player.Stream = options.AudioStream;
+            player.Bus = options.BusName;
+            player.VolumeDb = options.VolumeDb;
+            player.PitchScale = options.PitchScale;
+            player.Autoplay = false; // Ensure autoplay is off so manual control works
+            player.StreamPaused = options.Mute;
+
+
+            if (options.StartOffset > 0)
+            {
+                player.Seek(options.StartOffset);
+            }
+
+            // Handle 3D sound if specified
+            if (options.Is3D)
+            {
+                var audioPlayer3D = new AudioStreamPlayer3D
+                {
+                    Stream = options.AudioStream,
+                    Position = options.Position,
+                    Bus = options.BusName,
+                    VolumeDb = options.VolumeDb,
+                    PitchScale = options.PitchScale,
+                    StreamPaused = options.Mute,
+                    Autoplay = false,
+                };
+                AddChild(audioPlayer3D);
+                audioPlayer3D.Play();
+            }
+            else
+            {
+                player.Play();
+            }
+
+            // Handle fade-in (simplified, can be expanded for smoother interpolation)
+            if (options.FadeInDuration > 0)
+            {
+                // Implement your fade-in logic here (e.g., timer to adjust volume over time)
+            }
+
             available.RemoveAt(0); // Remove player from available list
         }
     }
