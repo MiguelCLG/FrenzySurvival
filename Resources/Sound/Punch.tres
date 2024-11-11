@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AudioOptionsResource" load_steps=3 format=3 uid="uid://yxpx7udhdnk"]
+
+[ext_resource type="AudioStream" uid="uid://ckivgjkbjloi1" path="res://Assets/Sound/punch-7171.mp3" id="1_88s75"]
+[ext_resource type="Script" path="res://Scripts/Sound/AudioOptionsResource.cs" id="2_xi7iy"]
+
+[resource]
+script = ExtResource("2_xi7iy")
+AudioStream = ExtResource("1_88s75")
+BusName = "Master"
+VolumeDb = -20.0
+PitchScale = 1.0
+StartOffset = 0.0
+FadeInDuration = 0.0
+FadeOutDuration = 0.0
+Mute = false
+Is3D = false
+Position = Vector3(0, 0, 0)
+Priority = 0

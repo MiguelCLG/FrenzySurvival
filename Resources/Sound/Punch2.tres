@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AudioOptionsResource" load_steps=3 format=3 uid="uid://bnshhqi5rrn3t"]
+
+[ext_resource type="AudioStream" uid="uid://bnoelox21wn2v" path="res://Assets/Sound/punch-2-37333.mp3" id="1_l2keu"]
+[ext_resource type="Script" path="res://Scripts/Sound/AudioOptionsResource.cs" id="2_6r54h"]
+
+[resource]
+script = ExtResource("2_6r54h")
+AudioStream = ExtResource("1_l2keu")
+BusName = "Master"
+VolumeDb = -20.0
+PitchScale = 1.0
+StartOffset = 0.0
+FadeInDuration = 0.0
+FadeOutDuration = 0.0
+Mute = false
+Is3D = false
+Position = Vector3(0, 0, 0)
+Priority = 0

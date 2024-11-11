@@ -5,6 +5,8 @@ using Godot.Collections;
 public partial class Ability : Node2D
 {
   [Export] public AbilityResource abilityResource;
+  [Export] protected AudioOptionsResource abilitySound;
+  protected AudioManager audioManager;
 
   public Vector2 CurrentVelocity = Vector2.Zero;
 
@@ -15,7 +17,11 @@ public partial class Ability : Node2D
 
   public int facingDirection = 1;
 
-  public void SetFacingDirection(int direction)
+    public override void _Ready()
+    {
+      audioManager = GetNode<AudioManager>("/root/AudioManager");
+    }
+    public void SetFacingDirection(int direction)
   {
     facingDirection = direction;
   }

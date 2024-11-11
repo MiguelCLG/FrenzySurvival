@@ -26,11 +26,11 @@ public partial class CharacterSelectionScreen : Control
       character.GetNode<TextureRect>("%IconUI").Texture = characterInformation.Portrait;
       character.GetNode<Label>("%NameLabel").Text = characterInformation.Name;
       character.GetNode<Button>("%Button").Connect("pressed", Callable.From(() => OnClickButton(characterInformation)));
-      character.GetNode<Button>("%Button").Connect("mouse_entered", Callable.From(() => OnMouseEntered(characterInformation)));
+      character.GetNode<Button>("%Button").Connect("mouse_entered", Callable.From(() => OnMouseEntered()));
     }
   }
 
-  public void OnMouseEntered(CharacterSelectionResource characterInformation)
+  public void OnMouseEntered()
   {
     audioManager?.Play(characterSelectionSounds.GetValueOrDefault("HoverClick"), this);
   }

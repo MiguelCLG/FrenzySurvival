@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class LevelUpUi : CanvasLayer
 {
@@ -7,8 +7,12 @@ public partial class LevelUpUi : CanvasLayer
   [Export] PackedScene abilityUIButton;
   [Export] PlayerResource playerResource;
   private int currentLevel = 1;
+  [Export] Godot.Collections.Dictionary<string, AudioOptionsResource> levelUpSelectionSounds;
+  private AudioManager audioManager;
+
   public override void _Ready()
   {
+    audioManager = GetNode<AudioManager>("/root/AudioManager");
     RefetchAbilities();
     EventSubscriber.SubscribeToEvent("AbilitySelected", AbilitySelected);
     EventSubscriber.SubscribeToEvent("OnLevelUp", OnLevelUp);
@@ -48,8 +52,13 @@ public partial class LevelUpUi : CanvasLayer
       AbilityUiButton uiButton = abilityUIButton.Instantiate<AbilityUiButton>();
       row.AddChild(uiButton);
       uiButton.SetInitialValues(abilityScene, ability.abilityResource.Icon, ability.abilityResource.Name, ability.abilityResource.Cooldown.ToString(), ability.abilityResource.CastTime.ToString(), ability.abilityResource.Damage.ToString(), ability.abilityResource.kiRequired.ToString());
+      uiButton.GetNode<Button>("%Button").Connect("mouse_entered", Callable.From(() => OnMouseEntered()));
       ability.QueueFree();
     }
+  }
+  public void OnMouseEntered()
+  {
+    audioManager?.Play(levelUpSelectionSounds.GetValueOrDefault("HoverClick"), this);
   }
   public void OnLevelUp(object sender, object[] args)
   {
@@ -60,6 +69,7 @@ public partial class LevelUpUi : CanvasLayer
   }
   public void AbilitySelected(object sender, object[] args)
   {
+    audioManager?.Play(levelUpSelectionSounds.GetValueOrDefault("HoverClick"), this);
     GetTree().Paused = false;
     Visible = false;
   }
