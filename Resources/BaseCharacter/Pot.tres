@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://bhfenastadlvk"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://bhfenastadlvk"]
 
 [ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="2_7h2jt"]
 [ext_resource type="Resource" uid="uid://c33iqisjm77do" path="res://Resources/LootTables/PotLootTable.tres" id="3_7ript"]
+[ext_resource type="Resource" uid="uid://cw1jq1gnltsdd" path="res://Resources/Sound/HoverClick.tres" id="3_rq6tn"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_kg0n4"]
 
 [resource]
@@ -18,3 +19,6 @@ MobAttacks = null
 LootTables = Array[Resource]([ExtResource("3_7ript")])
 ShowHealBar = false
 ExpDropValue = 0
+characterSounds = {
+"death": ExtResource("3_rq6tn")
+}
