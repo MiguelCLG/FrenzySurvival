@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AudioOptionsResource" load_steps=3 format=3 uid="uid://db0qgh2ixoj65"]
+
+[ext_resource type="AudioStream" uid="uid://cyy22log6d2u4" path="res://Assets/Sound/DBZ-Super Namek Theme.mp3" id="1_vi46f"]
+[ext_resource type="Script" path="res://Scripts/Sound/AudioOptionsResource.cs" id="2_vuumq"]
+
+[resource]
+script = ExtResource("2_vuumq")
+AudioStream = ExtResource("1_vi46f")
+BusName = "Master"
+VolumeDb = -30.0
+PitchScale = 1.0
+StartOffset = 0.0
+FadeInDuration = 0.0
+FadeOutDuration = 0.0
+Mute = false
+Is3D = false
+Position = Vector3(0, 0, 0)
+Priority = 0

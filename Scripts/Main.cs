@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 
 public partial class Main : Node2D
@@ -39,7 +41,7 @@ public partial class Main : Node2D
 
     GetTree().Paused = true;
     audioManager = GetNode<AudioManager>("/root/AudioManager");
-    //audioManager?.Play(music, this);
+    audioManager?.Play(mainSounds.GetValueOrDefault("music"), this);
     characterSelectionScreen.Visible = true;
   }
 
@@ -201,6 +203,7 @@ public partial class Main : Node2D
 
   public override void _ExitTree()
   {
+    audioManager?.StopSound(this);
     EventSubscriber.UnsubscribeFromEvent("OnMobDeath", OnMobDeath);
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
     EventSubscriber.UnsubscribeFromEvent("CharacterSelected", PlayerCharacterSelected);
