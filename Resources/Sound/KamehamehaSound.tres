@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_aibbm")
 AudioStream = ExtResource("1_jvpi8")
-BusName = "Master"
+BusName = "Sound Effects"
 VolumeDb = -10.0
 PitchScale = 1.0
 StartOffset = 4.5

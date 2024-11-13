@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_xi7iy")
 AudioStream = ExtResource("1_88s75")
-BusName = "Master"
+BusName = "Sound Effects"
 VolumeDb = -20.0
 PitchScale = 1.0
 StartOffset = 0.0
