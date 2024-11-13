@@ -206,7 +206,12 @@ public partial class Mob : CharacterBody2D
   public void Die()
   {
     AnimationPlayer.Play("death");
-    audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("death"), this);
+    if(mobResource.characterSounds is not null)
+    {
+      AudioOptionsResource sound = mobResource.characterSounds.GetValueOrDefault("death");
+      if(sound is not null)
+        audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("death"), this);
+    }
     EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
   }
   public override void _ExitTree()
