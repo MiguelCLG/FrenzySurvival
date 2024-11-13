@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://gxkliy280dyl"]
+[gd_scene load_steps=5 format=3 uid="uid://gxkliy280dyl"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/EnergyBarrage/EnergyBarrage.cs" id="1_xgp0t"]
 [ext_resource type="PackedScene" uid="uid://cjtn3vs1t3ogt" path="res://Scenes/Abilities/EnergyBarrage/fireball.tscn" id="2_a3rrw"]
 [ext_resource type="Resource" uid="uid://bf0v7h5midfbe" path="res://Resources/Abilities/Fireball.tres" id="3_3cw0v"]
+[ext_resource type="Resource" uid="uid://cn7sy7skmfpni" path="res://Resources/Sound/EnergBarrageSound.tres" id="4_y5u3d"]
 
 [node name="EnergyBarrage" type="Node2D"]
 script = ExtResource("1_xgp0t")
 fireballScene = ExtResource("2_a3rrw")
 abilityResource = ExtResource("3_3cw0v")
+abilitySound = ExtResource("4_y5u3d")
 
 [node name="FireballSpawn" type="Node2D" parent="."]

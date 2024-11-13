@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 public partial class EnergyBarrage : Ability
 {
@@ -16,6 +15,7 @@ public partial class EnergyBarrage : Ability
   {
     for (int i = 0; i < abilityResource.Value; i++)
     {
+
       AnimationPlayer.Play(i % 2 == 0 ? "punch" : "punch_2");
       facingDirection = AnimationPlayer.FlipH ? -1 : 1;
       var fireball = fireballScene.Instantiate();
@@ -24,10 +24,11 @@ public partial class EnergyBarrage : Ability
       fireballSpawn.Position = new Vector2(Position.X * facingDirection, Position.Y);
       (fireball as Fireball).GlobalPosition = fireballSpawn.GlobalPosition;
       (fireball as Fireball).SetFacingDirection(facingDirection);
-
       await ToSignal(GetTree().CreateTimer(spawnRate, false, true), "timeout");
+      audioManager?.Play(abilitySound, this);
       (fireball as Fireball).StartProcess();
     }
+    
     AnimationPlayer.Play("default");
     await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });

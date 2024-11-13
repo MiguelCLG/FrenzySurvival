@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public partial class AudioManager : Node
 {
-    [Export] public int NumPlayers = 8;
+    [Export] public int NumPlayers = 40;
 
     private List<AudioStreamPlayer> available = new List<AudioStreamPlayer>();
     private Queue<AudioOptionsResource> queue = new Queue<AudioOptionsResource>(); // Queue now holds AudioOptionsResource
