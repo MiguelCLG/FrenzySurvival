@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3 uid="uid://c13jww0kptfoy"]
+
+[ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_xlc62"]
+[ext_resource type="Script" path="res://Scripts/UiElements/AudioOptionsScreen.cs" id="2_iadlj"]
+
+[node name="AudioOptionsScreen" type="PanelContainer" node_paths=PackedStringArray("SliderMaster", "SliderMusic", "SliderSFX", "SliderUIFX")]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 408.0
+offset_top = 104.0
+offset_right = -408.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_xlc62")
+script = ExtResource("2_iadlj")
+SliderMaster = NodePath("VBoxContainer2/VBoxContainer/MasterHSlider")
+SliderMusic = NodePath("VBoxContainer2/VBoxContainer2/MusicHSlider")
+SliderSFX = NodePath("VBoxContainer2/VBoxContainer2/SoundEffectsHSlider")
+SliderUIFX = NodePath("VBoxContainer2/VBoxContainer2/UiEffectsHSlider")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 0.3
+theme_type_variation = &"HeaderLarge"
+text = "Audio Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
+
+[node name="MasterLabel" type="Label" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_xlc62")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Master"
+
+[node name="MasterHSlider" type="HSlider" parent="VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+alignment = 1
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_xlc62")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Music"
+horizontal_alignment = 1
+
+[node name="MusicHSlider" type="HSlider" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+
+[node name="SoundEffectsLabel" type="Label" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_xlc62")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Sound Effects"
+horizontal_alignment = 1
+
+[node name="SoundEffectsHSlider" type="HSlider" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+
+[node name="UiEffectsLabel" type="Label" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("1_xlc62")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "UI Effects"
+horizontal_alignment = 1
+
+[node name="UiEffectsHSlider" type="HSlider" parent="VBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+min_value = -80.0
+max_value = 0.0
+
+[node name="Spacer" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3

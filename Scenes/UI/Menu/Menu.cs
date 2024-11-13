@@ -39,7 +39,11 @@ public partial class Menu : Control
     audioManager?.Play(menuSounds.GetValueOrDefault("HoverClick"), this);
     GetTree().ChangeSceneToFile("res://Scenes/Main.tscn"); 
   }
-  public void OnOptionsPressed() { GD.Print("NOT IMPLEMENTED"); }
+  public void OnOptionsPressed() 
+  { 
+    audioManager?.Play(menuSounds.GetValueOrDefault("HoverClick"), this);
+    GD.Print("NOT IMPLEMENTED"); 
+  }
   public void OnQuitPressed() { GetTree().Quit(); }
   
   public void OnHover(string property)

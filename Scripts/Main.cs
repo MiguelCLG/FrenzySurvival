@@ -143,6 +143,7 @@ public partial class Main : Node2D
 
   public void PauseGame()
   {
+    audioManager.PauseAllSounds();
     GetTree().Paused = true;
   }
 
@@ -181,9 +182,18 @@ public partial class Main : Node2D
     }
     GetTree().CallDeferred("reload_current_scene");
   }
+  public void Options()
+  {
+    var audioOptions = GetNode<CanvasLayer>("%UI").GetNode<Control>("%AudioOptionsScreen");
+    if(audioOptions is AudioOptionsScreen sfxOptions)
+    {
+      sfxOptions.Visible = true;
+    }
+  }
   public void Exit()
   {
     GetTree().Paused = false;
+    audioManager.UnpauseAllSounds();
     GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
   }
 
@@ -199,6 +209,12 @@ public partial class Main : Node2D
   {
     GetTree().Paused = !GetTree().Paused;
     UI.GetNode<Control>("%PauseScreen").Visible = GetTree().Paused;
+    if(GetTree().Paused)
+      audioManager.PauseAllSounds();
+    else
+      audioManager.UnpauseAllSounds();
+
+
   }
 
   public override void _ExitTree()

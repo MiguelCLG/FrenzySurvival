@@ -6,6 +6,8 @@ public partial class AudioManager : Node
     [Export] public int NumPlayers = 40;
 
     private List<AudioStreamPlayer> available = new List<AudioStreamPlayer>();
+    private List<AudioStreamPlayer> activePlayers = new List<AudioStreamPlayer>();
+
     private Queue<AudioOptionsResource> queue = new Queue<AudioOptionsResource>(); // Queue now holds AudioOptionsResource
 
     private Dictionary<Node, AudioStreamPlayer> nodeToPlayer = new Dictionary<Node, AudioStreamPlayer>();
@@ -25,8 +27,48 @@ public partial class AudioManager : Node
     private void OnStreamFinished(AudioStreamPlayer player)
     {
         available.Add(player); // Make the player available again
+        UnregisterPlayer(player); // Unregister from the active ones
+    }
+    
+    private void RegisterPlayer(AudioStreamPlayer player)
+    {
+        if (!activePlayers.Contains(player))
+        {
+            activePlayers.Add(player);
+        }
+    }
+    
+    public void UnregisterPlayer(AudioStreamPlayer player)
+    {
+        if (activePlayers.Contains(player))
+        {
+            activePlayers.Remove(player);
+        }
+    }
+    
+    public void PauseAllSounds()
+    {
+        foreach (var player in activePlayers)
+        {
+            GD.Print($"Player {player.Name} - IsPlaying: {player.IsPlaying()}");
+            if (player.IsPlaying())
+            {
+                player.StreamPaused = true;
+                GD.Print($"Pausing player {player.Name}");
+            }
+        }
     }
 
+    public void UnpauseAllSounds()
+    {
+        foreach (var player in activePlayers)
+        {
+            if (player.StreamPaused)
+            {
+                player.StreamPaused = false;
+            }
+        }
+    }
     public void Play(AudioOptionsResource options, Node requestingNode)
     {
         if (options != null && options.AudioStream != null)
@@ -136,7 +178,7 @@ public partial class AudioManager : Node
 
                 fadeOutTimer.Start();
             }
-
+            RegisterPlayer(player);
             available.RemoveAt(0); // Remove player from available list
         }
     }
