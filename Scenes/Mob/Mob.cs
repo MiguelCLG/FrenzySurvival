@@ -147,6 +147,12 @@ public partial class Mob : CharacterBody2D
         SetProcess(false);
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
         AnimationPlayer.Play("hurt");
+        if(mobResource.characterSounds is not null)
+        {
+          AudioOptionsResource sound = mobResource.characterSounds.GetValueOrDefault("hurt");
+          if(sound is not null)
+            audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("hurt"), this);
+        }
         await ToSignal(AnimationPlayer, "animation_finished");
         if (!healthbar.IsAlive)
         {
@@ -205,13 +211,13 @@ public partial class Mob : CharacterBody2D
 
   public void Die()
   {
-    AnimationPlayer.Play("death");
     if(mobResource.characterSounds is not null)
     {
       AudioOptionsResource sound = mobResource.characterSounds.GetValueOrDefault("death");
       if(sound is not null)
         audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("death"), this);
     }
+    AnimationPlayer.Play("death");
     EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
   }
   public override void _ExitTree()
