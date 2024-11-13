@@ -45,13 +45,25 @@ public partial class AudioManager : Node
             activePlayers.Remove(player);
         }
     }
-    
+
     public void PauseAllSounds()
     {
         foreach (var player in activePlayers)
         {
             GD.Print($"Player {player.Name} - IsPlaying: {player.IsPlaying()}");
             if (player.IsPlaying())
+            {
+                player.StreamPaused = true;
+                GD.Print($"Pausing player {player.Name}");
+            }
+        }
+    }
+    public void PauseAllSoundsFromBus(string busName)
+    {
+        foreach (var player in activePlayers)
+        {
+            GD.Print($"Player {player.Name} - IsPlaying: {player.IsPlaying()}");
+            if (player.IsPlaying() && player.Bus == busName)
             {
                 player.StreamPaused = true;
                 GD.Print($"Pausing player {player.Name}");

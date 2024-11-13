@@ -210,10 +210,9 @@ public partial class Main : Node2D
     GetTree().Paused = !GetTree().Paused;
     UI.GetNode<Control>("%PauseScreen").Visible = GetTree().Paused;
     if(GetTree().Paused)
-      audioManager.PauseAllSounds();
+      audioManager.PauseAllSoundsFromBus("Sound Effects");
     else
-      audioManager.UnpauseAllSounds();
-
+      audioManager.UnpauseAllSounds();  // TODO: Unpause all from bus.
 
   }
 
