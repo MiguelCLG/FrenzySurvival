@@ -14,11 +14,11 @@ Shield = 0
 MaxShield = 0
 KI = 0
 MaxKI = 0
-AnimatedFrames = ExtResource("2_7h2jt")
 MobAttacks = null
 LootTables = Array[Resource]([ExtResource("3_7ript")])
 ShowHealBar = false
 ExpDropValue = 0
+AnimatedFrames = ExtResource("2_7h2jt")
 characterSounds = {
 "death": ExtResource("3_rq6tn")
 }

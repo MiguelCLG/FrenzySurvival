@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 
 public partial class Kamehameha : Ability
 
@@ -11,6 +11,7 @@ public partial class Kamehameha : Ability
 
   public override void _Ready()
   {
+    base._Ready();
     Laser = GetNode<Laser>("%LaserRaycast");
     EventRegistry.RegisterEvent("KamehameHit");
     EventSubscriber.SubscribeToEvent("KamehameHit", KamehameHit);
@@ -25,6 +26,7 @@ public partial class Kamehameha : Ability
     energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMin = EnergyBallScale.X;
     energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMax = EnergyBallScale.Y;
     AnimationPlayer.Play("beam_charge");
+    audioManager?.Play(abilitySound, this);
 
     // Set the energy ball's position based on the facing direction
     Vector2 energyBallPosition = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;

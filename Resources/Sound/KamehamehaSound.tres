@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AudioOptionsResource" load_steps=3 format=3 uid="uid://duh47nf2yr13n"]
+
+[ext_resource type="AudioStream" uid="uid://p8avkk25mieb" path="res://Assets/Sound/Kamehameha Sound Effect.mp3" id="1_jvpi8"]
+[ext_resource type="Script" path="res://Scripts/Sound/AudioOptionsResource.cs" id="2_aibbm"]
+
+[resource]
+script = ExtResource("2_aibbm")
+AudioStream = ExtResource("1_jvpi8")
+BusName = "Master"
+VolumeDb = -10.0
+PitchScale = 1.0
+StartOffset = 4.5
+FadeInDuration = 0.0
+FadeOutDuration = 8.0
+Mute = false
+Is3D = false
+Position = Vector3(0, 0, 0)
+Priority = 0

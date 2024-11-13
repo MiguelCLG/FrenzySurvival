@@ -68,7 +68,10 @@ public partial class AudioManager : Node
         {
             var options = queue.Dequeue();
             var player = available[0];
-            
+            if (player.IsPlaying())
+            {
+                player.Stop();
+            }
             // Set up player properties from AudioOptionsResource
             player.Stream = options.AudioStream;
             player.Bus = options.BusName;
@@ -78,10 +81,7 @@ public partial class AudioManager : Node
             player.StreamPaused = options.Mute;
 
 
-            if (options.StartOffset > 0)
-            {
-                player.Seek(options.StartOffset);
-            }
+
 
             // Handle 3D sound if specified
             if (options.Is3D)
@@ -100,14 +100,46 @@ public partial class AudioManager : Node
                 audioPlayer3D.Play();
             }
             else
-            {
+            {   
                 player.Play();
+                if (options.StartOffset > 0)
+                {
+                    player.Seek(options.StartOffset);
+                }
             }
 
-            // Handle fade-in (simplified, can be expanded for smoother interpolation)
-            if (options.FadeInDuration > 0)
+            // TODO: This fadeout stuff isnt working as intended.
+            //? It seems that the fade out duration of the sound resource is setting when the fadeout starts.
+            //? I want it to define the time it starts but before the end, if its 20s audio and I set fadeout to 20, I want it to start
+            //? fading at 18
+            // Handle fade-out duration
+            // Ensure audio stream duration is known and fade-out duration is valid
+            double streamLength = player.Stream.GetLength();
+            double fadeStartTime = streamLength - options.FadeOutDuration;
+            GD.Print($"Stream length: {streamLength}, Fade starts at: {fadeStartTime}");
+
+            if (fadeStartTime > 0 && options.FadeOutDuration > 0)
             {
-                // Implement your fade-in logic here (e.g., timer to adjust volume over time)
+                // Create a timer to trigger the fade-out
+                Timer fadeOutTimer = new Timer();
+                fadeOutTimer.WaitTime = fadeStartTime;
+                fadeOutTimer.OneShot = true;
+                AddChild(fadeOutTimer);
+
+                fadeOutTimer.Timeout += () =>
+                {
+                    Tween tween = GetTree().CreateTween();
+                    tween.TweenProperty(player, "volume_db", -80, options.FadeOutDuration)
+                        .SetTrans(Tween.TransitionType.Linear)
+                        .SetEase(Tween.EaseType.InOut);
+
+                    tween.Finished += () =>
+                    {
+                        player.Stop();
+                    };
+                };
+
+                fadeOutTimer.Start();
             }
 
             available.RemoveAt(0); // Remove player from available list
