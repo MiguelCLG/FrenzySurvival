@@ -159,8 +159,6 @@ public partial class Mob : CharacterBody2D
           Die();
           return;
         }
-
-
         AnimationPlayer.Play("default");
         SetProcess(true);
       }

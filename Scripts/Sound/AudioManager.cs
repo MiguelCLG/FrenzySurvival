@@ -32,7 +32,6 @@ public partial class AudioManager : Node
         if (options != null && options.AudioStream != null)
         {
             queue.Enqueue(options);
-
             // Track the node and associate the player
             if (!nodeToPlayer.ContainsKey(requestingNode))
             {
@@ -69,9 +68,8 @@ public partial class AudioManager : Node
             var options = queue.Dequeue();
             var player = available[0];
             if (player.IsPlaying())
-            {
                 player.Stop();
-            }
+
             // Set up player properties from AudioOptionsResource
             player.Stream = options.AudioStream;
             player.Bus = options.BusName;
@@ -79,9 +77,6 @@ public partial class AudioManager : Node
             player.PitchScale = options.PitchScale;
             player.Autoplay = false; // Ensure autoplay is off so manual control works
             player.StreamPaused = options.Mute;
-
-
-
 
             // Handle 3D sound if specified
             if (options.Is3D)
