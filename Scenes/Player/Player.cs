@@ -1,5 +1,6 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
+using Godot.Collections;
 
 public partial class Player : CharacterBody2D
 {
@@ -16,17 +17,18 @@ public partial class Player : CharacterBody2D
   bool isGettingHurt = false;
   int facingDirection = 1;
   private int experiencePoints = 0;
+  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
+
 
   public override void _Ready()
   {
     abilityManager = GetNode<AbilityManager>("%Abilities");
+    abilityManager.SetTargetGroup("Enemies");
     AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
     EventRegistry.RegisterEvent("TakeDamage");
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventRegistry.RegisterEvent("OnComboFinished");
     EventSubscriber.SubscribeToEvent("OnComboFinished", OnComboFinished);
-    //EventRegistry.RegisterEvent("SetKI");
-    //EventSubscriber.SubscribeToEvent("SetKI", SetKI);
     EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
     EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventRegistry.RegisterEvent("AbilitySelected");
@@ -37,6 +39,17 @@ public partial class Player : CharacterBody2D
 
 
     PrepareCharacter();
+  }
+
+  public override void _PhysicsProcess(double delta)
+  {
+    if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
+    Movement(delta);
+    if (!isDoingCombo && !isGettingHurt)
+    {
+      isDoingCombo = true;
+      abilityManager.DoNextActionAsync();
+    }
   }
 
   public void PrepareCharacter()
@@ -51,6 +64,7 @@ public partial class Player : CharacterBody2D
   }
   public async void TakeDamage(object sender, object[] args)
   {
+    if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Healthbar healthbar)
     {
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
@@ -66,11 +80,13 @@ public partial class Player : CharacterBody2D
           {
             // Corre animacao de morte
             AnimationPlayer.Play("death");
+            SetPhysicsProcess(false);
             // Espera x segundos para a morte
             EventRegistry.GetEventPublisher("OnPlayerDeath").RaiseEvent(new object[] { this });
             return;
           }
           isGettingHurt = false;
+          AnimationPlayer.Play("default");
 
         }
       }
@@ -99,16 +115,7 @@ public partial class Player : CharacterBody2D
     }
   }
 
-  public override void _PhysicsProcess(double delta)
-  {
-    if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
-    Movement(delta);
-    if (!isDoingCombo && !isGettingHurt)
-    {
-      isDoingCombo = true;
-      abilityManager.DoNextActionAsync();
-    }
-  }
+
 
   public void OnComboFinished(object sender, object[] args)
   {
@@ -144,7 +151,7 @@ public partial class Player : CharacterBody2D
     {
       // If there's input, set the velocity towards the new direction
       Velocity = direction;
-      if (AnimationPlayer.Animation == "default") AnimationPlayer.Play("move");
+      if (!lockedAnimations.Contains(AnimationPlayer.Animation) && AnimationPlayer.Animation == "default") AnimationPlayer.Play("move");
     }
     else
     {
@@ -194,6 +201,14 @@ public partial class Player : CharacterBody2D
 
   public void IncreaseStatsFromDictionary(object sender, object[] args)
   {
+    if (args[1] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+    }
     if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
     {
       var healthbar = GetNode<Healthbar>("Healthbar");
@@ -226,8 +241,6 @@ public partial class Player : CharacterBody2D
           default:
             break;
         }
-        if (kvp.Key == "ki")
-          EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
       }
     }
   }
@@ -245,7 +258,6 @@ public partial class Player : CharacterBody2D
   {
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", OnComboFinished);
-    EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
     EventSubscriber.UnsubscribeFromEvent("IsDoingAction", SetIsDoingAction);

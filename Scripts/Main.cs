@@ -47,6 +47,7 @@ public partial class Main : Node2D
 
   public override void _Process(double delta)
   {
+    if (!playerReference.GetNode<Healthbar>("Healthbar").IsAlive) return;
     spawnCooldown += delta;
     time += delta;
     //if (currentEnemies < maxEnemies && spawnCooldown > 1)

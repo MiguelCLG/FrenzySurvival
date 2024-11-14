@@ -21,6 +21,12 @@ public partial class Kamehameha : Ability
     EventSubscriber.SubscribeToEvent("DirectionChanged", DirectionChanged);
   }
 
+  public override void SetTargetGroup(string group)
+  {
+    base.SetTargetGroup(group);
+    Laser.targetGroup = group;
+  }
+
   public async void FireLaser()
   {
     EnergyBall energyBall = Laser.GetNode<EnergyBall>("EnergyBall");
@@ -71,7 +77,7 @@ public partial class Kamehameha : Ability
       if (body is Mob mob)
       {
         Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;
-        mob.KnockBack(curDirection, 100);
+        mob.KnockBack(curDirection, abilityResource.Value);
       }
 
       if (healthbar.IsAlive)
@@ -91,7 +97,6 @@ public partial class Kamehameha : Ability
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("KamehameHit", KamehameHit);
-    EventRegistry.UnregisterEvent("KamehameHit");
     EventSubscriber.UnsubscribeFromEvent("DirectionChanged", DirectionChanged);
 
   }

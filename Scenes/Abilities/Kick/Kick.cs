@@ -26,7 +26,7 @@ public partial class Kick : Ability
     query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
 
     var results = spaceState.IntersectShape(query);
-
+    if (AnimationPlayer.Animation == "death") return;
     AnimationPlayer.Play("kick");
     audioManager?.Play(abilitySound, this);
 
@@ -34,12 +34,13 @@ public partial class Kick : Ability
     {
       if (result["collider"] is Variant body)
       {
+        Node2D node = body.As<Node2D>();
         // The object is within the cone, call its method
-        if (!body.As<Node2D>().IsInGroup(targetGroup))
+        if (!node.IsInGroup(targetGroup))
           continue;
-        var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
+        var healthbar = node.GetNode<Healthbar>("Healthbar");
         // Vector from the character to the object
-        Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
+        Vector2 toBody = (node.GlobalPosition - GlobalPosition).Normalized();
 
         // Check if the object is within the cone
         float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
@@ -52,11 +53,13 @@ public partial class Kick : Ability
               healthbar,
               abilityResource.Damage
             });
-          body.As<Mob>().KnockBack(forward, abilityResource.Value);
+          //TODO: Make the knockback for player (maybe create an Interface to acomudate both the player and Mobs as they both might have knockbacks)
+          if (node is Mob mob)
+            mob.KnockBack(forward, abilityResource.Value);
         }
       }
     }
-
+    AnimationPlayer.Play("default");
     isDoingAction = false;
     EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
   }

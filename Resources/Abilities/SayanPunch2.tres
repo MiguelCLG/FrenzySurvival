@@ -13,3 +13,4 @@ Value = 30
 Damage = 20
 kiRequired = 0
 isSuperAbility = false
+isRangedAbility = false

@@ -1,24 +1,26 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://dw7fcg3fx56fi"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://dw7fcg3fx56fi"]
 
 [ext_resource type="SpriteFrames" uid="uid://btyb8jf5dt6va" path="res://Assets/CharacterAssets/Sayan/Saiyan_4/Sayan_4.tres" id="1_uiwg0"]
 [ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_d0p8i"]
 [ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_12ucc"]
-[ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="4_vo51t"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_yiler"]
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="5_l5mhh"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="5_v8qak"]
 [ext_resource type="Texture2D" uid="uid://bvvyieyesorfc" path="res://Assets/CharacterAssets/Sayan/Saiyan_4/sayan4_portrait.png" id="5_w138o"]
+[ext_resource type="PackedScene" uid="uid://bhkhwuha4lequ" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="6_njoht"]
 
 [resource]
 script = ExtResource("5_v8qak")
-HP = 100
-MaxHP = 100
-Speed = 60
+HP = 320
+MaxHP = 320
+Speed = 80
 Shield = 0
 MaxShield = 0
-KI = 0
-MaxKI = 0
+KI = 100
+MaxKI = 100
 AnimatedFrames = ExtResource("1_uiwg0")
 Portrait = ExtResource("5_w138o")
-MobAttacks = Array[Object]([ExtResource("4_vo51t")])
+MobAttacks = Array[Object]([ExtResource("4_yiler"), ExtResource("5_l5mhh"), ExtResource("6_njoht")])
 LootTables = Array[Resource]([ExtResource("2_d0p8i"), ExtResource("3_12ucc")])
 ShowHealBar = true
 ExpDropValue = 200

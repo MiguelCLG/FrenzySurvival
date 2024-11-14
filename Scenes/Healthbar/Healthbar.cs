@@ -57,6 +57,7 @@ public partial class Healthbar : ProgressBar
   public void Die()
   {
     IsAlive = false;
+    Health = 0;
   }
 
 

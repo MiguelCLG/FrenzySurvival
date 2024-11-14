@@ -1,8 +1,9 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using Algos;
 using Godot;
-using System.Collections.Generic;
+using Godot.Collections;
+
 
 public partial class Mob : CharacterBody2D
 {
@@ -11,14 +12,16 @@ public partial class Mob : CharacterBody2D
   private Node2D target;
   public Healthbar healthbar;
   private AbilityManager abilityManager;
+  private Vector2 motion = Vector2.Zero;
 
   private bool isDoingAction = false;
   private double timer = 0;
   bool isGettingHurt = false;
 
-  private float stopDistance = 30f;
   private AudioManager audioManager;
+  private float stopDistance = 50f;
 
+  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
   public override void _Ready()
   {
@@ -42,6 +45,9 @@ public partial class Mob : CharacterBody2D
     if (!EventRegistry.HasEventBeenRegistered("OnComboFinished"))
       EventRegistry.RegisterEvent("OnComboFinished");
     EventSubscriber.SubscribeToEvent("OnComboFinished", ActionFinished);
+    if (!EventRegistry.HasEventBeenRegistered("IncreaseStatsFromDictionary"))
+      EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
+    EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     LoadAbilities();
   }
 
@@ -51,23 +57,20 @@ public partial class Mob : CharacterBody2D
     UpdatePositions();
     if (!mobResource.ShowHealBar)
       healthbar.Visible = false;
-    if (healthbar.IsAlive)
-    {
-      UpdateTarget();
-      if (mobResource.Speed > 0) // TODO: ??? Why? Must have been drunk, right?
-        Movement(delta);
-    }
-    else
-    {
-      Die();
-    }
+
   }
 
   public override void _PhysicsProcess(double delta)
   {
     if (AnimationPlayer.Animation == "death") return;
 
-    MoveAndSlide();
+    if (healthbar.IsAlive)
+    {
+      UpdateTarget();
+      if (mobResource.Speed > 0) // TODO: ??? Why? Must have been drunk, right? ahhh, pots.. got it
+        Movement(delta);
+    }
+    MoveAndCollide(motion, false, 1f, true);
   }
 
   private void UpdatePositions()
@@ -100,6 +103,11 @@ public partial class Mob : CharacterBody2D
   {
     var ability = abilityManager.GetNextAbility();
 
+    // Update velocity for all abilities
+    foreach (Ability _ability in GetNode("AbilityManager").GetChildren())
+    {
+      _ability.CurrentVelocity = motion * 100;
+    }
     if (ability.isRangedAbility)
     {
       // Calculate the distance on the X-axis to keep the mob at the specific range from the target
@@ -108,16 +116,16 @@ public partial class Mob : CharacterBody2D
       float distanceY = Mathf.Abs(target.Position.Y - Position.Y);
 
       // Check if mob is at the desired range on the X-axis and within the acceptable Y range
-      if (distanceX > targetRangeX || distanceY > 5.0f) // Allow small Y-axis variance
+      if (distanceX > targetRangeX || distanceY > 20.0f) // Allow small Y-axis variance
       {
         // Move towards the target X range and adjust Y to align with the player
         Vector2 moveDirection = new Vector2(target.Position.X - Position.X, target.Position.Y - Position.Y).Normalized();
 
         // OnlY move horizontally until the target range is reached, but also adjust Y if needed
-        Position += new Vector2(moveDirection.X, moveDirection.Y) * (float)(mobResource.Speed * delta);
+        motion = new Vector2(moveDirection.X, moveDirection.Y) * (float)(mobResource.Speed * delta);
 
         // Play the move animation
-        if (AnimationPlayer.Animation == "default")
+        if (!lockedAnimations.Contains(AnimationPlayer.Animation) && AnimationPlayer.Animation == "default")
         {
           AnimationPlayer.Play("move");
         }
@@ -140,13 +148,12 @@ public partial class Mob : CharacterBody2D
     }
     else
     {
-      // Melee ability logic (existing code)
       Vector2 direction = (target.Position - Position).Normalized();
       float distanceToTarget = Position.DistanceTo(target.Position);
 
       if (distanceToTarget > stopDistance)
       {
-        Position += direction * (float)(mobResource.Speed * delta);
+        motion = direction * (float)(mobResource.Speed * delta);
         if (AnimationPlayer.Animation == "default")
         {
           AnimationPlayer.Play("move");
@@ -173,27 +180,6 @@ public partial class Mob : CharacterBody2D
     abilityManager.SetFacingDirection(AnimationPlayer.FlipH ? -1 : 1);
   }
 
-  public void Attack()
-  {
-    if (target.HasNode("Healthbar"))
-    {
-      var targetHealthbar = target.GetNode<Healthbar>("Healthbar");
-      AnimationPlayer.Play("punch");
-      TimerUtils.CreateTimer(() =>
-        {
-          if (!targetHealthbar.IsQueuedForDeletion())
-            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
-              targetHealthbar,
-              1
-            });
-          //targetHealthbar.TakeDamage(mobResource.Abilities[0].Damage);
-          AnimationPlayer.Play("default");
-
-        }, this, .1f);
-
-    }
-  }
-
   public void UpdateTarget()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
@@ -202,15 +188,22 @@ public partial class Mob : CharacterBody2D
   public async void TakeDamage(object sender, object[] args)
   {
     if (AnimationPlayer.Animation == "death") return;
+
     if (args[0] is Healthbar healthbar)
     {
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
       {
-        SetProcess(false);
+        SetProcess(false); // Stop current processing
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
 
-        isGettingHurt = true;
+        // Cancel the current ability if one is being executed
+        if (isDoingAction)
+        {
+          abilityManager.CancelCurrentAbility(); // Cancel the ongoing ability
+          isDoingAction = false; // Reset the action flag
+        }
 
+        isGettingHurt = true;
         AnimationPlayer.Play("hurt");
         if (mobResource.characterSounds is not null)
         {
@@ -219,15 +212,19 @@ public partial class Mob : CharacterBody2D
             audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("hurt"), this);
         }
         await ToSignal(AnimationPlayer, "animation_finished");
+
         if (!healthbar.IsAlive)
         {
           Die();
           return;
         }
-        AnimationPlayer.Play("default");
-        isGettingHurt = true;
+        else
+        {
+          isGettingHurt = false;
+          AnimationPlayer.Play("default");
+          SetProcess(true); // Resume processing
+        }
 
-        SetProcess(true);
       }
     }
   }
@@ -235,24 +232,21 @@ public partial class Mob : CharacterBody2D
   public async void KnockBack(Vector2 dir, float frc)
   {
     if (AnimationPlayer.Animation == "death") return;
-    SetProcess(false);
-    SetPhysicsProcess(true);
     await ToSignal(GetTree().CreateTimer(.1f), "timeout");
-    Velocity = dir * frc;
+    motion = dir * frc;
     await ToSignal(GetTree().CreateTimer(1f), "timeout");
-    Velocity = Vector2.Zero;
-    SetPhysicsProcess(false);
-    SetProcess(true);
   }
 
   public void OnPlayerDeath(object sender, object[] args)
   {
+    AnimationPlayer.Play("default");
     SetProcess(false);
     SetPhysicsProcess(false);
   }
   public void ActionFinished(object sender, object[] args)
   {
     // Se nao vier do ability manager ou ability deste mob, entao retorna
+    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt") return;
     if (args[0] is Node2D node)
     {
       var isInChildren = abilityManager.GetChildren().Contains(node);
@@ -288,6 +282,35 @@ public partial class Mob : CharacterBody2D
     }
   }
 
+  public void IncreaseStatsFromDictionary(object sender, object[] args)
+  {
+    if (args[1] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+    }
+    if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
+    {
+
+      foreach (var kvp in statIncreases)
+      {
+        switch (kvp.Key)
+        {
+          case "ki":
+            int newKi = mobResource.KI + kvp.Value < mobResource.MaxKI ? mobResource.KI + kvp.Value : mobResource.MaxKI;
+            mobResource.KI = newKi;
+            abilityManager.SetKI(newKi);
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  }
+
   public void Die()
   {
     if (mobResource.characterSounds is not null)
@@ -297,15 +320,24 @@ public partial class Mob : CharacterBody2D
         audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("death"), this);
     }
     AnimationPlayer.Play("death");
+    UnsubscribeFromEvents();
+    SetProcess(false);
+    SetPhysicsProcess(false);
+    abilityManager.Deactivate();
     EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
   }
-  public override void _ExitTree()
+
+  public void UnsubscribeFromEvents()
   {
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("ActionFinished", ActionFinished);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", ActionFinished);
+    EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
 
-
+  }
+  public override void _ExitTree()
+  {
+    UnsubscribeFromEvents();
   }
 }
