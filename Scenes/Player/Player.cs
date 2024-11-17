@@ -151,7 +151,7 @@ public partial class Player : CharacterBody2D
     {
       // If there's input, set the velocity towards the new direction
       Velocity = direction;
-      if (!lockedAnimations.Contains(AnimationPlayer.Animation) && AnimationPlayer.Animation == "default") AnimationPlayer.Play("move");
+      if (!lockedAnimations.Contains(AnimationPlayer.Animation) && !isDoingAction) AnimationPlayer.Play("move");
     }
     else
     {

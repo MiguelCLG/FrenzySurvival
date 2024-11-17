@@ -33,7 +33,9 @@ public partial class Punch : Ability
     if (isDoingAction)
     {
       cancellationTokenSource.Cancel();  // Cancel the task
+      isDoingAction = false;
       EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+      base.Cancel();
     }
   }
 
@@ -45,7 +47,6 @@ public partial class Punch : Ability
 
       if (token.IsCancellationRequested) return;  // Handle early cancellation
 
-      AnimationPlayer.Play("default");
       cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);
       await ToSignal(cooldownTimer, "timeout");
 
@@ -82,10 +83,10 @@ public partial class Punch : Ability
           }
         }
 
-        if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
       }
+      if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
 
-      AnimationPlayer.Play("default");
     }
     catch (TaskCanceledException)
     {
@@ -96,7 +97,6 @@ public partial class Punch : Ability
     finally
     {
       isDoingAction = false;
-      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
   }
 

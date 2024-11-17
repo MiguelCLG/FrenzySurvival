@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Godot;
@@ -40,7 +41,8 @@ public partial class Ability : Node2D
   {
   }
 
-  public virtual void Cancel() { }
+  public virtual void Cancel() { GD.Print("Canceling ability: " + Name); }
+
   public virtual void SpendKi(int value)
   {
     EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary")

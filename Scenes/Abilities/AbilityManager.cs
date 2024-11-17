@@ -79,7 +79,7 @@ public partial class AbilityManager : Node2D
       }
       if (IsActive)
       {
-        await ToSignal(GetTree().CreateTimer(.5f), "timeout"); // da tempo para a proxima ability
+        await ToSignal(GetTree().CreateTimer(3f, true, true), "timeout");
         DoNextActionAsync();
       }
     }
@@ -96,7 +96,8 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync()
   {
-    if (AnimationPlayer.Animation == "death") return;
+    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt" || !IsActive) { GD.Print("Animation Playing: " + AnimationPlayer.Animation); return; }
+
 
     if (actionindex > abilityArray.Count - 1)
     {
@@ -125,7 +126,7 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync(object sender, object[] args)
   {
-    if (AnimationPlayer.Animation == "death") return;
+    if (AnimationPlayer.Animation == "death" || !IsActive) return;
 
     if (args[0] is Node2D node)
     {

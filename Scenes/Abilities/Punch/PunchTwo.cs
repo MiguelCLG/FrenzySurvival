@@ -19,7 +19,6 @@ public partial class PunchTwo : Ability
     {
       await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
       if (token.IsCancellationRequested) return;  // Handle early cancellation
-      AnimationPlayer.Play("default");
       cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);    // Use character's movement direction as forward direction
       await ToSignal(cooldownTimer, "timeout");
 
@@ -34,7 +33,7 @@ public partial class PunchTwo : Ability
 
       var results = spaceState.IntersectShape(query);
 
-      if (AnimationPlayer.Animation == "death") return;
+      if (AnimationPlayer.Animation == "death" || token.IsCancellationRequested) return;
       AnimationPlayer.Play("punch_2");
       audioManager?.Play(abilitySound, this);
 
@@ -63,8 +62,8 @@ public partial class PunchTwo : Ability
           }
         }
       }
-
-      AnimationPlayer.Play("default");
+      if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
     catch (TaskCanceledException)
     {
@@ -75,7 +74,6 @@ public partial class PunchTwo : Ability
     finally
     {
       isDoingAction = false;
-      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
 
   }
@@ -101,7 +99,10 @@ public partial class PunchTwo : Ability
     if (isDoingAction)
     {
       cancellationTokenSource.Cancel();  // Cancel the task
+      isDoingAction = false;
       EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+
+      base.Cancel();
     }
   }
 

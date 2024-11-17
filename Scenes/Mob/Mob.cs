@@ -62,15 +62,17 @@ public partial class Mob : CharacterBody2D
 
   public override void _PhysicsProcess(double delta)
   {
-    if (AnimationPlayer.Animation == "death") return;
+    if (AnimationPlayer.Animation == "death" || isGettingHurt) return;
 
     if (healthbar.IsAlive)
     {
       UpdateTarget();
-      if (mobResource.Speed > 0) // TODO: ??? Why? Must have been drunk, right? ahhh, pots.. got it
+      if (mobResource.Speed > 0 && !isDoingAction) // TODO: ??? Why? Must have been drunk, right? ahhh, pots.. got it
+      {
         Movement(delta);
+        MoveAndCollide(motion, false, 1f, true);
+      }
     }
-    MoveAndCollide(motion, false, 1f, true);
   }
 
   private void UpdatePositions()
@@ -125,7 +127,7 @@ public partial class Mob : CharacterBody2D
         motion = new Vector2(moveDirection.X, moveDirection.Y) * (float)(mobResource.Speed * delta);
 
         // Play the move animation
-        if (!lockedAnimations.Contains(AnimationPlayer.Animation) && AnimationPlayer.Animation == "default")
+        if (!lockedAnimations.Contains(AnimationPlayer.Animation))
         {
           AnimationPlayer.Play("move");
         }
@@ -154,17 +156,13 @@ public partial class Mob : CharacterBody2D
       if (distanceToTarget > stopDistance)
       {
         motion = direction * (float)(mobResource.Speed * delta);
-        if (AnimationPlayer.Animation == "default")
+        if (!lockedAnimations.Contains(AnimationPlayer.Animation))
         {
           AnimationPlayer.Play("move");
         }
       }
       else if (!isDoingAction)
       {
-        if (AnimationPlayer.Animation == "move")
-        {
-          AnimationPlayer.Play("default");
-        }
         isDoingAction = true;
         abilityManager.DoNextActionAsync();
       }
@@ -200,7 +198,6 @@ public partial class Mob : CharacterBody2D
         if (isDoingAction)
         {
           abilityManager.CancelCurrentAbility(); // Cancel the ongoing ability
-          isDoingAction = false; // Reset the action flag
         }
 
         isGettingHurt = true;
@@ -218,12 +215,13 @@ public partial class Mob : CharacterBody2D
           Die();
           return;
         }
-        else
+        else if (AnimationPlayer.Animation != "death")
         {
           isGettingHurt = false;
           AnimationPlayer.Play("default");
           SetProcess(true); // Resume processing
         }
+        isDoingAction = false; // Reset the action flag
 
       }
     }
