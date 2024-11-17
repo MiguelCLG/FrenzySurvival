@@ -201,14 +201,6 @@ public partial class Player : CharacterBody2D
 
   public void IncreaseStatsFromDictionary(object sender, object[] args)
   {
-    if (args[1] is Node2D node)
-    {
-      var isInChildren = abilityManager.GetChildren().Contains(node);
-      var isThisAbilityManager = node == abilityManager;
-      if (!isThisAbilityManager)
-        if (!isInChildren)
-          return;
-    }
     if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
     {
       var healthbar = GetNode<Healthbar>("Healthbar");
