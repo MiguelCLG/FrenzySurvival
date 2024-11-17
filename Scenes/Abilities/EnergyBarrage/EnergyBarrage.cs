@@ -1,43 +1,66 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class EnergyBarrage : Ability
 {
   [Export] public float spawnRate = .1f;
   [Export] PackedScene fireballScene;
-
+  private bool isDoingAction = false;
+  Node2D fireballSpawn;
   public override void _Ready()
   {
     base._Ready();
+    fireballSpawn = GetNode<Node2D>("FireballSpawn");
     EventRegistry.RegisterEvent("OnFireballHit");
     EventSubscriber.SubscribeToEvent("OnFireballHit", OnFireballHit);
   }
-  public async void SpawnFireballs()
+  public async void SpawnFireballs(CancellationToken token)
   {
-    for (int i = 0; i < abilityResource.Value; i++)
+    try
     {
+      await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+      if (token.IsCancellationRequested) return;  // Handle early cancellation
+      for (int i = 0; i < abilityResource.Value; i++)
+      {
 
-      AnimationPlayer.Play(i % 2 == 0 ? "punch" : "punch_2");
-      facingDirection = AnimationPlayer.FlipH ? -1 : 1;
-      var fireball = fireballScene.Instantiate<Fireball>();
-      fireball.targetGroup = targetGroup;
-      GetTree().Root.AddChild(fireball);
-      Node2D fireballSpawn = GetNode<Node2D>("FireballSpawn");
-      fireballSpawn.Position = new Vector2(Position.X * facingDirection, Position.Y);
-      fireball.GlobalPosition = fireballSpawn.GlobalPosition;
-      fireball.SetFacingDirection(facingDirection);
-      await ToSignal(GetTree().CreateTimer(spawnRate, false, true), "timeout");
-      audioManager?.Play(abilitySound, this);
-      fireball.StartProcess();
+        if (token.IsCancellationRequested) return;  // Handle early cancellation
+        AnimationPlayer.Play(i % 2 == 0 ? "punch" : "punch_2");
+        facingDirection = AnimationPlayer.FlipH ? -1 : 1;
+        var fireball = fireballScene.Instantiate<Fireball>();
+        fireball.targetGroup = targetGroup;
+        GetTree().Root.AddChild(fireball);
+        fireballSpawn.Position = new Vector2(Position.X * facingDirection, Position.Y);
+        fireball.GlobalPosition = fireballSpawn.GlobalPosition;
+        fireball.SetFacingDirection(facingDirection);
+        await ToSignal(GetTree().CreateTimer(spawnRate, false, true), "timeout");
+        audioManager?.Play(abilitySound, this);
+        fireball.StartProcess();
+      }
+
+      AnimationPlayer.Play("default");
+      await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
+      if (token.IsCancellationRequested) return;  // Handle early cancellation
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
+    catch (TaskCanceledException)
+    {
+      cooldownTimer.Free();
 
-    AnimationPlayer.Play("default");
-    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
+    }
+    finally
+    {
+      isDoingAction = false;
 
+    }
   }
   public override void Action()
   {
-    CallDeferred("SpawnFireballs");  // Perform the cone detection
+    if (isDoingAction) return;  // Prevent multiple actions at once
+    isDoingAction = true;
+    cancellationTokenSource = new CancellationTokenSource();
+    CancellationToken token = cancellationTokenSource.Token;
+    currentTask = Task.Run(() => SpawnFireballs(token), token);
   }
 
   public void OnFireballHit(object sender, object[] args)
@@ -61,6 +84,16 @@ public partial class EnergyBarrage : Ability
     }
   }
 
+  public override void Cancel()
+  {
+    if (isDoingAction)
+    {
+      cancellationTokenSource.Cancel();  // Cancel the task
+      isDoingAction = false;
+      EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+      base.Cancel();
+    }
+  }
 
   public override void _ExitTree()
   {
