@@ -63,18 +63,29 @@ alignment = 1
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 75)
 layout_mode = 2
+focus_neighbor_top = NodePath("../QuitGameButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+focus_next = NodePath("../OptionsButton")
+focus_previous = NodePath("../QuitGameButton")
 text = "START GAME"
 
 [node name="OptionsButton" type="Button" parent="PanelContainer/MainVertical/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 75)
 layout_mode = 2
+focus_neighbor_top = NodePath("../StartGameButton")
+focus_next = NodePath("../QuitGameButton")
+focus_previous = NodePath("../StartGameButton")
 text = "Options"
 
 [node name="QuitGameButton" type="Button" parent="PanelContainer/MainVertical/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(150, 75)
 layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../StartGameButton")
+focus_next = NodePath("../StartGameButton")
+focus_previous = NodePath("../OptionsButton")
 text = "Quit"
 
 [node name="Spacer" type="VBoxContainer" parent="PanelContainer/MainVertical"]
@@ -99,12 +110,18 @@ grow_horizontal = 0
 grow_vertical = 0
 texture = SubResource("AnimatedTexture_y8cbf")
 
+[connection signal="focus_entered" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHover" binds= ["Start"]]
+[connection signal="focus_exited" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHoverExit" binds= ["Start"]]
 [connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHover" binds= ["Start"]]
 [connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnHoverExit" binds= ["Start"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/StartGameButton" to="." method="OnStartPressed"]
+[connection signal="focus_entered" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHover" binds= ["Options"]]
+[connection signal="focus_exited" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHoverExit" binds= ["Options"]]
 [connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHover" binds= ["Options"]]
 [connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnHoverExit" binds= ["Options"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/OptionsButton" to="." method="OnOptionsPressed"]
+[connection signal="focus_entered" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHover" binds= ["Quit"]]
+[connection signal="focus_exited" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHoverExit" binds= ["Quit"]]
 [connection signal="mouse_entered" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHover" binds= ["Quit"]]
 [connection signal="mouse_exited" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnHoverExit" binds= ["Quit"]]
 [connection signal="pressed" from="PanelContainer/MainVertical/VBoxContainer/QuitGameButton" to="." method="OnQuitPressed"]

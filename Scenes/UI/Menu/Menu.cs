@@ -27,8 +27,25 @@ public partial class Menu : Control
     tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f); */
     audioManager = GetNode<AudioManager>("/root/AudioManager");
     audioManager?.Play(menuSounds.GetValueOrDefault("music"), this);
-
+    StartButton.GrabFocus();
   }
+
+  private void OnInputEvent(InputEvent @event)
+  {
+    
+    Node focusOwner = GetViewport().GuiGetFocusOwner();
+    if(focusOwner is null || focusOwner is not Button) StartButton.GrabFocus();
+
+    if (@event is InputEventKey eventKey && eventKey.Pressed && eventKey.IsAction("ui_accept"))
+    {
+      // This gets the node that has focus, and if its a button it will press it.
+      if (focusOwner is Button button)
+      {
+        button.EmitSignal("pressed");
+      }
+    }
+  }
+
   public override void _ExitTree()
   {
       // Stop any sound associated with this node
