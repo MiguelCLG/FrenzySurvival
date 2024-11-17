@@ -59,7 +59,11 @@ public partial class Menu : Control
   public void OnOptionsPressed() 
   { 
     audioManager?.Play(menuSounds.GetValueOrDefault("HoverClick"), this);
-    GD.Print("NOT IMPLEMENTED"); 
+    var audioOptions = GetNode<Control>("%AudioOptionsScreen");
+    if(audioOptions is AudioOptionsScreen sfxOptions)
+    {
+      sfxOptions.Visible = true;
+    }
   }
   public void OnQuitPressed() { GetTree().Quit(); }
   
@@ -108,4 +112,5 @@ public partial class Menu : Control
         break;
     }
   }
+
 }

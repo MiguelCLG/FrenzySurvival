@@ -59,6 +59,7 @@ public partial class AudioOptionsScreen : PanelContainer
     private void ReturnToPreviousMenu()
     {
         this.Hide();
-        PreviousUIElement.Show();
+        if(PreviousUIElement is not null)
+            PreviousUIElement.Show();
     }
 }
