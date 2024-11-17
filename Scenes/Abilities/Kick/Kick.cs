@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 public partial class Kick : Ability
 {
@@ -10,58 +12,68 @@ public partial class Kick : Ability
 
 
   // Call this function to detect objects in the cone
-  public async void DetectInCone()
+  public async Task DetectInCone(CancellationToken token)
   {
-    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
-    AnimationPlayer.Play("default");
-    cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);    // Use character's movement direction as forward direction
-    await ToSignal(cooldownTimer, "timeout");
+    try{
+      await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+        if (token.IsCancellationRequested) return;  // Handle early cancellation
 
-    Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
+      cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);    // Use character's movement direction as forward direction
+      await ToSignal(cooldownTimer, "timeout");
 
-    // Get all bodies in a circular range (optimized with a CollisionShape2D)
-    var spaceState = GetWorld2D().DirectSpaceState;
-    var query = new PhysicsShapeQueryParameters2D();
-    query.Shape = new CircleShape2D { Radius = coneRange };
-    query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
+      Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
 
-    var results = spaceState.IntersectShape(query);
-    if (AnimationPlayer.Animation == "death") return;
-    AnimationPlayer.Play("kick");
-    audioManager?.Play(abilitySound, this);
+      // Get all bodies in a circular range (optimized with a CollisionShape2D)
+      var spaceState = GetWorld2D().DirectSpaceState;
+      var query = new PhysicsShapeQueryParameters2D();
+      query.Shape = new CircleShape2D { Radius = coneRange };
+      query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
 
-    foreach (var result in results)
-    {
-      if (result["collider"] is Variant body)
+      var results = spaceState.IntersectShape(query);
+      if (AnimationPlayer.Animation == "death") return;
+      AnimationPlayer.Play("kick");
+      audioManager?.Play(abilitySound, this);
+
+      foreach (var result in results)
       {
-        Node2D node = body.As<Node2D>();
-        // The object is within the cone, call its method
-        if (!node.IsInGroup(targetGroup))
-          continue;
-        var healthbar = node.GetNode<Healthbar>("Healthbar");
-        // Vector from the character to the object
-        Vector2 toBody = (node.GlobalPosition - GlobalPosition).Normalized();
-
-        // Check if the object is within the cone
-        float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
-
-        if (Math.Abs(angleToBody) <= coneAngleDegrees)
+        if (result["collider"] is Variant body)
         {
-          // Call Take Damage
-          if (healthbar.IsAlive)
-            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
-              healthbar,
-              abilityResource.Damage
-            });
-          //TODO: Make the knockback for player (maybe create an Interface to acomudate both the player and Mobs as they both might have knockbacks)
-          if (node is Mob mob)
-            mob.KnockBack(forward, abilityResource.Value);
+          Node2D node = body.As<Node2D>();
+          // The object is within the cone, call its method
+          if (!node.IsInGroup(targetGroup))
+            continue;
+          var healthbar = node.GetNode<Healthbar>("Healthbar");
+          // Vector from the character to the object
+          Vector2 toBody = (node.GlobalPosition - GlobalPosition).Normalized();
+
+          // Check if the object is within the cone
+          float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
+
+          if (Math.Abs(angleToBody) <= coneAngleDegrees)
+          {
+            // Call Take Damage
+            if (healthbar.IsAlive)
+              EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+                healthbar,
+                abilityResource.Damage
+              });
+            //TODO: Make the knockback for player (maybe create an Interface to acomudate both the player and Mobs as they both might have knockbacks)
+            if (node is Mob mob)
+              mob.KnockBack(forward, abilityResource.Value);
+          }
         }
       }
+      AnimationPlayer.Play("default");
+      if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
-    AnimationPlayer.Play("default");
-    isDoingAction = false;
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
+    catch(TaskCanceledException){
+      cooldownTimer.Free();
+
+    }
+    finally{
+      isDoingAction = false;
+    }
   }
 
   public override void _Process(double delta)
@@ -71,10 +83,25 @@ public partial class Kick : Ability
 
   public override void Action()
   {
+    if (isDoingAction) return;  // Prevent multiple actions at once
+
     isDoingAction = true;
-    CallDeferred("DetectInCone");  // Perform the cone detection
+    cancellationTokenSource = new CancellationTokenSource();
+    CancellationToken token = cancellationTokenSource.Token;
+
+    currentTask = Task.Run(() => DetectInCone(token), token);
   }
 
+public override void Cancel()
+  {
+    if (isDoingAction)
+    {
+      cancellationTokenSource.Cancel();  // Cancel the task
+      isDoingAction = false;
+      EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+      base.Cancel();
+    }
+  }
   public override void _Draw()
   {
 
