@@ -26,6 +26,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 alignment = 1
 
+[node name="Spacer4" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
 [node name="Label" type="Label" parent="VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 6
@@ -98,3 +103,24 @@ max_value = 0.0
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
+
+[node name="Spacer2" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("1_xlc62")
+text = "Back"
+
+[node name="Spacer3" type="Control" parent="VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.3
+
+[connection signal="pressed" from="VBoxContainer2/HBoxContainer/Button" to="." method="ReturnToPreviousMenu"]

@@ -8,6 +8,12 @@ public partial class AudioOptionsScreen : PanelContainer
     [Export] private Slider SliderMusic;
     [Export] private Slider SliderSFX;
     [Export] private Slider SliderUIFX;
+    
+    /// <summary>
+    ///  This should be used to define the UI Element that called the AudioOptions, this way when we exit the AudioOptions we can
+    /// show the previous UI.
+    /// </summary>
+    [Export] private Control PreviousUIElement;
 
 	public override void _Ready()
 	{
@@ -42,5 +48,17 @@ public partial class AudioOptionsScreen : PanelContainer
     private void OnSliderUIFXValueChanged(double value)
     {
         AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex("Ui Effects"), (float)value);
+    }
+
+    public override void _UnhandledKeyInput(InputEvent @event)
+    {
+        if (Input.IsActionPressed("ui_cancel"))
+            ReturnToPreviousMenu();
+    }
+
+    private void ReturnToPreviousMenu()
+    {
+        this.Hide();
+        PreviousUIElement.Show();
     }
 }
