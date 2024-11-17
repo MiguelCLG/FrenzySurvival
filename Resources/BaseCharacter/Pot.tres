@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=4 format=3 uid="uid://bhfenastadlvk"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://bhfenastadlvk"]
 
 [ext_resource type="SpriteFrames" uid="uid://k2brblrxuy01" path="res://Assets/Pot/Pot.tres" id="2_7h2jt"]
 [ext_resource type="Resource" uid="uid://c33iqisjm77do" path="res://Resources/LootTables/PotLootTable.tres" id="3_7ript"]
+[ext_resource type="Resource" uid="uid://lcsjqfcgtf42" path="res://Resources/Sound/PotBreaking.tres" id="3_bgiy4"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_kg0n4"]
 
 [resource]
@@ -13,8 +14,12 @@ Shield = 0
 MaxShield = 0
 KI = 0
 MaxKI = 0
-AnimatedFrames = ExtResource("2_7h2jt")
-ShowHealBar = false
 MobAttacks = null
 LootTables = Array[Resource]([ExtResource("3_7ript")])
+ShowHealBar = false
 ExpDropValue = 0
+AnimatedFrames = ExtResource("2_7h2jt")
+characterSounds = {
+"death": null,
+"hurt": ExtResource("3_bgiy4")
+}

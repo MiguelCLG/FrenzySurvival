@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://o47vwc8o2aoo"]
+[gd_scene load_steps=10 format=3 uid="uid://o47vwc8o2aoo"]
 
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_nhgjq"]
 [ext_resource type="Script" path="res://Scenes/UI/CharacterSelection/CharacterSelectionScreen.cs" id="2_8m2ml"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://crf7aclcjelu7" path="res://Scenes/UI/CharacterSelection/CharacterSlot.tscn" id="6_64h8v"]
 [ext_resource type="Resource" uid="uid://yakdss6h2uva" path="res://Resources/CharacterSelection/CS_Namekian_3/CS_Namekian_3.tres" id="6_cnkqj"]
 [ext_resource type="Resource" uid="uid://cq5jicavqwu6m" path="res://Resources/CharacterSelection/CS_Freeza_Soldier_1/CS_Freeza_Soldier_1.tres" id="7_4hdk5"]
+[ext_resource type="Resource" uid="uid://cw1jq1gnltsdd" path="res://Resources/Sound/HoverClick.tres" id="9_ouqde"]
 
 [node name="CharacterSelectionScreen" type="Control"]
 process_mode = 2
@@ -21,6 +22,9 @@ theme = ExtResource("1_nhgjq")
 script = ExtResource("2_8m2ml")
 CharacterSelectionResource = Array[Object]([ExtResource("3_7i55f"), ExtResource("4_q5mft"), ExtResource("5_r1fs0"), ExtResource("6_cnkqj"), ExtResource("7_4hdk5")])
 CharacterSelectScene = ExtResource("6_64h8v")
+characterSelectionSounds = {
+"HoverClick": ExtResource("9_ouqde")
+}
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

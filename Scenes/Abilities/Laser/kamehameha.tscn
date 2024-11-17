@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://4cgaxihbvw23"]
+[gd_scene load_steps=30 format=3 uid="uid://4cgaxihbvw23"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_k7mjl"]
 [ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="2_byprf"]
+[ext_resource type="Resource" uid="uid://duh47nf2yr13n" path="res://Resources/Sound/KamehamehaSound.tres" id="3_2sq6y"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="3_tbm1m"]
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="4_l4nt2"]
 [ext_resource type="Gradient" uid="uid://dfpvudfglp1ti" path="res://Assets/Gradients/Blue_Gradient.tres" id="5_b0prk"]
@@ -116,6 +117,7 @@ size = Vector2(23, 20)
 script = ExtResource("1_k7mjl")
 EnergyBallScale = Vector2(0.5, 0.5)
 abilityResource = ExtResource("2_byprf")
+abilitySound = ExtResource("3_2sq6y")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
 unique_name_in_owner = true

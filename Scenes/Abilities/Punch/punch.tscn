@@ -1,11 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://btuvr7gvcu8w8"]
+[gd_scene load_steps=4 format=3 uid="uid://btuvr7gvcu8w8"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Punch/Punch.cs" id="1_nwbql"]
 [ext_resource type="Resource" uid="uid://bsuwsnal5te0r" path="res://Resources/Abilities/SayanPunch.tres" id="2_hp4k4"]
+[ext_resource type="Resource" uid="uid://yxpx7udhdnk" path="res://Resources/Sound/Punch.tres" id="3_ygq18"]
 
 [node name="Punch" type="Node2D"]
 script = ExtResource("1_nwbql")
 abilityResource = ExtResource("2_hp4k4")
+abilitySound = ExtResource("3_ygq18")
 
 [node name="AbilityArea" type="Area2D" parent="."]
 unique_name_in_owner = true

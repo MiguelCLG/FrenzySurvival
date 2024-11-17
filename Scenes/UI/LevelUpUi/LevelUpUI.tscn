@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddm8b3qk8htao"]
+[gd_scene load_steps=7 format=3 uid="uid://ddm8b3qk8htao"]
 
 [ext_resource type="Script" path="res://Scenes/UI/LevelUpUi/LevelUpUi.cs" id="1_3h8jk"]
 [ext_resource type="Theme" uid="uid://chn7yd7a3v1gk" path="res://Themes/White_UI.tres" id="1_a8h6o"]
-[ext_resource type="PackedScene" uid="uid://chtn7ge3t1j1v" path="res://Scenes/UI/LevelUpUi/AbilityUIButton.tscn" id="3_daiv3"]
+[ext_resource type="PackedScene" uid="uid://bq0odfgx3qteh" path="res://Scenes/UI/LevelUpUi/AbilityUIButton.tscn" id="3_daiv3"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="3_jbx48"]
-[ext_resource type="PackedScene" uid="uid://dlklg2bwfao0p" path="res://Scenes/UI/LevelUpUi/AbilityRowUI.tscn" id="3_kw6pi"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/LevelUpUi/AbilityRowUI.tscn" id="3_kw6pi"]
+[ext_resource type="Resource" uid="uid://cw1jq1gnltsdd" path="res://Resources/Sound/HoverClick.tres" id="5_6nllc"]
 
 [node name="LevelUpUI" type="CanvasLayer"]
 process_mode = 2
@@ -12,6 +13,9 @@ script = ExtResource("1_3h8jk")
 abilityRow = ExtResource("3_kw6pi")
 abilityUIButton = ExtResource("3_daiv3")
 playerResource = ExtResource("3_jbx48")
+levelUpSelectionSounds = {
+"HoverClick": ExtResource("5_6nllc")
+}
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15

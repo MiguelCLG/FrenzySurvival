@@ -1,12 +1,17 @@
-using Algos;
 using Godot;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Collections.Generic;
+
 
 public partial class Main : Node2D
 {
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
+  [Export] Godot.Collections.Dictionary<string, AudioOptionsResource> mainSounds;
+  
+  private AudioManager audioManager;
+
   LevelUpUi levelUpUi;
   CharacterSelectionScreen characterSelectionScreen;
   Node2D playerReference;
@@ -33,7 +38,10 @@ public partial class Main : Node2D
     EventSubscriber.SubscribeToEvent("CharacterSelected", PlayerCharacterSelected);
     EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
+
     GetTree().Paused = true;
+    audioManager = GetNode<AudioManager>("/root/AudioManager");
+    audioManager?.Play(mainSounds.GetValueOrDefault("music"), this);
     characterSelectionScreen.Visible = true;
   }
 
@@ -135,6 +143,7 @@ public partial class Main : Node2D
 
   public void PauseGame()
   {
+    audioManager.PauseAllSounds();
     GetTree().Paused = true;
   }
 
@@ -173,9 +182,18 @@ public partial class Main : Node2D
     }
     GetTree().CallDeferred("reload_current_scene");
   }
+  public void Options()
+  {
+    var audioOptions = GetNode<CanvasLayer>("%UI").GetNode<Control>("%AudioOptionsScreen");
+    if(audioOptions is AudioOptionsScreen sfxOptions)
+    {
+      sfxOptions.Visible = true;
+    }
+  }
   public void Exit()
   {
     GetTree().Paused = false;
+    audioManager.UnpauseAllSounds();
     GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
   }
 
@@ -191,10 +209,16 @@ public partial class Main : Node2D
   {
     GetTree().Paused = !GetTree().Paused;
     UI.GetNode<Control>("%PauseScreen").Visible = GetTree().Paused;
+    if(GetTree().Paused)
+      audioManager.PauseAllSoundsFromBus("Sound Effects");
+    else
+      audioManager.UnpauseAllSounds();  // TODO: Unpause all from bus.
+
   }
 
   public override void _ExitTree()
   {
+    audioManager?.StopSound(this);
     EventSubscriber.UnsubscribeFromEvent("OnMobDeath", OnMobDeath);
     EventSubscriber.UnsubscribeFromEvent("OnPlayerDeath", OnPlayerDeath);
     EventSubscriber.UnsubscribeFromEvent("CharacterSelected", PlayerCharacterSelected);
@@ -205,5 +229,6 @@ public partial class Main : Node2D
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("OnComboFinished");
     EventRegistry.UnregisterEvent("CharacterSelected");
+    //audioManager?.StopSound(this);
   }
 }

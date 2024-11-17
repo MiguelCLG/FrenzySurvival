@@ -1,7 +1,7 @@
 using System;
 using Algos;
 using Godot;
-
+using System.Collections.Generic;
 
 public partial class Mob : CharacterBody2D
 {
@@ -11,6 +11,7 @@ public partial class Mob : CharacterBody2D
   double timer = 0;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
   private float stopDistance = 30f;
+  private AudioManager audioManager;
 
   public override void _Ready()
   {
@@ -25,6 +26,7 @@ public partial class Mob : CharacterBody2D
     if (!EventRegistry.HasEventBeenRegistered("OnPlayerDeath"))
       EventRegistry.RegisterEvent("OnPlayerDeath");
     EventSubscriber.SubscribeToEvent("OnPlayerDeath", OnPlayerDeath);
+    audioManager = GetNode<AudioManager>("/root/AudioManager");
 
   }
 
@@ -145,14 +147,18 @@ public partial class Mob : CharacterBody2D
         SetProcess(false);
         healthbar.TakeDamage(float.Parse(args[1].ToString()));
         AnimationPlayer.Play("hurt");
+        if(mobResource.characterSounds is not null)
+        {
+          AudioOptionsResource sound = mobResource.characterSounds.GetValueOrDefault("hurt");
+          if(sound is not null)
+            audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("hurt"), this);
+        }
         await ToSignal(AnimationPlayer, "animation_finished");
         if (!healthbar.IsAlive)
         {
           Die();
           return;
         }
-
-
         AnimationPlayer.Play("default");
         SetProcess(true);
       }
@@ -203,8 +209,13 @@ public partial class Mob : CharacterBody2D
 
   public void Die()
   {
+    if(mobResource.characterSounds is not null)
+    {
+      AudioOptionsResource sound = mobResource.characterSounds.GetValueOrDefault("death");
+      if(sound is not null)
+        audioManager?.Play(mobResource.characterSounds.GetValueOrDefault("death"), this);
+    }
     AnimationPlayer.Play("death");
-
     EventRegistry.GetEventPublisher("OnMobDeath").RaiseEvent(new object[] { this });
   }
   public override void _ExitTree()

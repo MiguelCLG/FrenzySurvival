@@ -31,6 +31,8 @@ public partial class Punch : Ability
     var results = spaceState.IntersectShape(query);
 
     AnimationPlayer.Play("punch");
+    audioManager?.Play(abilitySound, this);
+    
     foreach (var result in results)
     {
       if (result["collider"] is Variant body)

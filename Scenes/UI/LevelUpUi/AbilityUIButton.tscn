@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://chtn7ge3t1j1v"]
+[gd_scene load_steps=4 format=3 uid="uid://bq0odfgx3qteh"]
 
 [ext_resource type="Texture2D" uid="uid://b4hrhccq4e2e0" path="res://Assets/Icons/punch.png" id="1_bsls2"]
 [ext_resource type="Script" path="res://Scenes/UI/LevelUpUi/AbilityUiButton.cs" id="1_n7dwt"]
@@ -94,6 +94,7 @@ text = "KI: 0"
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="PanelContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_i11o4")
 theme_type_variation = &"FlatButton"

@@ -8,6 +8,7 @@ public partial class Kick : Ability
   [Export] private float coneAngleDegrees = 45.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 100.0f;         // Maximum range of the cone
 
+
   // Call this function to detect objects in the cone
   public async void DetectInCone()
   {
@@ -27,6 +28,8 @@ public partial class Kick : Ability
     var results = spaceState.IntersectShape(query);
 
     AnimationPlayer.Play("kick");
+    audioManager?.Play(abilitySound, this);
+
     foreach (var result in results)
     {
       if (result["collider"] is Variant body)
