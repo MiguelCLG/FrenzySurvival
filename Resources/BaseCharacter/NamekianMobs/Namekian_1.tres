@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://cjsxx5bkrptff"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://cjsxx5bkrptff"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_tml6u"]
 [ext_resource type="SpriteFrames" uid="uid://bq5l07jlroepc" path="res://Assets/CharacterAssets/Namekian/Namekian_1.tres" id="2_2ygy4"]
@@ -6,10 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="4_1m1fc"]
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_j525w"]
 [ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="4_o5cbc"]
-[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_rwjwx"]
 [ext_resource type="Texture2D" uid="uid://gmqvhpy8ifiw" path="res://Assets/CharacterAssets/Namekian/Namek_1/namek1_portrait.png" id="5_eltx7"]
-[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="5_j05gk"]
-[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="6_u688a"]
 
 [resource]
 script = ExtResource("1_tml6u")
