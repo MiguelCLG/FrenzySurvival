@@ -69,6 +69,8 @@ public partial class PunchTwo : Ability
     {
       // Handle task cancellation, if needed
       GD.Print("Ability was canceled");
+      if (cooldownTimer.TimeLeft > 0)
+        await ToSignal(cooldownTimer, "timeout");
       cooldownTimer.Free();
     }
     finally

@@ -221,8 +221,6 @@ public partial class Mob : CharacterBody2D
           AnimationPlayer.Play("default");
           SetProcess(true); // Resume processing
         }
-        isDoingAction = false; // Reset the action flag
-
       }
     }
   }

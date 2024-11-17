@@ -80,7 +80,7 @@ public partial class AbilityManager : Node2D
       if (IsActive)
       {
         await ToSignal(GetTree().CreateTimer(3f, true, true), "timeout");
-        DoNextActionAsync();
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
       }
     }
   }
