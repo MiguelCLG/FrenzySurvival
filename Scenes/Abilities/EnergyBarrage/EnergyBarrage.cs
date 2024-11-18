@@ -6,7 +6,6 @@ public partial class EnergyBarrage : Ability
 {
   [Export] public float spawnRate = .1f;
   [Export] PackedScene fireballScene;
-  private bool isDoingAction = false;
   Node2D fireballSpawn;
   public override void _Ready()
   {
@@ -46,18 +45,11 @@ public partial class EnergyBarrage : Ability
     catch (TaskCanceledException)
     {
       cooldownTimer.Free();
-
     }
-    finally
-    {
-      isDoingAction = false;
 
-    }
   }
   public override void Action()
   {
-    if (isDoingAction) return;  // Prevent multiple actions at once
-    isDoingAction = true;
     cancellationTokenSource = new CancellationTokenSource();
     CancellationToken token = cancellationTokenSource.Token;
     currentTask = Task.Run(() => SpawnFireballs(token), token);
@@ -86,14 +78,12 @@ public partial class EnergyBarrage : Ability
 
   public override void Cancel()
   {
-    if (isDoingAction)
-    {
-      cancellationTokenSource.Cancel();  // Cancel the task
-      isDoingAction = false;
-      EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
-      base.Cancel();
-    }
+
+    cancellationTokenSource.Cancel();  // Cancel the task
+    EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+    base.Cancel();
   }
+
 
   public override void _ExitTree()
   {

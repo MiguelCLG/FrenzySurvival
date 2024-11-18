@@ -57,7 +57,6 @@ public partial class Mob : CharacterBody2D
     UpdatePositions();
     if (!mobResource.ShowHealBar)
       healthbar.Visible = false;
-
   }
 
   public override void _PhysicsProcess(double delta)
@@ -99,6 +98,7 @@ public partial class Mob : CharacterBody2D
     abilityManager.UnsubscribeFromEvents();
     abilityManager.SetKI(mobResource.KI);
     abilityManager.SetTargetGroup("Player");
+    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { mobResource.KI, mobResource.MaxKI, this });
   }
 
   private void Movement(double delta)
@@ -173,9 +173,12 @@ public partial class Mob : CharacterBody2D
     if (timer > 1)
     {
       abilityManager.SetKI(abilityManager.GetKI() + 1); // regenerate ki 1/second
+      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { abilityManager.GetKI(), this });
+
       timer = 0;
     }
     abilityManager.SetFacingDirection(AnimationPlayer.FlipH ? -1 : 1);
+    EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { AnimationPlayer.FlipH ? -1 : 1, this });
   }
 
   public void UpdateTarget()
@@ -252,7 +255,6 @@ public partial class Mob : CharacterBody2D
           return;
       isDoingAction = false;
     }
-
   }
 
   public void HandleLootDrop()
@@ -297,8 +299,8 @@ public partial class Mob : CharacterBody2D
         {
           case "ki":
             int newKi = mobResource.KI + kvp.Value < mobResource.MaxKI ? mobResource.KI + kvp.Value : mobResource.MaxKI;
-            mobResource.KI = newKi;
             abilityManager.SetKI(newKi);
+            EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { abilityManager.GetKI(), this });
             break;
           default:
             break;

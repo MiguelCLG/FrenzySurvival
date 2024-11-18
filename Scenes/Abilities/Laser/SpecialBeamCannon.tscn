@@ -1,8 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://bo40kckcbb26x"]
+[gd_scene load_steps=31 format=3 uid="uid://bo40kckcbb26x"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_huaqd"]
 [ext_resource type="Resource" uid="uid://cml34wi6dmdsp" path="res://Resources/Abilities/SpecialBeamCannon.tres" id="2_ybset"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="3_24pw2"]
+[ext_resource type="Resource" uid="uid://duh47nf2yr13n" path="res://Resources/Sound/KamehamehaSound.tres" id="3_jhhpn"]
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="4_dexg6"]
 [ext_resource type="Gradient" uid="uid://dap1uteldl5dg" path="res://Assets/Gradients/Yellow_Purple_Gradient.tres" id="5_a2v3f"]
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="6_ptjfg"]
@@ -120,6 +121,7 @@ script = ExtResource("1_huaqd")
 EnergyBallPosition = Vector2(-8, -6)
 EnergyBallScale = Vector2(0.1, 0.2)
 abilityResource = ExtResource("2_ybset")
+abilitySound = ExtResource("3_jhhpn")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
 unique_name_in_owner = true

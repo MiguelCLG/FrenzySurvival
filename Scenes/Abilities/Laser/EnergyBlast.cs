@@ -1,4 +1,6 @@
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
 
 public partial class EnergyBlast : Ability
@@ -36,41 +38,60 @@ public partial class EnergyBlast : Ability
     energyBallArea = energyBall.GetNode<Area2D>("CollisionArea");
     energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ColorRamp = energyBlastGradient;
 
-    CallDeferred("StartLaunchAsync");
+    cancellationTokenSource = new CancellationTokenSource();
+    CancellationToken token = cancellationTokenSource.Token;
+    currentTask = Task.Run(() => StartLaunchAsync(token), token);
   }
-  public async void StartLaunchAsync()
+  public override void Cancel()
   {
-    energyBallArea.Scale = Vector2.Zero;
-    energyBall.GetNode<CpuParticles2D>("CPUParticles2D").Emitting = true;
-    AnimationPlayer?.Play("beam_charge");
-    Vector2 energyBallPosition = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
-    energyBall.Position = energyBallPosition;
 
-    await ToSignal(GetTree().CreateTimer(2f, false, true), "timeout");
-    energyBallArea.Scale = EnergyBallScale;
-
-    RemoveChild(energyBall);
-    GetTree().Root.AddChild(energyBall);
-    energyBall.GlobalPosition = GlobalPosition + new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y);
-
-    EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { true }); // locks character in animation
-    direction = facingDirection;
-    AnimationPlayer?.Play("beam");
-    SetProcess(true);
-    await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
-    Destroy();
-    EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { false }); // unlocks character in animation
-    AnimationPlayer?.Play("default");
-    await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
-    EventRegistry.GetEventPublisher("ActionFinished")?.RaiseEvent(new object[] { this });
-
+    cancellationTokenSource.Cancel();  // Cancel the task
+    energyBall.DeactivateEnergyBall();
+    EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+    base.Cancel();
   }
-
-  public override void _UnhandledInput(InputEvent @event)
+  public async void StartLaunchAsync(CancellationToken token)
   {
-    if (@event is InputEventMouseButton)
-      StartLaunchAsync();
+    try
+    {
+
+      await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+      if (token.IsCancellationRequested) return;
+      energyBallArea.Scale = Vector2.Zero;
+      energyBall.GetNode<CpuParticles2D>("CPUParticles2D").Emitting = true;
+      AnimationPlayer?.Play("beam_charge");
+      Vector2 energyBallPosition = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
+      energyBall.Position = energyBallPosition;
+
+      await ToSignal(GetTree().CreateTimer(2f, false, true), "timeout");
+      if (token.IsCancellationRequested) return;
+      energyBallArea.Scale = EnergyBallScale;
+
+      RemoveChild(energyBall);
+      GetTree().Root.AddChild(energyBall);
+      energyBall.GlobalPosition = GlobalPosition + new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y);
+
+      EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { true }); // locks character in animation
+      direction = facingDirection;
+      AnimationPlayer?.Play("beam");
+      SetProcess(true);
+      await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
+      Destroy();
+      EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { false }); // unlocks character in animation
+      AnimationPlayer?.Play("default");
+      await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
+      if (token.IsCancellationRequested) return;
+      EventRegistry.GetEventPublisher("ActionFinished")?.RaiseEvent(new object[] { this });
+    }
+    catch (TaskCanceledException)
+    {
+      cooldownTimer.Free();
+      energyBall.DeactivateEnergyBall();
+      energyBall.GetParent().RemoveChild(energyBall);
+    }
+
   }
+
   public void Destroy()
   {
     SetProcess(false);
@@ -104,6 +125,11 @@ public partial class EnergyBlast : Ability
   {
     if (IsInstanceValid(energyBall) && !energyBall.IsQueuedForDeletion() && energyBall.GetParent() == this)
     {
+      //Verify that the direction changed was done by the correct unit (mob or player)
+      if (args[1] is Node2D node)
+      {
+        if (!GetParent().GetParent().Equals(node)) return;
+      }
       facingDirection = (int)args[0];
       energyBall.Position = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
     }

@@ -37,7 +37,6 @@ public partial class Player : CharacterBody2D
     EventSubscriber.SubscribeToEvent("IsDoingAction", SetIsDoingAction);
     EventRegistry.RegisterEvent("DirectionChanged");
 
-
     PrepareCharacter();
   }
 
@@ -167,17 +166,17 @@ public partial class Player : CharacterBody2D
     {
       AnimationPlayer.FlipH = Velocity.X < 0;
       abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);
-      EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { Velocity.X < 0 ? -1 : 1 });
+      EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { Velocity.X < 0 ? -1 : 1, this });
     }
     MoveAndSlide();
-
   }
 
   public void SetInitialKIValue()
   {
     abilityManager.SetKI(playerResource.KI);
-    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI });
+    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI, this });
   }
+
   public void SetInitialExperienceValue()
   {
     int newExp = experiencePoints;
@@ -195,12 +194,23 @@ public partial class Player : CharacterBody2D
       int newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
       playerResource.KI = newKi;
       abilityManager.SetKI(newKi);
-      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
     }
   }
 
   public void IncreaseStatsFromDictionary(object sender, object[] args)
   {
+    // this function is called when a pickup is collected and when KI is spent (by both the player and mob)
+    // So we figure out if it's a pickup, if so, then we continue to add the correct stat to the player
+    // if it is not a pickup but it is a KI spendage from the mob, then we return without changing the stats
+    if (args[1] is not Pickup && args[1] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+    }
     if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
     {
       var healthbar = GetNode<Healthbar>("Healthbar");
@@ -213,7 +223,7 @@ public partial class Player : CharacterBody2D
             int newKi = playerResource.KI + kvp.Value < playerResource.MaxKI ? playerResource.KI + kvp.Value : playerResource.MaxKI;
             playerResource.KI = newKi;
             abilityManager.SetKI(newKi);
-            EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+            EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
             break;
 
           case "health":
@@ -244,7 +254,6 @@ public partial class Player : CharacterBody2D
     abilityManager.AddAbility(ab);
     abilityManager.SetTargetGroup("Enemies");
   }
-
 
   public override void _ExitTree()
   {

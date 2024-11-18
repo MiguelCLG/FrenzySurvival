@@ -1,7 +1,8 @@
-[gd_scene load_steps=30 format=3 uid="uid://bpw30mhlwbchh"]
+[gd_scene load_steps=31 format=3 uid="uid://bpw30mhlwbchh"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_e333y"]
 [ext_resource type="Resource" uid="uid://dnkjdl1axmvl4" path="res://Resources/Abilities/Masenko.tres" id="2_r1qqp"]
+[ext_resource type="Resource" uid="uid://duh47nf2yr13n" path="res://Resources/Sound/KamehamehaSound.tres" id="3_glaxj"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="3_n4pce"]
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="4_81e8g"]
 [ext_resource type="Gradient" uid="uid://ort4b4gq1m2s" path="res://Assets/Gradients/Yellow_Gradient.tres" id="4_dw156"]
@@ -118,6 +119,7 @@ size = Vector2(23, 20)
 [node name="Masenko" type="Node2D"]
 script = ExtResource("1_e333y")
 abilityResource = ExtResource("2_r1qqp")
+abilitySound = ExtResource("3_glaxj")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
 unique_name_in_owner = true

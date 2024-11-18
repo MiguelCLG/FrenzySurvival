@@ -26,12 +26,14 @@ public partial class EnergyBall : Node2D
 
   public void ActivateEnergyBall()
   {
+    if (energyBallParticles.IsQueuedForDeletion() || !IsInstanceValid(energyBallParticles)) return;
     energyBallParticles.Emitting = true;
     ActivateBeamLines();
   }
 
   public void DeactivateEnergyBall()
   {
+    if (energyBallParticles.IsQueuedForDeletion() || !IsInstanceValid(energyBallParticles)) return;
     energyBallParticles.Emitting = false;
     DeactivateBeamLines();
   }
