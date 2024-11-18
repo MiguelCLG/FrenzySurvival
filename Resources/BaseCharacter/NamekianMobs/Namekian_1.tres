@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://cjsxx5bkrptff"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=8 format=3 uid="uid://cjsxx5bkrptff"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_tml6u"]
 [ext_resource type="SpriteFrames" uid="uid://bq5l07jlroepc" path="res://Assets/CharacterAssets/Namekian/Namekian_1.tres" id="2_2ygy4"]

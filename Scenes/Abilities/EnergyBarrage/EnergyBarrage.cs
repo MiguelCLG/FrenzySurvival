@@ -48,7 +48,7 @@ public partial class EnergyBarrage : Ability
     }
 
   }
-  }
+
   public override void Action()
   {
     cancellationTokenSource = new CancellationTokenSource();
@@ -57,37 +57,37 @@ public partial class EnergyBarrage : Ability
   }
 
   public void OnFireballHit(object sender, object[] args)
-{
-  if (args[0] is Node2D body)
   {
-    if (!body.IsInGroup(targetGroup)) return;
-    var healthbar = body.GetNode<Healthbar>("Healthbar");
-    if (!healthbar.IsAlive) return;
-    if (body is Mob mob)
+    if (args[0] is Node2D body)
     {
-      Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;
-      mob.KnockBack(curDirection, 1);
-    }
-    if (healthbar.IsAlive)
-      EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+      if (!body.IsInGroup(targetGroup)) return;
+      var healthbar = body.GetNode<Healthbar>("Healthbar");
+      if (!healthbar.IsAlive) return;
+      if (body is Mob mob)
+      {
+        Vector2 curDirection = facingDirection == 1 ? Vector2.Right : Vector2.Left;
+        mob.KnockBack(curDirection, 1);
+      }
+      if (healthbar.IsAlive)
+        EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
               healthbar,
               abilityResource.Damage
             });
-    if (args[1] is Fireball fireball) { fireball.Destroy(); }
+      if (args[1] is Fireball fireball) { fireball.Destroy(); }
+    }
   }
-}
 
-public override void Cancel()
-{
+  public override void Cancel()
+  {
 
-  cancellationTokenSource.Cancel();  // Cancel the task
-  EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
-  base.Cancel();
-}
+    cancellationTokenSource.Cancel();  // Cancel the task
+    EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+    base.Cancel();
+  }
 
 
-public override void _ExitTree()
-{
-  EventSubscriber.UnsubscribeFromEvent("OnFireballHit", OnFireballHit);
-}
+  public override void _ExitTree()
+  {
+    EventSubscriber.UnsubscribeFromEvent("OnFireballHit", OnFireballHit);
+  }
 }
