@@ -10,14 +10,15 @@ public partial class BaseCharacterResource : Resource
   [Export] public int Speed;
   [Export] public int Shield;
   [Export] public int MaxShield;
-  [Export] public int KI;
-  [Export] public int MaxKI;
+  [Export] public float KI;
+  [Export] public float MaxKI;
 
   [ExportGroup("Mobs Only")]
   [Export] public Array<PackedScene> MobAttacks;
   [Export] public Array<LootTable> LootTables;
   [Export] public bool ShowHealBar = true;
   [Export] public int ExpDropValue = 0;
+  [Export] public float RegenKI;
 
   [ExportGroup("Image and Sound")]
   [Export] public SpriteFrames AnimatedFrames;

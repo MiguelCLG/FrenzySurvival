@@ -4,7 +4,7 @@
 [ext_resource type="SpriteFrames" uid="uid://f8grogvdsd5l" path="res://Assets/CharacterAssets/Namekian/Namekian_3.tres" id="2_0tqhe"]
 [ext_resource type="Resource" uid="uid://bsjou14wb657w" path="res://Resources/Player/LevelTable-v2.tres" id="3_yyxdc"]
 [ext_resource type="Texture2D" uid="uid://cuou4fadpxulm" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_portrait.png" id="4_5iir3"]
-[ext_resource type="Resource" uid="uid://dfrdcchlk46l" path="res://Resources/Race/Namekian.tres" id="5_fewwe"]
+[ext_resource type="Resource" path="res://Resources/Race/Namekian.tres" id="5_fewwe"]
 [ext_resource type="Script" path="res://Scenes/Player/PlayerResource.cs" id="6_vl0ew"]
 
 [resource]
@@ -17,12 +17,13 @@ MaxHP = 200
 Speed = 100
 Shield = 0
 MaxShield = 50
-KI = 100
-MaxKI = 100
+KI = 0.0
+MaxKI = 0.0
 MobAttacks = Array[Object]([])
 LootTables = Array[Resource]([])
 ShowHealBar = true
 ExpDropValue = 0
+RegenKI = 0.0
 AnimatedFrames = ExtResource("2_0tqhe")
 Portrait = ExtResource("4_5iir3")
 characterSounds = null

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="5_l5mhh"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="5_v8qak"]
 [ext_resource type="Texture2D" uid="uid://bvvyieyesorfc" path="res://Assets/CharacterAssets/Sayan/Saiyan_4/sayan4_portrait.png" id="5_w138o"]
-[ext_resource type="PackedScene" uid="uid://bhkhwuha4lequ" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="6_njoht"]
+[ext_resource type="PackedScene" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="6_njoht"]
 
 [resource]
 script = ExtResource("5_v8qak")
@@ -16,12 +16,13 @@ MaxHP = 320
 Speed = 25
 Shield = 0
 MaxShield = 0
-KI = 100
-MaxKI = 100
+KI = 0.0
+MaxKI = 0.0
 MobAttacks = Array[Object]([ExtResource("4_yiler"), ExtResource("5_l5mhh"), ExtResource("6_njoht")])
 LootTables = Array[Resource]([ExtResource("2_d0p8i"), ExtResource("3_12ucc")])
 ShowHealBar = true
 ExpDropValue = 200
+RegenKI = 0.0
 AnimatedFrames = ExtResource("1_uiwg0")
 Portrait = ExtResource("5_w138o")
 characterSounds = null
