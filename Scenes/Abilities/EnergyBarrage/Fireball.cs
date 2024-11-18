@@ -7,6 +7,8 @@ public partial class Fireball : AnimatedSprite2D
   private int facingDirection = 1;
   private int lifespan = 10;
 
+  public string targetGroup = "Enemies";
+
   public void SetFacingDirection(int direction)
   {
     facingDirection = direction;
@@ -41,7 +43,8 @@ public partial class Fireball : AnimatedSprite2D
 
   public void OnBodyEntered(Node2D bodyEntered)
   {
-    EventRegistry.GetEventPublisher("OnFireballHit").RaiseEvent(new object[] { bodyEntered, this });
+    if (bodyEntered.IsInGroup(targetGroup))
+      EventRegistry.GetEventPublisher("OnFireballHit").RaiseEvent(new object[] { bodyEntered, this });
   }
 
 }

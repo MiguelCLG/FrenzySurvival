@@ -14,7 +14,7 @@ public partial class BaseCharacterResource : Resource
   [Export] public int MaxKI;
 
   [ExportGroup("Mobs Only")]
-  [Export] public Array<AbilityResource> MobAttacks;
+  [Export] public Array<PackedScene> MobAttacks;
   [Export] public Array<LootTable> LootTables;
   [Export] public bool ShowHealBar = true;
   [Export] public int ExpDropValue = 0;

@@ -6,10 +6,11 @@
 [resource]
 script = ExtResource("2_m5irm")
 Name = "Special Beam Cannon"
+Icon = ExtResource("1_m2sbm")
 Cooldown = 6
 CastTime = 3.0
-Value = 100
+Value = 1
 Damage = 200
-Icon = ExtResource("1_m2sbm")
-isSuperAbility = true
 kiRequired = 40
+isSuperAbility = true
+isRangedAbility = true

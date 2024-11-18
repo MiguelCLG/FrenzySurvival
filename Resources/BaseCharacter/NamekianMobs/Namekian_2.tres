@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=5 format=3 uid="uid://b777ofptysvqh"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://b777ofptysvqh"]
 
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="2_dhmwm"]
 [ext_resource type="SpriteFrames" uid="uid://djdhtfhrfs1y" path="res://Assets/CharacterAssets/Namekian/Namekian_2.tres" id="2_ejqwk"]
-[ext_resource type="Resource" uid="uid://c4r6dt0yn5dle" path="res://Resources/Abilities/SayanKamehameha.tres" id="2_nan31"]
+[ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="3_218ut"]
 [ext_resource type="Texture2D" uid="uid://cdttql2mna4g8" path="res://Assets/CharacterAssets/Namekian/Namek_2/namek2_portrait.png" id="3_stxav"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_6xd2l"]
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="4_pxja0"]
 
 [resource]
 script = ExtResource("4_6xd2l")
@@ -12,9 +14,9 @@ MaxHP = 70
 Speed = 70
 Shield = 0
 MaxShield = 0
-KI = 0
-MaxKI = 0
-MobAttacks = Array[Object]([ExtResource("2_nan31")])
+KI = 100
+MaxKI = 100
+MobAttacks = Array[Object]([ExtResource("2_dhmwm"), ExtResource("3_218ut"), ExtResource("4_pxja0")])
 LootTables = null
 ShowHealBar = true
 ExpDropValue = 200

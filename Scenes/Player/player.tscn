@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgxub8yjvhnxn"]
+[gd_scene load_steps=7 format=3 uid="uid://dgxub8yjvhnxn"]
 
 [ext_resource type="Script" path="res://Scenes/Player/Player.cs" id="1_bia2f"]
 [ext_resource type="Resource" uid="uid://s4myc45rkqu2" path="res://Resources/Player/Player.tres" id="2_1em62"]
-[ext_resource type="SpriteFrames" uid="uid://cccnbri4ggfsf" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1.tres" id="3_qcgbd"]
+[ext_resource type="SpriteFrames" uid="uid://brp7hsh2smf35" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/Sayan_Boss_1.tres" id="3_n1lyc"]
 [ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_21k5k"]
 [ext_resource type="Script" path="res://Scenes/Abilities/AbilityManager.cs" id="5_60arm"]
-[ext_resource type="PackedScene" uid="uid://4cgaxihbvw23" path="res://Scenes/Abilities/Laser/kamehameha.tscn" id="6_h7o81"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vyyvv"]
 radius = 3.0
@@ -19,8 +18,8 @@ AnimationPlayer = NodePath("Portrait")
 
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-sprite_frames = ExtResource("3_qcgbd")
-animation = &"beam"
+sprite_frames = ExtResource("3_n1lyc")
+animation = &"punch_2"
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -35,5 +34,3 @@ offset_bottom = -17.0
 [node name="Abilities" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_60arm")
-
-[node name="Kamehameha" parent="Abilities" instance=ExtResource("6_h7o81")]

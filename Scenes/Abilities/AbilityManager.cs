@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 using Godot.Collections;
 
@@ -7,10 +5,11 @@ public partial class AbilityManager : Node2D
 {
   public AnimatedSprite2D AnimationPlayer;
   public Array<Ability> abilityArray = new Array<Ability>();
-
+  public bool IsActive = true;
   public int actionindex = 0;
-  int facingDirection = 1;
-  int ki = 0;
+  private Ability currentAbility = null;  // Track the currently active ability
+  private int facingDirection = 1;
+  private int ki = 0;
 
   public override void _Ready()
   {
@@ -22,6 +21,8 @@ public partial class AbilityManager : Node2D
     }
     EventRegistry.RegisterEvent("ActionFinished");
     EventSubscriber.SubscribeToEvent("ActionFinished", DoNextActionAsync);
+    EventRegistry.RegisterEvent("ActionCanceled");
+    EventSubscriber.SubscribeToEvent("ActionCanceled", ActionCanceled);
   }
 
   public void AddAbility(Ability ability)
@@ -31,13 +32,26 @@ public partial class AbilityManager : Node2D
     AddChild(ability);
   }
 
+  public void SetTargetGroup(string targetGroup)
+  {
+    foreach (Ability ability in abilityArray)
+    {
+      ability.SetTargetGroup(targetGroup);
+    }
+  }
+
   public void SetKI(int newKi)
   {
     ki = newKi;
   }
+
+  public int GetKI()
+  {
+    return ki;
+  }
+
   public void AddDamage(int newDamage)
   {
-
     foreach (Ability ability in abilityArray)
     {
       ability.abilityResource.Damage += newDamage;
@@ -54,26 +68,56 @@ public partial class AbilityManager : Node2D
     }
   }
 
+  public async void ActionCanceled(object sender, object[] args)
+  {
+    if (!IsInstanceValid(AnimationPlayer) || AnimationPlayer.IsQueuedForDeletion()) return;
+    if (AnimationPlayer.Animation != "death")
+    {
+      if (AnimationPlayer.Animation == "hurt")
+      {
+        await ToSignal(AnimationPlayer, "animation_finished");
+      }
+      if (IsActive)
+      {
+        await ToSignal(GetTree().CreateTimer(3f, true, true), "timeout");
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
+      }
+    }
+  }
+  public void CancelCurrentAbility()
+  {
+    // Check if there's an ability currently executing and cancel it
+    if (currentAbility != null) // Assuming IsExecuting() exists to track active ability status
+    {
+      currentAbility.Cancel();
+      currentAbility = null; // Clear current ability after canceling
+    }
+  }
+
   public void DoNextActionAsync()
   {
+    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt" || !IsActive) { GD.Print("Animation Playing: " + AnimationPlayer.Animation); return; }
+
+
     if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
-
-      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
+      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { this });
     }
     else
     {
-      if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is not a super
+      Ability nextAbility = abilityArray[actionindex];
+      if (nextAbility.abilityResource.kiRequired <= ki) // Ensure enough Ki to perform the action
       {
-        abilityArray[actionindex].SetFacingDirection(facingDirection);
-        abilityArray[actionindex].Action();
-        abilityArray[actionindex].SpendKi(-abilityArray[actionindex].abilityResource.kiRequired);
+        nextAbility.SetFacingDirection(facingDirection);
+        currentAbility = nextAbility;  // Track the current executing ability
+        nextAbility.Action();
+        nextAbility.SpendKi(-nextAbility.abilityResource.kiRequired);
       }
-      else
+      else // Not enough Ki, skip to the next action
       {
         actionindex++;
-        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
         return;
       }
       actionindex++;
@@ -82,33 +126,59 @@ public partial class AbilityManager : Node2D
 
   public void DoNextActionAsync(object sender, object[] args)
   {
+    if (AnimationPlayer.Animation == "death" || !IsActive) return;
+
+    if (args[0] is Node2D node)
+    {
+      var isInChildren = GetChildren().Contains(node);
+      var isThisAbilityManager = node == this;
+      if (!isThisAbilityManager && !isInChildren)
+        return;
+    }
 
     if (actionindex > abilityArray.Count - 1)
     {
       actionindex = 0;
-      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { });
-
+      EventRegistry.GetEventPublisher("OnComboFinished").RaiseEvent(new object[] { this });
     }
     else
     {
-      if (abilityArray[actionindex].abilityResource.kiRequired <= ki) // it is not a super
+      Ability nextAbility = abilityArray[actionindex];
+      if (nextAbility.abilityResource.kiRequired <= ki) // Ensure enough Ki to perform the action
       {
-        abilityArray[actionindex].SetFacingDirection(facingDirection);
-        abilityArray[actionindex].Action();
-        abilityArray[actionindex].SpendKi(-abilityArray[actionindex].abilityResource.kiRequired);
+        nextAbility.SetFacingDirection(facingDirection);
+        currentAbility = nextAbility;  // Track the current executing ability
+        nextAbility.Action();
+        nextAbility.SpendKi(-nextAbility.abilityResource.kiRequired);
       }
-      else // it is a super but does not have enough ki
+      else // Not enough Ki, skip to the next action
       {
         actionindex++;
-        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
+        EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
         return;
       }
       actionindex++;
     }
   }
 
-  public override void _ExitTree()
+  public AbilityResource GetNextAbility()
+  {
+    var i = actionindex < abilityArray.Count ? actionindex : 0;
+    return abilityArray[i].abilityResource;
+  }
+
+  public void Deactivate()
+  {
+    IsActive = false;
+    CancelCurrentAbility();
+  }
+  public void UnsubscribeFromEvents()
   {
     EventSubscriber.UnsubscribeFromEvent("ActionFinished", DoNextActionAsync);
+  }
+
+  public override void _ExitTree()
+  {
+    UnsubscribeFromEvents();
   }
 }

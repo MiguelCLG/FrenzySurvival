@@ -9,7 +9,7 @@ public partial class Main : Node2D
   [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
   [Export] Godot.Collections.Dictionary<string, AudioOptionsResource> mainSounds;
-  
+
   private AudioManager audioManager;
 
   LevelUpUi levelUpUi;
@@ -47,6 +47,7 @@ public partial class Main : Node2D
 
   public override void _Process(double delta)
   {
+    if (!playerReference.GetNode<Healthbar>("Healthbar").IsAlive) return;
     spawnCooldown += delta;
     time += delta;
     //if (currentEnemies < maxEnemies && spawnCooldown > 1)
@@ -104,10 +105,10 @@ public partial class Main : Node2D
   public void CreateMobOfResource(BaseCharacterResource charResourse)
   {
     var mob = mobScene.Instantiate<Mob>();
-    mobContainer.AddChild(mob);
     mob.mobResource = charResourse;
-    mob.healthbar.SetInitialValues(mob.mobResource);
     mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
+    mobContainer.AddChild(mob);
+    mob.healthbar.SetInitialValues(mob.mobResource);
 
 
     Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
@@ -185,7 +186,7 @@ public partial class Main : Node2D
   public void Options()
   {
     var audioOptions = GetNode<CanvasLayer>("%UI").GetNode<Control>("%AudioOptionsScreen");
-    if(audioOptions is AudioOptionsScreen sfxOptions)
+    if (audioOptions is AudioOptionsScreen sfxOptions)
     {
       sfxOptions.Visible = true;
     }
@@ -205,11 +206,19 @@ public partial class Main : Node2D
     }
   }
 
+  public override void _Input(InputEvent @event)
+  {
+    if (Input.IsActionPressed("ui_cancel") && @event is InputEventJoypadButton)
+    {
+      HandlePause();
+    }
+  }
+
   public void HandlePause()
   {
     GetTree().Paused = !GetTree().Paused;
     UI.GetNode<Control>("%PauseScreen").Visible = GetTree().Paused;
-    if(GetTree().Paused)
+    if (GetTree().Paused)
       audioManager.PauseAllSoundsFromBus("Sound Effects");
     else
       audioManager.UnpauseAllSounds();  // TODO: Unpause all from bus.

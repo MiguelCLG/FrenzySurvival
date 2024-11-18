@@ -3,7 +3,7 @@ using Godot;
 public partial class Pickup : Node2D
 {
   AnimationPlayer animationPlayer;
-  [Export] public PickUpResource pickUp;  
+  [Export] public PickUpResource pickUp;
 
   public override void _Ready()
   {
@@ -38,7 +38,7 @@ public partial class Pickup : Node2D
   }
 
   /// <summary>
-  /// During the implementation of the Experience pickup, there was a 
+  /// During the implementation of the Experience pickup, there was a
   /// need to have the resource be updated from the Mob.
   /// The pickup resource is then local to scene, so that we can change its values
   /// on runtime.
@@ -48,7 +48,7 @@ public partial class Pickup : Node2D
   /// <param name="value"></param>
   public void ChangeStatChangeValue(string key, int value)
   {
-    if(pickUp.statChange.ContainsKey(key))
+    if (pickUp.statChange.ContainsKey(key))
       pickUp.statChange[key] = value;
   }
 
@@ -58,7 +58,7 @@ public partial class Pickup : Node2D
   {
     if (body.IsInGroup("Player"))
     {
-      EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary").RaiseEvent(new object[] { pickUp.statChange });
+      EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary").RaiseEvent(new object[] { pickUp.statChange, this });
       QueueFree();
     }
   }

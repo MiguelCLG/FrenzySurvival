@@ -13,6 +13,8 @@ public partial class KiBar : ProgressBar
 
   private void SetInitialKIValue(object sender, object[] args)
   {
+    if (args[2] is not Player) return;
+
     if (args[0] is int kiValue && args[1] is int maxKI)
     {
       MaxValue = maxKI;
@@ -21,6 +23,7 @@ public partial class KiBar : ProgressBar
   }
   private void OnKiChanged(object sender, object[] args)
   {
+    if (args[1] is not Player) return;
     if (args[0] is int kiValue)
     {
       Value = kiValue;

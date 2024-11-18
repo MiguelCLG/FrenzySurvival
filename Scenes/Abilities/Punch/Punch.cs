@@ -1,6 +1,6 @@
-using Algos;
 using Godot;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 public partial class Punch : Ability
@@ -10,58 +10,7 @@ public partial class Punch : Ability
   [Export] private float coneAngleDegrees = 90.0f;  // Cone's half-angle in degrees
   [Export] private float coneRange = 60.0f;         // Maximum range of the cone
 
-
   // Call this function to detect objects in the cone
-  public async void DetectInCone()
-  {
-    await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
-    AnimationPlayer.Play("default");
-    cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);
-    await ToSignal(cooldownTimer, "timeout");
-
-    // Use character's movement direction as forward direction
-    Vector2 forward = CurrentVelocity.Normalized();  // Adjusted to use velocity
-
-    // Get all bodies in a circular range (optimized with a CollisionShape2D)
-    var spaceState = GetWorld2D().DirectSpaceState;
-    var query = new PhysicsShapeQueryParameters2D();
-    query.Shape = new CircleShape2D { Radius = coneRange };
-    query.Transform = new Transform2D(0, GlobalPosition); // Set the center of the query to the player
-
-    var results = spaceState.IntersectShape(query);
-
-    AnimationPlayer.Play("punch");
-    audioManager?.Play(abilitySound, this);
-    
-    foreach (var result in results)
-    {
-      if (result["collider"] is Variant body)
-      {
-        // The object is within the cone, call its method
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
-          continue;
-        var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
-        // Vector from the character to the object
-        Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
-
-        // Check if the object is within the cone
-        float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
-
-        if (Math.Abs(angleToBody) <= coneAngleDegrees)
-        {
-          // Call Take Damage
-          if (healthbar.IsAlive)
-            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
-              healthbar,
-              abilityResource.Damage
-            });
-        }
-      }
-    }
-
-    isDoingAction = false;
-    EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { });
-  }
 
   public override void _Process(double delta)
   {
@@ -70,8 +19,85 @@ public partial class Punch : Ability
 
   public override void Action()
   {
+    if (isDoingAction) return;  // Prevent multiple actions at once
+
     isDoingAction = true;
-    CallDeferred("DetectInCone");  // Perform the cone detection
+    cancellationTokenSource = new CancellationTokenSource();
+    CancellationToken token = cancellationTokenSource.Token;
+
+    currentTask = Task.Run(() => DetectInCone(token), token);
+  }
+
+  public override void Cancel()
+  {
+    if (isDoingAction)
+    {
+      cancellationTokenSource.Cancel();  // Cancel the task
+      isDoingAction = false;
+      EventRegistry.GetEventPublisher("ActionCanceled").RaiseEvent(new object[] { this });
+      base.Cancel();
+    }
+  }
+
+  public async Task DetectInCone(CancellationToken token)
+  {
+    try
+    {
+      await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
+
+      if (token.IsCancellationRequested) return;  // Handle early cancellation
+
+      cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);
+      await ToSignal(cooldownTimer, "timeout");
+
+      Vector2 forward = CurrentVelocity.Normalized();
+
+      var spaceState = GetWorld2D().DirectSpaceState;
+      var query = new PhysicsShapeQueryParameters2D
+      {
+        Shape = new CircleShape2D { Radius = coneRange },
+        Transform = new Transform2D(0, GlobalPosition)
+      };
+
+      var results = spaceState.IntersectShape(query);
+
+      if (AnimationPlayer.Animation == "death" || token.IsCancellationRequested) return;
+
+      AnimationPlayer.Play("punch");
+      audioManager?.Play(abilitySound, this);
+
+      foreach (var result in results)
+      {
+        if (result["collider"] is Variant body && body.As<Node2D>().IsInGroup(targetGroup))
+        {
+          var healthbar = body.As<Node2D>().GetNode<Healthbar>("Healthbar");
+          Vector2 toBody = (body.As<Node2D>().GlobalPosition - GlobalPosition).Normalized();
+          float angleToBody = Mathf.RadToDeg(forward.AngleTo(toBody));
+
+          if (Math.Abs(angleToBody) <= coneAngleDegrees && healthbar.IsAlive)
+          {
+            EventRegistry.GetEventPublisher("TakeDamage").RaiseEvent(new object[] {
+                            healthbar,
+                            abilityResource.Damage
+                        });
+          }
+        }
+
+      }
+      if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
+      EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
+
+    }
+    catch (TaskCanceledException)
+    {
+      // Handle task cancellation, if needed
+      GD.Print("Ability was canceled");
+      cooldownTimer.Free();
+    }
+    finally
+    {
+      isDoingAction = false;
+    }
   }
 
   public override void _Draw()
@@ -97,7 +123,14 @@ public partial class Punch : Ability
         // Optionally fill the cone area (as a polygon)
         Color fillColor = new Color(0.8f, 0.8f, 0.8f, abilityResource.Cooldown - (float)cooldownTimer.TimeLeft);  // Light gray with transparency
         Vector2[] points = { Position, leftDir, rightDir };
-        if (cooldownTimer.TimeLeft == 0)
+        if (cancellationTokenSource.IsCancellationRequested)
+        {
+          DrawLine(Position, leftDir, transparentColor, 2);   // Left boundary
+          DrawLine(Position, rightDir, transparentColor, 2);  // Right boundary
+          DrawLine(leftDir, rightDir, transparentColor, 2);    //Clearing line
+          DrawPolygon(points, new Color[] { transparentColor });
+        }
+        else if (cooldownTimer.TimeLeft == 0)
         {
           DrawLine(Position, leftDir, transparentColor, 2);   // Left boundary
           DrawLine(Position, rightDir, transparentColor, 2);  // Right boundary
@@ -115,6 +148,7 @@ public partial class Punch : Ability
       }
 
     }
+
     // Visualize enemies detected within the cone
     DetectInConeVisual();
   }
@@ -137,7 +171,7 @@ public partial class Punch : Ability
     {
       if (result["collider"] is Variant body)
       {
-        if (!body.As<Node2D>().IsInGroup("Enemies"))
+        if (!body.As<Node2D>().IsInGroup(targetGroup))
           continue;
 
         // Vector from the character to the object

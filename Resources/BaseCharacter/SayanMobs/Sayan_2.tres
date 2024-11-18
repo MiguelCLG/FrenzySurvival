@@ -1,24 +1,27 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://3ij2ajj82a8r"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://3ij2ajj82a8r"]
 
 [ext_resource type="SpriteFrames" uid="uid://c2eqfpt6pr31a" path="res://Assets/CharacterAssets/Sayan/Saiyan_2/Sayan_2.tres" id="1_cexy0"]
 [ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_07r6m"]
 [ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_7u14r"]
-[ext_resource type="Resource" uid="uid://dk8t824tcqpq8" path="res://Resources/Abilities/SayanPunch2.tres" id="4_kggsk"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_l0eew"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="5_kk6c4"]
+[ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="5_mubc3"]
 [ext_resource type="Texture2D" uid="uid://cdic8y2q41ynf" path="res://Assets/CharacterAssets/Sayan/Saiyan_2/sayan2_portrait.png" id="5_w03yk"]
+[ext_resource type="PackedScene" uid="uid://bpw30mhlwbchh" path="res://Scenes/Abilities/Laser/masenko.tscn" id="6_vprmh"]
 
 [resource]
 script = ExtResource("5_kk6c4")
-HP = 50
-MaxHP = 50
-Speed = 70
+HP = 200
+MaxHP = 200
+Speed = 60
 Shield = 0
 MaxShield = 0
-KI = 0
-MaxKI = 0
-AnimatedFrames = ExtResource("1_cexy0")
-Portrait = ExtResource("5_w03yk")
-MobAttacks = Array[Object]([ExtResource("4_kggsk")])
+KI = 100
+MaxKI = 100
+MobAttacks = Array[Object]([ExtResource("4_l0eew"), ExtResource("5_mubc3"), ExtResource("6_vprmh")])
 LootTables = Array[Resource]([ExtResource("2_07r6m"), ExtResource("3_7u14r")])
 ShowHealBar = true
 ExpDropValue = 150
+AnimatedFrames = ExtResource("1_cexy0")
+Portrait = ExtResource("5_w03yk")
+characterSounds = null

@@ -1,5 +1,6 @@
-using Godot;
 using System.Collections.Generic;
+using Godot;
+using Godot.Collections;
 
 public partial class Player : CharacterBody2D
 {
@@ -16,17 +17,18 @@ public partial class Player : CharacterBody2D
   bool isGettingHurt = false;
   int facingDirection = 1;
   private int experiencePoints = 0;
+  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
+
 
   public override void _Ready()
   {
     abilityManager = GetNode<AbilityManager>("%Abilities");
+    abilityManager.SetTargetGroup("Enemies");
     AnimationPlayer = GetNode<AnimatedSprite2D>("Portrait");
     EventRegistry.RegisterEvent("TakeDamage");
     EventSubscriber.SubscribeToEvent("TakeDamage", TakeDamage);
     EventRegistry.RegisterEvent("OnComboFinished");
     EventSubscriber.SubscribeToEvent("OnComboFinished", OnComboFinished);
-    //EventRegistry.RegisterEvent("SetKI");
-    //EventSubscriber.SubscribeToEvent("SetKI", SetKI);
     EventRegistry.RegisterEvent("IncreaseStatsFromDictionary");
     EventSubscriber.SubscribeToEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventRegistry.RegisterEvent("AbilitySelected");
@@ -35,8 +37,18 @@ public partial class Player : CharacterBody2D
     EventSubscriber.SubscribeToEvent("IsDoingAction", SetIsDoingAction);
     EventRegistry.RegisterEvent("DirectionChanged");
 
-
     PrepareCharacter();
+  }
+
+  public override void _PhysicsProcess(double delta)
+  {
+    if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
+    Movement(delta);
+    if (!isDoingCombo && !isGettingHurt)
+    {
+      isDoingCombo = true;
+      abilityManager.DoNextActionAsync();
+    }
   }
 
   public void PrepareCharacter()
@@ -51,6 +63,7 @@ public partial class Player : CharacterBody2D
   }
   public async void TakeDamage(object sender, object[] args)
   {
+    if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Healthbar healthbar)
     {
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
@@ -66,11 +79,13 @@ public partial class Player : CharacterBody2D
           {
             // Corre animacao de morte
             AnimationPlayer.Play("death");
+            SetPhysicsProcess(false);
             // Espera x segundos para a morte
             EventRegistry.GetEventPublisher("OnPlayerDeath").RaiseEvent(new object[] { this });
             return;
           }
           isGettingHurt = false;
+          AnimationPlayer.Play("default");
 
         }
       }
@@ -99,22 +114,20 @@ public partial class Player : CharacterBody2D
     }
   }
 
-  public override void _PhysicsProcess(double delta)
-  {
-    if (!GetNode<Healthbar>("Healthbar").IsAlive) return;
-    Movement(delta);
-    if (!isDoingCombo && !isGettingHurt)
-    {
-      isDoingCombo = true;
-      abilityManager.DoNextActionAsync();
-    }
-  }
+
 
   public void OnComboFinished(object sender, object[] args)
   {
-
-    isDoingCombo = false;
-    timer = 0;
+    if (args[0] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+      isDoingCombo = false;
+      timer = 0;
+    }
   }
 
   public void SetIsDoingAction(object sender, object[] args)
@@ -137,7 +150,7 @@ public partial class Player : CharacterBody2D
     {
       // If there's input, set the velocity towards the new direction
       Velocity = direction;
-      if (AnimationPlayer.Animation == "default") AnimationPlayer.Play("move");
+      if (!lockedAnimations.Contains(AnimationPlayer.Animation) && !isDoingAction) AnimationPlayer.Play("move");
     }
     else
     {
@@ -153,17 +166,17 @@ public partial class Player : CharacterBody2D
     {
       AnimationPlayer.FlipH = Velocity.X < 0;
       abilityManager.SetFacingDirection(Velocity.X < 0 ? -1 : 1);
-      EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { Velocity.X < 0 ? -1 : 1 });
+      EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { Velocity.X < 0 ? -1 : 1, this });
     }
     MoveAndSlide();
-
   }
 
   public void SetInitialKIValue()
   {
     abilityManager.SetKI(playerResource.KI);
-    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI });
+    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { playerResource.KI, playerResource.MaxKI, this });
   }
+
   public void SetInitialExperienceValue()
   {
     int newExp = experiencePoints;
@@ -181,12 +194,23 @@ public partial class Player : CharacterBody2D
       int newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
       playerResource.KI = newKi;
       abilityManager.SetKI(newKi);
-      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+      EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
     }
   }
 
   public void IncreaseStatsFromDictionary(object sender, object[] args)
   {
+    // this function is called when a pickup is collected and when KI is spent (by both the player and mob)
+    // So we figure out if it's a pickup, if so, then we continue to add the correct stat to the player
+    // if it is not a pickup but it is a KI spendage from the mob, then we return without changing the stats
+    if (args[1] is not Pickup && args[1] is Node2D node)
+    {
+      var isInChildren = abilityManager.GetChildren().Contains(node);
+      var isThisAbilityManager = node == abilityManager;
+      if (!isThisAbilityManager)
+        if (!isInChildren)
+          return;
+    }
     if (args[0] is Godot.Collections.Dictionary<string, int> statIncreases)
     {
       var healthbar = GetNode<Healthbar>("Healthbar");
@@ -199,7 +223,7 @@ public partial class Player : CharacterBody2D
             int newKi = playerResource.KI + kvp.Value < playerResource.MaxKI ? playerResource.KI + kvp.Value : playerResource.MaxKI;
             playerResource.KI = newKi;
             abilityManager.SetKI(newKi);
-            EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
+            EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
             break;
 
           case "health":
@@ -219,8 +243,6 @@ public partial class Player : CharacterBody2D
           default:
             break;
         }
-        if (kvp.Key == "ki")
-          EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI });
       }
     }
   }
@@ -230,14 +252,13 @@ public partial class Player : CharacterBody2D
     PackedScene a = args[0] as PackedScene;
     Ability ab = a.Instantiate<Ability>();
     abilityManager.AddAbility(ab);
+    abilityManager.SetTargetGroup("Enemies");
   }
-
 
   public override void _ExitTree()
   {
     EventSubscriber.UnsubscribeFromEvent("TakeDamage", TakeDamage);
     EventSubscriber.UnsubscribeFromEvent("OnComboFinished", OnComboFinished);
-    EventSubscriber.UnsubscribeFromEvent("SetKI", SetKI);
     EventSubscriber.UnsubscribeFromEvent("IncreaseStatsFromDictionary", IncreaseStatsFromDictionary);
     EventSubscriber.UnsubscribeFromEvent("AbilitySelected", AbilitySelected);
     EventSubscriber.UnsubscribeFromEvent("IsDoingAction", SetIsDoingAction);
