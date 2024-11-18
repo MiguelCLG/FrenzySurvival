@@ -9,7 +9,7 @@ public partial class AbilityManager : Node2D
   public int actionindex = 0;
   private Ability currentAbility = null;  // Track the currently active ability
   private int facingDirection = 1;
-  private int ki = 0;
+  private float ki = 0;
 
   public override void _Ready()
   {
@@ -40,12 +40,12 @@ public partial class AbilityManager : Node2D
     }
   }
 
-  public void SetKI(int newKi)
+  public void SetKI(float newKi)
   {
     ki = newKi;
   }
 
-  public int GetKI()
+  public float GetKI()
   {
     return ki;
   }

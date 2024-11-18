@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="2_vudaw"]
 [ext_resource type="Texture2D" uid="uid://cuou4fadpxulm" path="res://Assets/CharacterAssets/Namekian/Namek_3/namek3_portrait.png" id="3_357vb"]
 [ext_resource type="PackedScene" uid="uid://dlmr5ilhnd4kk" path="res://Scenes/Abilities/Kick/kick.tscn" id="3_lcve4"]
-[ext_resource type="PackedScene" uid="uid://bo40kckcbb26x" path="res://Scenes/Abilities/Laser/SpecialBeamCannon.tscn" id="4_jq37s"]
+[ext_resource type="PackedScene" path="res://Scenes/Abilities/Laser/SpecialBeamCannon.tscn" id="4_jq37s"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="4_vo1ox"]
 
 [resource]
@@ -14,12 +14,13 @@ MaxHP = 320
 Speed = 80
 Shield = 0
 MaxShield = 0
-KI = 100
-MaxKI = 100
+KI = 0.0
+MaxKI = 0.0
 MobAttacks = Array[Object]([ExtResource("2_vudaw"), ExtResource("3_lcve4"), ExtResource("4_jq37s")])
 LootTables = null
 ShowHealBar = true
 ExpDropValue = 400
+RegenKI = 0.2
 AnimatedFrames = ExtResource("2_3nwla")
 Portrait = ExtResource("3_357vb")
 characterSounds = null

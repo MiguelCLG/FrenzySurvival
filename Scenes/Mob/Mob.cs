@@ -170,9 +170,9 @@ public partial class Mob : CharacterBody2D
       AnimationPlayer.FlipH = direction.X < 0;
     }
     timer += delta;
-    if (timer > 1)
+    if (timer > 1) 
     {
-      abilityManager.SetKI(abilityManager.GetKI() + 1); // regenerate ki 1/second
+      abilityManager.SetKI(abilityManager.GetKI() + mobResource.RegenKI); // regenerate the mobs  1/second
       EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { abilityManager.GetKI(), this });
 
       timer = 0;
@@ -298,7 +298,7 @@ public partial class Mob : CharacterBody2D
         switch (kvp.Key)
         {
           case "ki":
-            int newKi = mobResource.KI + kvp.Value < mobResource.MaxKI ? mobResource.KI + kvp.Value : mobResource.MaxKI;
+            float newKi = mobResource.KI + kvp.Value < mobResource.MaxKI ? mobResource.KI + kvp.Value : mobResource.MaxKI;
             abilityManager.SetKI(newKi);
             EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { abilityManager.GetKI(), this });
             break;

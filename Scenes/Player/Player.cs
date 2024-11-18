@@ -63,7 +63,7 @@ public partial class Player : CharacterBody2D
   }
   public async void TakeDamage(object sender, object[] args)
   {
-    if (AnimationPlayer.Animation == "death") return;
+    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt") return;
     if (args[0] is Healthbar healthbar)
     {
       if (healthbar.Equals(GetNode<Healthbar>("Healthbar")))
@@ -191,7 +191,7 @@ public partial class Player : CharacterBody2D
   {
     if (args[0] is int kiValue)
     {
-      int newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
+      float newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
       playerResource.KI = newKi;
       abilityManager.SetKI(newKi);
       EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
@@ -220,7 +220,7 @@ public partial class Player : CharacterBody2D
         switch (kvp.Key)
         {
           case "ki":
-            int newKi = playerResource.KI + kvp.Value < playerResource.MaxKI ? playerResource.KI + kvp.Value : playerResource.MaxKI;
+            float newKi = playerResource.KI + kvp.Value < playerResource.MaxKI ? playerResource.KI + kvp.Value : playerResource.MaxKI;
             playerResource.KI = newKi;
             abilityManager.SetKI(newKi);
             EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
