@@ -191,7 +191,7 @@ public partial class Player : CharacterBody2D
   {
     if (args[0] is int kiValue)
     {
-      float newKi = playerResource.KI + kiValue < playerResource.MaxKI ? playerResource.KI + kiValue : playerResource.MaxKI;
+      float newKi = playerResource.KI + (float) kiValue < playerResource.MaxKI ? playerResource.KI + (float) kiValue : playerResource.MaxKI;
       playerResource.KI = newKi;
       abilityManager.SetKI(newKi);
       EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
@@ -220,7 +220,7 @@ public partial class Player : CharacterBody2D
         switch (kvp.Key)
         {
           case "ki":
-            float newKi = playerResource.KI + kvp.Value < playerResource.MaxKI ? playerResource.KI + kvp.Value : playerResource.MaxKI;
+            float newKi = playerResource.KI + (float) kvp.Value < playerResource.MaxKI ? playerResource.KI + (float) kvp.Value : playerResource.MaxKI;
             playerResource.KI = newKi;
             abilityManager.SetKI(newKi);
             EventRegistry.GetEventPublisher("OnKiChanged").RaiseEvent(new object[] { playerResource.KI, this });
