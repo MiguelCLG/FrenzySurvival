@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("2_foqyb")
 Name = "Masenko"
+AnimationNames = Array[String](["beam_charge", "beam"])
 Icon = ExtResource("1_u680m")
 Cooldown = 2
 CastTime = 3.0
@@ -14,3 +15,4 @@ Damage = 50
 kiRequired = 35
 isSuperAbility = true
 isRangedAbility = true
+RangeRequired = Vector2(300, 20)

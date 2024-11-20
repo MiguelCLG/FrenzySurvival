@@ -9,19 +9,19 @@ public partial class Mob : CharacterBody2D
 {
   [Export] public BaseCharacterResource mobResource;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
-  private Node2D target;
+  public Node2D target;
   public Healthbar healthbar;
-  private AbilityManager abilityManager;
-  private Vector2 motion = Vector2.Zero;
+  public AbilityManager abilityManager;
+  public Vector2 motion = Vector2.Zero;
 
-  private bool isDoingAction = false;
   private double timer = 0;
-  bool isGettingHurt = false;
+  protected bool isDoingAction = false;
+  protected bool isGettingHurt = false;
 
-  private AudioManager audioManager;
+  protected AudioManager audioManager;
   private float stopDistance = 50f;
 
-  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
+  public Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
   private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
@@ -68,12 +68,25 @@ public partial class Mob : CharacterBody2D
     if (healthbar.IsAlive)
     {
       UpdateTarget();
-      if (mobResource.Speed > 0 && !isDoingAction) // TODO: ??? Why? Must have been drunk, right? ahhh, pots.. got it
+      if (mobResource.Speed > 0 && !isDoingAction)
       {
         Movement(delta);
         MoveAndCollide(motion, false, 1f, true);
       }
     }
+  }
+
+  private void LoadAbilities()
+  {
+    foreach (var abilityScene in mobResource.MobAttacks)
+    {
+      var ability = abilityScene.Instantiate<Ability>();
+      abilityManager.AddAbility(ability);
+    }
+    abilityManager.UnsubscribeFromEvents();
+    abilityManager.SetKI(mobResource.KI);
+    abilityManager.SetTargetGroup("Player");
+    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { mobResource.KI, mobResource.MaxKI, this });
   }
 
   private void UpdatePositions()
@@ -90,18 +103,7 @@ public partial class Mob : CharacterBody2D
     }
   }
 
-  private void LoadAbilities()
-  {
-    foreach (var abilityScene in mobResource.MobAttacks)
-    {
-      var ability = abilityScene.Instantiate<Ability>();
-      abilityManager.AddAbility(ability);
-    }
-    abilityManager.UnsubscribeFromEvents();
-    abilityManager.SetKI(mobResource.KI);
-    abilityManager.SetTargetGroup("Player");
-    EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { mobResource.KI, mobResource.MaxKI, this });
-  }
+
 
   private void Movement(double delta)
   {
@@ -188,7 +190,7 @@ public partial class Mob : CharacterBody2D
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
   }
 
-  public async void TakeDamage(object sender, object[] args)
+  public virtual async void TakeDamage(object sender, object[] args)
   {
     if (AnimationPlayer.Animation == "death") return;
 
@@ -311,7 +313,7 @@ public partial class Mob : CharacterBody2D
     }
   }
 
-  public void Die()
+  public virtual void Die()
   {
     if (mobResource.characterSounds is not null)
     {

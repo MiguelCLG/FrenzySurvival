@@ -63,7 +63,7 @@ public partial class Punch : Ability
 
       if (AnimationPlayer.Animation == "death" || token.IsCancellationRequested) return;
 
-      AnimationPlayer.Play("punch");
+      AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
 
       foreach (var result in results)

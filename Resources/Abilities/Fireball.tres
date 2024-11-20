@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_rby3w")
 Name = "Energy Barrage"
+AnimationNames = Array[String](["punch", "punch_2"])
 Icon = ExtResource("1_4e4qk")
 Cooldown = 2
 CastTime = 0.2
@@ -14,3 +15,4 @@ Damage = 10
 kiRequired = 10
 isSuperAbility = false
 isRangedAbility = true
+RangeRequired = Vector2(0, 0)

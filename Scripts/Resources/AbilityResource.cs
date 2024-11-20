@@ -1,11 +1,13 @@
-using System.Runtime.CompilerServices;
 using Godot;
+using Godot.Collections;
 
 [GlobalClass]
 public partial class AbilityResource : Resource
 {
   [Export]
   public string Name { get; set; }
+  [Export]
+  public Array<string> AnimationNames { get; set; }
 
   [Export]
   public Texture2D Icon { get; set; }
@@ -25,4 +27,6 @@ public partial class AbilityResource : Resource
   public bool isSuperAbility { get; set; }
   [Export]
   public bool isRangedAbility { get; set; } = false;
+  [Export]
+  public Vector2 RangeRequired { get; set; } = Vector2.Zero;
 }

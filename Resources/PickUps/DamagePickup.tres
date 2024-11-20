@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_gqaqm")
 statChange = {
-"damage": 10
+"damage": 50
 }

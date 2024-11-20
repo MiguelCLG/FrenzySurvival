@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8gp7wpa0jebe"]
+
+[ext_resource type="Script" path="res://Scenes/Behaviors/AttackBehavior.cs" id="1_2hssy"]
+
+[node name="Attack" type="Node2D"]
+script = ExtResource("1_2hssy")

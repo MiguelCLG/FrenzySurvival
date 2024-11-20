@@ -24,7 +24,7 @@ public partial class EnergyBarrage : Ability
       {
 
         if (token.IsCancellationRequested) return;  // Handle early cancellation
-        AnimationPlayer.Play(i % 2 == 0 ? "punch" : "punch_2");
+        AnimationPlayer.Play(i % 2 == 0 ? abilityResource.AnimationNames[0] : abilityResource.AnimationNames[1]);
         facingDirection = AnimationPlayer.FlipH ? -1 : 1;
         var fireball = fireballScene.Instantiate<Fireball>();
         fireball.targetGroup = targetGroup;

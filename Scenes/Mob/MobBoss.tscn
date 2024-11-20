@@ -1,0 +1,65 @@
+[gd_scene load_steps=13 format=3 uid="uid://c1pjwnbveilkg"]
+
+[ext_resource type="Script" path="res://Scenes/Mob/MobBoss.cs" id="1_42med"]
+[ext_resource type="PackedScene" uid="uid://ce1gco1hsig0b" path="res://Scenes/Behaviors/Movement.tscn" id="2_av6yp"]
+[ext_resource type="SpriteFrames" uid="uid://brp7hsh2smf35" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/Sayan_Boss_1.tres" id="3_0eugb"]
+[ext_resource type="Resource" uid="uid://bqmd631lrtr54" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1.tres" id="3_bewhn"]
+[ext_resource type="PackedScene" uid="uid://c8gp7wpa0jebe" path="res://Scenes/Behaviors/Attack.tscn" id="3_qjmby"]
+[ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_lphpd"]
+[ext_resource type="Resource" uid="uid://cmm5e11b4rsou" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1_Phase_2.tres" id="4_ob6bl"]
+[ext_resource type="Script" path="res://Scenes/UI/KIBar/MobKiBar.cs" id="5_l45dy"]
+[ext_resource type="Script" path="res://Scenes/Abilities/AbilityManager.cs" id="6_pgwmg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oxruw"]
+radius = 3.0
+height = 16.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lioln"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khjty"]
+bg_color = Color(1, 1, 0.145098, 1)
+
+[node name="Mob" type="CharacterBody2D" node_paths=PackedStringArray("HealthBar", "KiBar", "collision", "AnimationPlayer") groups=["Enemies"]]
+disable_mode = 2
+script = ExtResource("1_42med")
+HealthBar = NodePath("Healthbar")
+KiBar = NodePath("KiBar")
+collision = NodePath("CollisionShape2D")
+behaviors = [ExtResource("2_av6yp"), ExtResource("3_qjmby")]
+mobResourcePhaseTwo = ExtResource("4_ob6bl")
+mobResource = ExtResource("3_bewhn")
+AnimationPlayer = NodePath("Portrait")
+
+[node name="Portrait" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = ExtResource("3_0eugb")
+animation = &"phase_2_move"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 19)
+shape = SubResource("CapsuleShape2D_oxruw")
+
+[node name="Healthbar" parent="." instance=ExtResource("4_lphpd")]
+offset_left = -11.0
+offset_top = -10.0
+offset_right = 11.0
+offset_bottom = -6.0
+
+[node name="KiBar" type="ProgressBar" parent="."]
+offset_left = -11.0
+offset_top = -6.0
+offset_right = 11.0
+offset_bottom = -4.0
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_lioln")
+theme_override_styles/fill = SubResource("StyleBoxFlat_khjty")
+value = 50.0
+show_percentage = false
+script = ExtResource("5_l45dy")
+
+[node name="AbilityManager" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("6_pgwmg")
+
+[node name="Behaviors" type="Node2D" parent="."]

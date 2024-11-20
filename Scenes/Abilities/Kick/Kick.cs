@@ -32,7 +32,7 @@ public partial class Kick : Ability
 
       var results = spaceState.IntersectShape(query);
       if (AnimationPlayer.Animation == "death") return;
-      AnimationPlayer.Play("kick");
+      AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
 
       foreach (var result in results)

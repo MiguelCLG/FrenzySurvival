@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_rhw0s")
 Name = "Kick"
+AnimationNames = Array[String](["kick"])
 Icon = ExtResource("1_7pui3")
 Cooldown = 2
 CastTime = 0.3
@@ -14,3 +15,4 @@ Damage = 45
 kiRequired = 0
 isSuperAbility = false
 isRangedAbility = false
+RangeRequired = Vector2(10, 20)

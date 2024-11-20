@@ -40,7 +40,7 @@ public partial class Kamehameha : Ability
       if (token.IsCancellationRequested) return;
       energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMin = EnergyBallScale.X;
       energyBall.GetNode<CpuParticles2D>("CPUParticles2D").ScaleAmountMax = EnergyBallScale.Y;
-      AnimationPlayer.Play("beam_charge");
+      AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
 
       // Set the energy ball's position based on the facing direction
@@ -54,7 +54,7 @@ public partial class Kamehameha : Ability
       EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { true }); // Locks the character in animation
       energyBall.DeactivateEnergyBall();
       Laser.SetDirection(facingDirection);
-      AnimationPlayer.Play("beam");
+      AnimationPlayer.Play(abilityResource.AnimationNames[1]);
       Laser.SetIsCasting(true);
       Position = new Vector2(-28 * -facingDirection, 0);
       await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");

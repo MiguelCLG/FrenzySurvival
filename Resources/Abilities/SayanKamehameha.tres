@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_xbgrv")
 Name = "Kamehameha"
+AnimationNames = Array[String](["beam_charge", "beam"])
 Icon = ExtResource("1_qttdi")
 Cooldown = 4
 CastTime = 4.0
@@ -14,3 +15,4 @@ Damage = 70
 kiRequired = 50
 isSuperAbility = true
 isRangedAbility = true
+RangeRequired = Vector2(300, 20)
