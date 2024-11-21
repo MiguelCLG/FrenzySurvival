@@ -11,8 +11,8 @@
 
 [resource]
 script = ExtResource("7_5xmlk")
-HP = 60
-MaxHP = 60
+HP = 10
+MaxHP = 10
 Speed = 60
 Shield = 0
 MaxShield = 0

@@ -46,7 +46,5 @@ public partial class MobKiBar : ProgressBar
   {
     EventSubscriber.UnsubscribeFromEvent("OnKiChanged", OnKiChanged);
     EventSubscriber.UnsubscribeFromEvent("SetInitialKIValue", SetInitialKIValue);
-    EventRegistry.UnregisterEvent("SetInitialKIValue");
-    EventRegistry.UnregisterEvent("OnKiChanged");
   }
 }

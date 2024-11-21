@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://pwi1w4p46vkm"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://bmqfh680fu6g7"]
 
 [ext_resource type="Resource" uid="uid://cjsxx5bkrptff" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_1.tres" id="1_gykdo"]
 [ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="2_y5t50"]

@@ -70,7 +70,7 @@ public partial class Main : Node2D
     UI.GetNode<Label>("%TimerLabel").Text = formattedTime;
     UI.GetNode<Label>("%EnemiesKilledLabel").Text = $"Kills: {enemiesKilled}";
 
-    if (time > 1800)
+    if (minutes > 10)
     {
       GD.Print("Jogo Terminado");
       GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
