@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://bo4cp25iiota6"]
+
+[ext_resource type="SpriteFrames" uid="uid://cccnbri4ggfsf" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1.tres" id="1_6dst0"]
+[ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_hghi3"]
+[ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_1gg6n"]
+[ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_4wl7o"]
+[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="5_1wlby"]
+[ext_resource type="PackedScene" uid="uid://dvxyr2o2po7cf" path="res://Scenes/Abilities/Laser/EnergyBlast.tscn" id="6_rhq66"]
+[ext_resource type="Texture2D" uid="uid://dosie2rn4hd1h" path="res://Assets/CharacterAssets/FriezaSoldier/FreezaSoldier_1/fsoldier1_portrait.png" id="6_stlm3"]
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="7_5xmlk"]
+
+[resource]
+script = ExtResource("7_5xmlk")
+HP = 60
+MaxHP = 60
+Speed = 60
+Shield = 0
+MaxShield = 0
+KI = 100
+MaxKI = 100
+MobAttacks = Array[Object]([ExtResource("4_4wl7o"), ExtResource("5_1wlby"), ExtResource("6_rhq66")])
+LootTables = Array[Resource]([ExtResource("2_hghi3"), ExtResource("3_1gg6n")])
+ShowHealBar = true
+ExpDropValue = 150
+AnimatedFrames = ExtResource("1_6dst0")
+Portrait = ExtResource("6_stlm3")
+characterSounds = null
