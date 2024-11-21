@@ -13,16 +13,16 @@ public partial class AbilityResource : Resource
   public Texture2D Icon { get; set; }
 
   [Export]
-  public int Cooldown { get; set; }
+  public float Cooldown { get; set; }
   [Export]
   public float CastTime { get; set; }
 
   [Export]
-  public int Value { get; set; }
+  public float Value { get; set; }
   [Export]
-  public int Damage { get; set; }
+  public float Damage { get; set; }
   [Export]
-  public int kiRequired { get; set; }
+  public float kiRequired { get; set; }
   [Export]
   public bool isSuperAbility { get; set; }
   [Export]

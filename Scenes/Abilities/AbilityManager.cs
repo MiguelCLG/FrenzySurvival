@@ -70,7 +70,7 @@ public partial class AbilityManager : Node2D
 
   public async void ActionCanceled(object sender, object[] args)
   {
-    if (!IsInstanceValid(AnimationPlayer) || AnimationPlayer.IsQueuedForDeletion()) return;
+    if (!IsInstanceValid(AnimationPlayer) || AnimationPlayer.IsQueuedForDeletion() || !GetParent().IsInGroup("Enemies")) return;
     if (AnimationPlayer.Animation != "death")
     {
       if (AnimationPlayer.Animation == "hurt")
@@ -180,5 +180,6 @@ public partial class AbilityManager : Node2D
   public override void _ExitTree()
   {
     UnsubscribeFromEvents();
+    EventSubscriber.UnsubscribeFromEvent("ActionCanceled", ActionCanceled);
   }
 }

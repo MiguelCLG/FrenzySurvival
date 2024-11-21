@@ -6,13 +6,13 @@
 [resource]
 script = ExtResource("2_m5irm")
 Name = "Special Beam Cannon"
-AnimationNames = Array[String](["beam_charge", "beam"])
+AnimationNames = Array[String](["beam_charge", "beam", "default"])
 Icon = ExtResource("1_m2sbm")
-Cooldown = 6
+Cooldown = 6.0
 CastTime = 3.0
-Value = 1
-Damage = 200
-kiRequired = 40
+Value = 1.0
+Damage = 200.0
+kiRequired = 40.0
 isSuperAbility = true
 isRangedAbility = true
-RangeRequired = Vector2(300, 20)
+RangeRequired = Vector2(300, 50)

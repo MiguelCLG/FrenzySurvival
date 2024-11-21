@@ -28,23 +28,24 @@ public partial class MobBoss : Mob
   public override void _Process(double delta)
   {
     base._Process(delta); // Not sure if it will be the same process, but we do need to update the position from the player
-    GD.Print("Process Boss");
   }
+
   public override void _PhysicsProcess(double delta)
   {
+    if (isDoingAction) return;
 
     // Calculate the distance on the X-axis to keep the mob at the specific range from the target
     int index = abilityManager.actionindex < abilityManager.abilityArray.Count ? abilityManager.actionindex : 0;
     Vector2 targetRange = abilityManager.abilityArray[index].abilityResource.RangeRequired; // Adjust this to the desired ranged attack distance
     float distanceX = Mathf.Abs(target.Position.X - Position.X);
     float distanceY = Mathf.Abs(target.Position.Y - Position.Y);
-    if (distanceX < targetRange.X || distanceY < targetRange.Y) // Allow small Y-axis variance
+    if (distanceX < targetRange.X && distanceY < targetRange.Y) // Allow small Y-axis variance
     {
-      if (isDoingAction) return;
       // Mob is in range for a ranged attack
       // Verify if the mob has KI to do the attack
       if (abilityManager.abilityArray[index].abilityResource.kiRequired <= abilityManager.GetKI())
       {
+        isDoingAction = true;
         SetBehavior("Attack");
         currentBehavior.Execute(this, (float)delta, currentPhase);
       }
@@ -55,6 +56,9 @@ public partial class MobBoss : Mob
       currentBehavior.Execute(this, (float)delta, currentPhase);
       MoveAndCollide(motion, false, 1f, true);
     }
+    AnimationPlayer.FlipH = (target.Position - Position).Normalized().X < 0;
+    abilityManager.SetFacingDirection(AnimationPlayer.FlipH ? -1 : 1);
+    EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { AnimationPlayer.FlipH ? -1 : 1, this });
   }
 
   private void LoadBehaviours()
@@ -115,6 +119,7 @@ public partial class MobBoss : Mob
             collision.Position = Vector2.Zero;
             collision.Scale = Vector2.One * 3;
             await ToSignal(AnimationPlayer, "animation_finished");
+            isDoingAction = false;
             AnimationPlayer.Play("phase_2_default");
             LoadBossAbilities();
             SetProcess(true);
@@ -146,6 +151,13 @@ public partial class MobBoss : Mob
     abilityManager.UnsubscribeFromEvents();
     abilityManager.SetKI(mobResource.KI);
     abilityManager.SetTargetGroup("Player");
+  }
+
+  public override void OnPlayerDeath(object sender, object[] args)
+  {
+    AnimationPlayer.Play(currentPhase == 1 ? "default" : "phase_2_default");
+    SetProcess(false);
+    SetPhysicsProcess(false);
   }
 
   public override async void Die()

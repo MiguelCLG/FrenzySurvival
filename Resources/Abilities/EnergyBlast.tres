@@ -6,13 +6,13 @@
 [resource]
 script = ExtResource("2_obltv")
 Name = "Energy Blast"
-AnimationNames = Array[String](["beam_charge", "beam"])
+AnimationNames = Array[String](["beam_charge", "beam", "default"])
 Icon = ExtResource("1_6jo5h")
-Cooldown = 2
+Cooldown = 2.0
 CastTime = 2.0
-Value = 0
-Damage = 40
-kiRequired = 40
+Value = 0.0
+Damage = 40.0
+kiRequired = 40.0
 isSuperAbility = true
 isRangedAbility = true
-RangeRequired = Vector2(300, 20)
+RangeRequired = Vector2(300, 50)

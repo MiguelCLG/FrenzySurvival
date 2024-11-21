@@ -65,6 +65,7 @@ public partial class Punch : Ability
 
       AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
+      await ToSignal(AnimationPlayer, "animation_finished");
 
       foreach (var result in results)
       {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1pjwnbveilkg"]
+[gd_scene load_steps=13 format=3 uid="uid://cb8rhbmnnji00"]
 
 [ext_resource type="Script" path="res://Scenes/Mob/MobBoss.cs" id="1_42med"]
 [ext_resource type="PackedScene" uid="uid://ce1gco1hsig0b" path="res://Scenes/Behaviors/Movement.tscn" id="2_av6yp"]
@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://bqmd631lrtr54" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1.tres" id="3_bewhn"]
 [ext_resource type="PackedScene" uid="uid://c8gp7wpa0jebe" path="res://Scenes/Behaviors/Attack.tscn" id="3_qjmby"]
 [ext_resource type="PackedScene" uid="uid://btn6oj1vvasix" path="res://Scenes/Healthbar/Healthbar.tscn" id="4_lphpd"]
-[ext_resource type="Resource" uid="uid://cmm5e11b4rsou" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1_Phase_2.tres" id="4_ob6bl"]
+[ext_resource type="Resource" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1_Phase_2.tres" id="4_ob6bl"]
 [ext_resource type="Script" path="res://Scenes/UI/KIBar/MobKiBar.cs" id="5_l45dy"]
 [ext_resource type="Script" path="res://Scenes/Abilities/AbilityManager.cs" id="6_pgwmg"]
 
@@ -19,7 +19,7 @@ height = 16.0
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khjty"]
 bg_color = Color(1, 1, 0.145098, 1)
 
-[node name="Mob" type="CharacterBody2D" node_paths=PackedStringArray("HealthBar", "KiBar", "collision", "AnimationPlayer") groups=["Enemies"]]
+[node name="Mob2" type="CharacterBody2D" node_paths=PackedStringArray("HealthBar", "KiBar", "collision", "AnimationPlayer") groups=["Enemies"]]
 disable_mode = 2
 script = ExtResource("1_42med")
 HealthBar = NodePath("Healthbar")
@@ -33,8 +33,9 @@ AnimationPlayer = NodePath("Portrait")
 [node name="Portrait" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = ExtResource("3_0eugb")
-animation = &"phase_2_move"
-autoplay = "default"
+animation = &"phase_2_punch"
+frame = 2
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 19)

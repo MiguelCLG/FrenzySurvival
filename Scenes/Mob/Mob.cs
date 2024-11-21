@@ -23,8 +23,6 @@ public partial class Mob : CharacterBody2D
 
   public Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
-  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
-
   public override void _Ready()
   {
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
@@ -102,8 +100,6 @@ public partial class Mob : CharacterBody2D
       SetPhysicsProcess(true);
     }
   }
-
-
 
   private void Movement(double delta)
   {
@@ -240,16 +236,17 @@ public partial class Mob : CharacterBody2D
     await ToSignal(GetTree().CreateTimer(1f), "timeout");
   }
 
-  public void OnPlayerDeath(object sender, object[] args)
+  public virtual void OnPlayerDeath(object sender, object[] args)
   {
     AnimationPlayer.Play("default");
     SetProcess(false);
     SetPhysicsProcess(false);
   }
-  public void ActionFinished(object sender, object[] args)
+  public async void ActionFinished(object sender, object[] args)
   {
     // Se nao vier do ability manager ou ability deste mob, entao retorna
-    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt") return;
+    if (AnimationPlayer.Animation == "hurt") await ToSignal(AnimationPlayer, "animation_finished");
+    if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Node2D node)
     {
       var isInChildren = abilityManager.GetChildren().Contains(node);

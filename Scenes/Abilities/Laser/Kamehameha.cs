@@ -60,7 +60,7 @@ public partial class Kamehameha : Ability
       await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
       Laser.SetIsCasting(false);
       EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { false }); // unlocks character in animation
-      AnimationPlayer.Play("default");
+      AnimationPlayer.Play(abilityResource.AnimationNames[2]);
 
       await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
       if (token.IsCancellationRequested) return;

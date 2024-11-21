@@ -16,7 +16,5 @@ public partial class MovementBehavior : Behavior
       mob.AnimationPlayer.Play(currentPhase == 1 ? "move" : "phase_2_move");
     }
 
-    mob.AnimationPlayer.FlipH = moveDirection.X < 0;
-    EventRegistry.GetEventPublisher("DirectionChanged").RaiseEvent(new object[] { mob.AnimationPlayer.FlipH ? -1 : 1, this });
   }
 }
