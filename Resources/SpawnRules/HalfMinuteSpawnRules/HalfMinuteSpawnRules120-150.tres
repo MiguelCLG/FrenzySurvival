@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=5 format=3 uid="uid://cguwjm4bhcfwa"]
+
+[ext_resource type="Resource" uid="uid://cjsxx5bkrptff" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_1.tres" id="1_3wk4q"]
+[ext_resource type="Resource" uid="uid://dfbwf6gk25vf3" path="res://Resources/BaseCharacter/SayanMobs/Sayan_1.tres" id="2_4b8ms"]
+[ext_resource type="Resource" uid="uid://b777ofptysvqh" path="res://Resources/BaseCharacter/NamekianMobs/Namekian_2.tres" id="3_iwsov"]
+[ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="4_0xh4d"]
+
+[resource]
+script = ExtResource("4_0xh4d")
+StartTimeInSeconds = 91.0
+FinishTimeInSeconds = 120.0
+MobsToSpawn = Array[Object]([ExtResource("1_3wk4q"), ExtResource("2_4b8ms"), ExtResource("3_iwsov")])
+SpawnNumbers = PackedInt32Array(5, 6, 0)
