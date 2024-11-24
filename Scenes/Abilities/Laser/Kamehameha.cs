@@ -84,7 +84,7 @@ public partial class Kamehameha : Ability
 
   public override void Cancel()
   {
-
+    audioManager?.StopSound(this);
     cancellationTokenSource.Cancel();  // Cancel the task
     energyBall.DeactivateEnergyBall();
     Laser.SetIsCasting(false);

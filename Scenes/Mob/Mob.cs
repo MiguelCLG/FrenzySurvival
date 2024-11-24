@@ -249,11 +249,14 @@ public partial class Mob : CharacterBody2D
     if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Node2D node)
     {
-      var isInChildren = abilityManager.GetChildren().Contains(node);
-      var isThisAbilityManager = node == abilityManager;
-      if (!isThisAbilityManager)
-        if (!isInChildren)
-          return;
+      if (abilityManager != null && !IsInstanceValid(abilityManager))
+      {
+        var isInChildren = abilityManager.GetChildren().Contains(node);
+        var isThisAbilityManager = node == abilityManager;
+        if (!isThisAbilityManager)
+          if (!isInChildren)
+            return;
+      }
       isDoingAction = false;
     }
   }
