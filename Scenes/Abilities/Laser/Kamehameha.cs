@@ -61,8 +61,9 @@ public partial class Kamehameha : Ability
       Laser.SetIsCasting(false);
       EventRegistry.GetEventPublisher("IsDoingAction").RaiseEvent(new object[] { false }); // unlocks character in animation
       AnimationPlayer.Play(abilityResource.AnimationNames[2]);
-
+      // TODO: This is trowing a massive error in the Phase2 of the boss. GetTree() is null. Means this node is not in the tree?
       await ToSignal(GetTree().CreateTimer(abilityResource.Cooldown, false, true), "timeout");
+
       if (token.IsCancellationRequested) return;
       EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }

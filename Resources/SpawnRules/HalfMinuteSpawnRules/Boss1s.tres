@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://chiil4apafh2y"]
+
+[ext_resource type="Resource" uid="uid://bqmd631lrtr54" path="res://Resources/BaseCharacter/SayanMobs/Sayan_Boss_1.tres" id="1_3x0x5"]
+[ext_resource type="Script" path="res://Scripts/Resources/MobSpawnRules.cs" id="2_la22o"]
+
+[resource]
+script = ExtResource("2_la22o")
+StartTimeInSeconds = 1.0
+FinishTimeInSeconds = 5.0
+MobsToSpawn = Array[Object]([ExtResource("1_3x0x5")])
+SpawnNumbers = PackedInt32Array(1)

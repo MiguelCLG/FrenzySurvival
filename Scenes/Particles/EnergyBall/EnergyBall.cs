@@ -42,7 +42,8 @@ public partial class EnergyBall : Node2D
     foreach (Line2D beamLine in beamLines)
     {
       // Instantiate the beam line and add it to the scene
-      AddChild(beamLine);
+      if(beamLine.GetParent() != this)
+        AddChild(beamLine);
 
       // Define the start and end points of the beam
       beamLine.ClearPoints(); // Clear any existing points
