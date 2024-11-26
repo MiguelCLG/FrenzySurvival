@@ -61,7 +61,9 @@ public partial class Mob : CharacterBody2D
 
   public override void _PhysicsProcess(double delta)
   {
-    if (AnimationPlayer.Animation == "death" || isGettingHurt) return;
+    if (AnimationPlayer.Animation == "death") return;
+    MoveAndCollide(motion, false, 1f, true);
+    if(isGettingHurt) return;
 
     if (healthbar.IsAlive)
     {
@@ -230,6 +232,7 @@ public partial class Mob : CharacterBody2D
 
   public async void KnockBack(Vector2 dir, float frc)
   {
+    GD.Print($"KnockBack: {this.Name} --- Animation: [{AnimationPlayer.Animation}]");
     if (AnimationPlayer.Animation == "death") return;
     await ToSignal(GetTree().CreateTimer(.1f), "timeout");
     motion = dir * frc;
