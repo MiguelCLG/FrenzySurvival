@@ -27,13 +27,15 @@ public partial class Menu : Control
     tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f); */
     audioManager = GetNode<AudioManager>("/root/AudioManager");
     audioManager?.Play(menuSounds.GetValueOrDefault("music"), this);
-    StartButton.GrabFocus();
+    //StartButton.GrabFocus();
+    DelayedGrabFocyus(0.5f);
   }
 
   private void OnInputEvent(InputEvent @event)
   {
-    
     Node focusOwner = GetViewport().GuiGetFocusOwner();
+    //if(focusOwner is null)
+    //  StartButton.GrabFocus();
     if(focusOwner is null || focusOwner is not Button) StartButton.GrabFocus();
 
     if (@event is InputEventKey eventKey && eventKey.Pressed && eventKey.IsAction("ui_accept"))
@@ -46,6 +48,11 @@ public partial class Menu : Control
     }
   }
 
+  private async void DelayedGrabFocyus(float waitTime)
+  {
+    await ToSignal(GetTree().CreateTimer(waitTime, false, true), "timeout");
+    StartButton.GrabFocus();
+  }
   public override void _ExitTree()
   {
       // Stop any sound associated with this node
