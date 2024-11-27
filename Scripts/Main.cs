@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 public partial class Main : Node2D
 {
-  [Export] BaseCharacterResource[] mobsResourceReference;
   [Export] MobSpawnRules[] mobSpawnRules;
   [Export] Godot.Collections.Dictionary<string, AudioOptionsResource> mainSounds;
 
@@ -21,7 +20,6 @@ public partial class Main : Node2D
   Node2D mobContainer;
   double spawnCooldown, time;
   int level = 1;
-  double maxEnemies = 10;
   double currentEnemies = 0;
   double enemiesKilled = 0;
   public override void _Ready()
@@ -90,20 +88,6 @@ public partial class Main : Node2D
       }
   }
 
-  public void CreateMob()
-  {
-    var mob = mobScene.Instantiate<Mob>();
-    mobContainer.AddChild(mob);
-    mob.mobResource = mobsResourceReference[level - 1];
-    mob.healthbar.SetInitialValues(mob.mobResource);
-    mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
-
-    Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
-    Vector2 randomPositionNegative = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
-    mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
-
-    // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));
-  }
   public void CreateMobOfResource(BaseCharacterResource charResourse)
   {
     Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
@@ -186,7 +170,6 @@ public partial class Main : Node2D
       }
     }
   }
-
   public void Restart()
   {
     GetTree().Paused = false;
@@ -212,7 +195,6 @@ public partial class Main : Node2D
     audioManager.UnpauseAllSounds();
     GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
   }
-
   public override void _UnhandledKeyInput(InputEvent @event)
   {
     if (Input.IsActionPressed("ui_cancel"))
@@ -220,7 +202,6 @@ public partial class Main : Node2D
       HandlePause();
     }
   }
-
   public override void _Input(InputEvent @event)
   {
     if (Input.IsActionPressed("ui_cancel") && @event is InputEventJoypadButton)
@@ -228,7 +209,6 @@ public partial class Main : Node2D
       HandlePause();
     }
   }
-
   public void HandlePause()
   {
     GetTree().Paused = !GetTree().Paused;
