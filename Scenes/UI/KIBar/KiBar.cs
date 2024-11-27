@@ -15,18 +15,18 @@ public partial class KiBar : ProgressBar
   {
     if (args[2] is not Player) return;
 
-    if (args[0] is int kiValue && args[1] is int maxKI)
+    if (args[0] is float kiValue && args[1] is float maxKI)
     {
-      MaxValue = maxKI;
-      Value = kiValue;
+      MaxValue = (double) maxKI;
+      Value = (double) kiValue;
     }
   }
   private void OnKiChanged(object sender, object[] args)
   {
     if (args[1] is not Player) return;
-    if (args[0] is int kiValue)
+    if (args[0] is float kiValue)
     {
-      Value = kiValue;
+      Value = (double) kiValue;
     }
   }
 

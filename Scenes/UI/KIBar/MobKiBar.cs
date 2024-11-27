@@ -20,7 +20,7 @@ public partial class MobKiBar : ProgressBar
     }
     else
       return;
-    if (args[0] is int kiValue && args[1] is int maxKI)
+    if (args[0] is float kiValue && args[1] is float maxKI)
     {
       MaxValue = maxKI;
       Value = kiValue;
@@ -35,7 +35,7 @@ public partial class MobKiBar : ProgressBar
     }
     else
       return;
-    if (args[0] is int kiValue)
+    if (args[0] is float kiValue)
     {
       Value = kiValue;
     }

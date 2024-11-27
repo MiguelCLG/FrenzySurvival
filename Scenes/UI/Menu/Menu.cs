@@ -27,12 +27,12 @@ public partial class Menu : Control
     tween.TweenProperty(QuitButton, "position", new Vector2(500, 260), .2f); */
     audioManager = GetNode<AudioManager>("/root/AudioManager");
     audioManager?.Play(menuSounds.GetValueOrDefault("music"), this);
-    StartButton.GrabFocus();
+    //StartButton.GrabFocus();
+    DelayedGrabFocyus(0.5f);
   }
 
   private void OnInputEvent(InputEvent @event)
   {
-    
     Node focusOwner = GetViewport().GuiGetFocusOwner();
     if(focusOwner is null || focusOwner is not Button) StartButton.GrabFocus();
 
@@ -46,6 +46,11 @@ public partial class Menu : Control
     }
   }
 
+  private async void DelayedGrabFocyus(float waitTime)
+  {
+    await ToSignal(GetTree().CreateTimer(waitTime, false, true), "timeout");
+    StartButton.GrabFocus();
+  }
   public override void _ExitTree()
   {
       // Stop any sound associated with this node
@@ -80,13 +85,16 @@ public partial class Menu : Control
         tween.TweenProperty(StartButton, "scale", new Vector2(1.2f, 1f), .2f);
         tween.TweenProperty(OptionsButton, "position", new Vector2(OptionsButton.Position.X, StartButton.Position.Y + 80), .2f);
         tween.TweenProperty(QuitButton, "position", new Vector2(QuitButton.Position.X, StartButton.Position.Y + 160), .1f);
+        StartButton.GrabFocus();
         break;
       case "Options":
         tween.TweenProperty(OptionsButton, "scale", new Vector2(1.2f, 1f), .2f);
         tween.TweenProperty(QuitButton, "position", new Vector2(QuitButton.Position.X, StartButton.Position.Y + 160), .1f);
+        OptionsButton.GrabFocus();
         break;
       case "Quit":
         tween.TweenProperty(QuitButton, "scale", new Vector2(1.2f, 1f), .1f);
+        QuitButton.GrabFocus();
         break;
     }
   }
