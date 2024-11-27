@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=7 format=3 uid="uid://bqmd631lrtr54"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=8 format=3 uid="uid://bqmd631lrtr54"]
 
 [ext_resource type="SpriteFrames" uid="uid://brp7hsh2smf35" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/Sayan_Boss_1.tres" id="1_q8vmu"]
 [ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_4b1y1"]
 [ext_resource type="Resource" uid="uid://bxbekxlvv4rwk" path="res://Resources/LootTables/ExperienceLootTable.tres" id="3_06jlv"]
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_w74qk"]
 [ext_resource type="Texture2D" uid="uid://b6xynm1ut2423" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/sayanboss1_portrait.png" id="5_b27lr"]
+[ext_resource type="PackedScene" uid="uid://bhkhwuha4lequ" path="res://Scenes/Abilities/Laser/Galick_Gun.tscn" id="5_vmpdk"]
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="6_n5rlj"]
 
 [resource]
@@ -16,7 +17,7 @@ Shield = 0
 MaxShield = 0
 KI = 100
 MaxKI = 100
-MobAttacks = Array[Object]([ExtResource("4_w74qk")])
+MobAttacks = Array[Object]([ExtResource("4_w74qk"), ExtResource("5_vmpdk")])
 LootTables = Array[Resource]([ExtResource("2_4b1y1"), ExtResource("3_06jlv")])
 ShowHealBar = true
 ExpDropValue = 200

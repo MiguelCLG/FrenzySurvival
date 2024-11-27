@@ -12,7 +12,7 @@
 script = ExtResource("1_fv6kt")
 HP = 15
 MaxHP = 15
-Speed = 50
+Speed = 15
 Shield = 0
 MaxShield = 0
 KI = 100

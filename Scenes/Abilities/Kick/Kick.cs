@@ -60,7 +60,7 @@ public partial class Kick : Ability
               });
             //TODO: Make the knockback for player (maybe create an Interface to acomudate both the player and Mobs as they both might have knockbacks)
             if (node is Mob mob)
-              mob.KnockBack(forward, abilityResource.Value);
+              mob.KnockBack(forward, abilityResource.Value);            
           }
         }
       }

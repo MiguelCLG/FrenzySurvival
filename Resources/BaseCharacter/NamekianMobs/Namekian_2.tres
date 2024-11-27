@@ -11,7 +11,7 @@
 script = ExtResource("4_6xd2l")
 HP = 20
 MaxHP = 20
-Speed = 70
+Speed = 15
 Shield = 0
 MaxShield = 0
 KI = 100
