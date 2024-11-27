@@ -34,8 +34,6 @@ public partial class Menu : Control
   private void OnInputEvent(InputEvent @event)
   {
     Node focusOwner = GetViewport().GuiGetFocusOwner();
-    //if(focusOwner is null)
-    //  StartButton.GrabFocus();
     if(focusOwner is null || focusOwner is not Button) StartButton.GrabFocus();
 
     if (@event is InputEventKey eventKey && eventKey.Pressed && eventKey.IsAction("ui_accept"))
@@ -87,13 +85,16 @@ public partial class Menu : Control
         tween.TweenProperty(StartButton, "scale", new Vector2(1.2f, 1f), .2f);
         tween.TweenProperty(OptionsButton, "position", new Vector2(OptionsButton.Position.X, StartButton.Position.Y + 80), .2f);
         tween.TweenProperty(QuitButton, "position", new Vector2(QuitButton.Position.X, StartButton.Position.Y + 160), .1f);
+        StartButton.GrabFocus();
         break;
       case "Options":
         tween.TweenProperty(OptionsButton, "scale", new Vector2(1.2f, 1f), .2f);
         tween.TweenProperty(QuitButton, "position", new Vector2(QuitButton.Position.X, StartButton.Position.Y + 160), .1f);
+        OptionsButton.GrabFocus();
         break;
       case "Quit":
         tween.TweenProperty(QuitButton, "scale", new Vector2(1.2f, 1f), .1f);
+        QuitButton.GrabFocus();
         break;
     }
   }
