@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://cmm5e11b4rsou"]
+
+[ext_resource type="SpriteFrames" uid="uid://brp7hsh2smf35" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/Sayan_Boss_1.tres" id="1_ecwsq"]
+[ext_resource type="Resource" uid="uid://d2xfl575cquaw" path="res://Resources/PickUps/KiPickupResource.tres" id="2_18lou"]
+[ext_resource type="Resource" uid="uid://d0wvh7cqjqan1" path="res://Resources/PickUps/ExperiencePickup.tres" id="3_g06yi"]
+[ext_resource type="Resource" uid="uid://decxqhrnt0um2" path="res://Resources/PickUps/DamagePickup.tres" id="4_krb0i"]
+[ext_resource type="PackedScene" uid="uid://dqjc0mhit02lx" path="res://Scenes/Abilities/Punch/boss_punch.tscn" id="5_8y22m"]
+[ext_resource type="PackedScene" uid="uid://e0neewch4g4v" path="res://Scenes/Abilities/BossAbilities/Galick_Gun_Boss.tscn" id="6_5r1pf"]
+[ext_resource type="Texture2D" uid="uid://b6xynm1ut2423" path="res://Assets/CharacterAssets/Sayan/Saiyan_Boss/sayanboss1_portrait.png" id="6_edk8j"]
+[ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="7_evj1q"]
+
+[resource]
+script = ExtResource("7_evj1q")
+HP = 500
+MaxHP = 500
+Speed = 100
+Shield = 0
+MaxShield = 0
+KI = 500
+MaxKI = 500
+MobAttacks = Array[PackedScene]([ExtResource("5_8y22m"), ExtResource("6_5r1pf")])
+LootTables = Array[Resource]([ExtResource("2_18lou"), ExtResource("3_g06yi"), ExtResource("4_krb0i")])
+ShowHealBar = true
+ExpDropValue = 200
+AnimatedFrames = ExtResource("1_ecwsq")
+Portrait = ExtResource("6_edk8j")
+characterSounds = {}

@@ -13,7 +13,7 @@ public static class EventSubscriber
         }
         else
         {
-            Console.WriteLine($"Event '{eventName}' does not exist.");
+            Console.WriteLine($"Event '{eventName}' does not exist. Subscribe failed.");
         }
     }
 
@@ -27,7 +27,7 @@ public static class EventSubscriber
         }
         else
         {
-            Console.WriteLine($"Event '{eventName}' does not exist.");
+            Console.WriteLine($"Event '{eventName}' does not exist. Unsubscribe failed.");
         }
     }
 }

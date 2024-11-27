@@ -29,7 +29,7 @@ public partial class AudioManager : Node
         available.Add(player); // Make the player available again
         UnregisterPlayer(player); // Unregister from the active ones
     }
-    
+
     private void RegisterPlayer(AudioStreamPlayer player)
     {
         if (!activePlayers.Contains(player))
@@ -37,7 +37,7 @@ public partial class AudioManager : Node
             activePlayers.Add(player);
         }
     }
-    
+
     public void UnregisterPlayer(AudioStreamPlayer player)
     {
         if (activePlayers.Contains(player))
@@ -149,7 +149,7 @@ public partial class AudioManager : Node
                 audioPlayer3D.Play();
             }
             else
-            {   
+            {
                 player.Play();
                 if (options.StartOffset > 0)
                 {
@@ -165,7 +165,7 @@ public partial class AudioManager : Node
             // Ensure audio stream duration is known and fade-out duration is valid
             double streamLength = player.Stream.GetLength();
             double fadeStartTime = streamLength - options.FadeOutDuration;
-            GD.Print($"Stream length: {streamLength}, Fade starts at: {fadeStartTime}");
+            // GD.Print($"Stream length: {streamLength}, Fade starts at: {fadeStartTime}");
 
             if (fadeStartTime > 0 && options.FadeOutDuration > 0)
             {

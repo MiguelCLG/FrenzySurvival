@@ -14,9 +14,10 @@ public partial class Kick : Ability
   // Call this function to detect objects in the cone
   public async Task DetectInCone(CancellationToken token)
   {
-    try{
+    try
+    {
       await ToSignal(GetTree().CreateTimer(.2f, false, true), "timeout");
-        if (token.IsCancellationRequested) return;  // Handle early cancellation
+      if (token.IsCancellationRequested) return;  // Handle early cancellation
 
       cooldownTimer = GetTree().CreateTimer(abilityResource.Cooldown, false, true);    // Use character's movement direction as forward direction
       await ToSignal(cooldownTimer, "timeout");
@@ -31,7 +32,7 @@ public partial class Kick : Ability
 
       var results = spaceState.IntersectShape(query);
       if (AnimationPlayer.Animation == "death") return;
-      AnimationPlayer.Play("kick");
+      AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
 
       foreach (var result in results)
@@ -59,7 +60,7 @@ public partial class Kick : Ability
               });
             //TODO: Make the knockback for player (maybe create an Interface to acomudate both the player and Mobs as they both might have knockbacks)
             if (node is Mob mob)
-              mob.KnockBack(forward, abilityResource.Value);
+              mob.KnockBack(forward, abilityResource.Value);            
           }
         }
       }
@@ -67,11 +68,13 @@ public partial class Kick : Ability
       if (token.IsCancellationRequested) return;  // Check cancellation inside the loop
       EventRegistry.GetEventPublisher("ActionFinished").RaiseEvent(new object[] { this });
     }
-    catch(TaskCanceledException){
+    catch (TaskCanceledException)
+    {
       cooldownTimer.Free();
 
     }
-    finally{
+    finally
+    {
       isDoingAction = false;
     }
   }
@@ -92,7 +95,7 @@ public partial class Kick : Ability
     currentTask = Task.Run(() => DetectInCone(token), token);
   }
 
-public override void Cancel()
+  public override void Cancel()
   {
     if (isDoingAction)
     {

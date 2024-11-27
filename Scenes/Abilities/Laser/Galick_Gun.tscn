@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=3 uid="uid://bhkhwuha4lequ"]
+[gd_scene load_steps=31 format=3 uid="uid://bhkhwuha4lequ"]
 
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_fqm00"]
 [ext_resource type="Resource" uid="uid://t8pat3edeppc" path="res://Resources/Abilities/GalickGun.tres" id="2_avl8r"]
+[ext_resource type="Resource" uid="uid://duh47nf2yr13n" path="res://Resources/Sound/KamehamehaSound.tres" id="3_drd6u"]
 [ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="3_ixxxg"]
 [ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="4_gbnie"]
-[ext_resource type="Gradient" uid="uid://c6h3rk20m61h1" path="res://Assets/Gradients/Purple_Gradient.tres" id="5_chreu"]
+[ext_resource type="Gradient" path="res://Assets/Gradients/Purple_Gradient.tres" id="5_chreu"]
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="6_amtiw"]
 [ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBall.cs" id="7_b8pfe"]
 [ext_resource type="PackedScene" uid="uid://nnvpi5hi8qwy" path="res://Scenes/Particles/EnergyBall/BeamLine.tscn" id="8_2gr6i"]
@@ -119,6 +120,7 @@ size = Vector2(23, 20)
 script = ExtResource("1_fqm00")
 EnergyBallScale = Vector2(0.3, 0.5)
 abilityResource = ExtResource("2_avl8r")
+abilitySound = ExtResource("3_drd6u")
 
 [node name="LaserRaycast" type="RayCast2D" parent="."]
 unique_name_in_owner = true

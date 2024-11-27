@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=9 format=3 uid="uid://dfbwf6gk25vf3"]
+[gd_resource type="Resource" script_class="BaseCharacterResource" load_steps=8 format=3 uid="uid://dfbwf6gk25vf3"]
 
 [ext_resource type="Script" path="res://Scripts/Resources/BaseCharacterResource.cs" id="1_fv6kt"]
 [ext_resource type="Resource" uid="uid://30h4ai857qts" path="res://Resources/LootTables/KiLootTable.tres" id="2_1yx26"]
@@ -7,21 +7,20 @@
 [ext_resource type="PackedScene" uid="uid://btuvr7gvcu8w8" path="res://Scenes/Abilities/Punch/punch.tscn" id="4_46d02"]
 [ext_resource type="PackedScene" uid="uid://chrjkbevmm8wx" path="res://Scenes/Abilities/Punch/punch_2.tscn" id="5_4rt4y"]
 [ext_resource type="Texture2D" uid="uid://coci5cgt2qwky" path="res://Assets/CharacterAssets/Sayan/Saiyan_1/sayan1_portrait.png" id="5_5u4ky"]
-[ext_resource type="PackedScene" uid="uid://gxkliy280dyl" path="res://Scenes/Abilities/EnergyBarrage/energy_barrage.tscn" id="6_iicoc"]
 
 [resource]
 script = ExtResource("1_fv6kt")
-HP = 150
-MaxHP = 150
-Speed = 50
+HP = 15
+MaxHP = 15
+Speed = 15
 Shield = 0
 MaxShield = 0
 KI = 100
 MaxKI = 100
-MobAttacks = Array[Object]([ExtResource("4_46d02"), ExtResource("5_4rt4y"), ExtResource("6_iicoc")])
+MobAttacks = Array[Object]([ExtResource("4_46d02"), ExtResource("5_4rt4y")])
 LootTables = Array[Resource]([ExtResource("2_1yx26"), ExtResource("3_snf3k")])
 ShowHealBar = true
-ExpDropValue = 400
+ExpDropValue = 15
 AnimatedFrames = ExtResource("2_wx5nq")
 Portrait = ExtResource("5_5u4ky")
 characterSounds = null

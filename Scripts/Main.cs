@@ -16,6 +16,7 @@ public partial class Main : Node2D
   CharacterSelectionScreen characterSelectionScreen;
   Node2D playerReference;
   PackedScene mobScene;
+  PackedScene mobBossScene;
   CanvasLayer UI;
   Node2D mobContainer;
   double spawnCooldown, time;
@@ -28,6 +29,7 @@ public partial class Main : Node2D
     levelUpUi = GetNode<LevelUpUi>("%LevelUpUI");
     characterSelectionScreen = GetNode<CharacterSelectionScreen>("%CharacterSelectionScreen");
     mobScene = GD.Load<PackedScene>("res://Scenes/Mob/Mob.tscn");
+    mobBossScene = GD.Load<PackedScene>("res://Scenes/Mob/MobBoss.tscn");
     mobContainer = GetNode<Node2D>("%MobContainer");
     playerReference = GetNode<Player>("Player");
     UI = GetNode<CanvasLayer>("%UI");
@@ -68,7 +70,7 @@ public partial class Main : Node2D
     UI.GetNode<Label>("%TimerLabel").Text = formattedTime;
     UI.GetNode<Label>("%EnemiesKilledLabel").Text = $"Kills: {enemiesKilled}";
 
-    if (time > 1800)
+    if (minutes > 10)
     {
       GD.Print("Jogo Terminado");
       GetNode<CanvasLayer>("%UI").GetNode<Control>("%GameOverScreen").Visible = true;
@@ -104,16 +106,29 @@ public partial class Main : Node2D
   }
   public void CreateMobOfResource(BaseCharacterResource charResourse)
   {
-    var mob = mobScene.Instantiate<Mob>();
-    mob.mobResource = charResourse;
-    mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
-    mobContainer.AddChild(mob);
-    mob.healthbar.SetInitialValues(mob.mobResource);
-
-
     Vector2 randomPositionPositive = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(100, 300), Random.Shared.Next(100, 300));
     Vector2 randomPositionNegative = playerReference.GlobalPosition + new Vector2(Random.Shared.Next(-300, -100), Random.Shared.Next(-300, -100));
-    mob.GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+    var position = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+    GD.Print(charResourse.ResourceName);
+    if (charResourse.ResourcePath.Contains("Boss"))
+    {
+      var mob = mobBossScene.Instantiate<MobBoss>();
+      mob.mobResource = charResourse;
+      mobContainer.AddChild(mob);
+      mob.healthbar.SetInitialValues(mob.mobResource);
+      mob.GlobalPosition = position;
+    }
+    else
+    {
+      var mob = mobScene.Instantiate<Mob>();
+      mob.mobResource = charResourse;
+      mob.AnimationPlayer.SpriteFrames = mob.mobResource.AnimatedFrames;
+      mobContainer.AddChild(mob);
+      mob.healthbar.SetInitialValues(mob.mobResource);
+      mob.GlobalPosition = position;
+    }
+
+
 
 
     // mob.GlobalPosition = playerReference.GlobalPosition - new Vector2(Random.Shared.Next(-100, 100), Random.Shared.Next(-100, 100));

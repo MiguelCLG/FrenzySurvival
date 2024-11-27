@@ -59,7 +59,7 @@ public partial class EnergyBlast : Ability
       if (token.IsCancellationRequested) return;
       energyBallArea.Scale = Vector2.Zero;
       energyBall.GetNode<CpuParticles2D>("CPUParticles2D").Emitting = true;
-      AnimationPlayer?.Play("beam_charge");
+      AnimationPlayer?.Play(abilityResource.AnimationNames[0]);
       Vector2 energyBallPosition = new Vector2(EnergyBallPosition.X * -facingDirection, EnergyBallPosition.Y) - Position;
       energyBall.Position = energyBallPosition;
 
@@ -73,7 +73,7 @@ public partial class EnergyBlast : Ability
 
       EventRegistry.GetEventPublisher("IsDoingAction")?.RaiseEvent(new object[] { true }); // locks character in animation
       direction = facingDirection;
-      AnimationPlayer?.Play("beam");
+      AnimationPlayer?.Play(abilityResource.AnimationNames[1]);
       SetProcess(true);
       await ToSignal(GetTree().CreateTimer(abilityResource.CastTime, false, true), "timeout");
       Destroy();

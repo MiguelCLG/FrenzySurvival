@@ -43,9 +43,9 @@ public partial class Ability : Node2D
 
   public virtual void Cancel() { GD.Print("Canceling ability: " + Name); }
 
-  public virtual void SpendKi(int value)
+  public virtual void SpendKi(float value)
   {
     EventRegistry.GetEventPublisher("IncreaseStatsFromDictionary")
-      .RaiseEvent(new object[] { new Dictionary<string, int> { { "ki", -abilityResource.kiRequired } }, this });
+      .RaiseEvent(new object[] { new Dictionary<string, float> { { "ki", -abilityResource.kiRequired } }, this });
   }
 }

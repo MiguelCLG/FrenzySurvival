@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("2_s7800")
 statChange = {
-"ki": 30.0
+"ki": 100.0
 }

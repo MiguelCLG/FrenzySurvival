@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://ds3r68jr65vy0"]
+
+[ext_resource type="Texture2D" uid="uid://cwswglsbi7xvc" path="res://Assets/Icons/laser.png" id="1_ni8kn"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_turne"]
+
+[resource]
+script = ExtResource("2_turne")
+Name = "Galick Gun Phase 2"
+AnimationNames = Array[String](["phase_2_beam_charge", "phase_2_beam", "phase_2_default"])
+Icon = ExtResource("1_ni8kn")
+Cooldown = 3.0
+CastTime = 5.0
+Value = 100.0
+Damage = 60.0
+kiRequired = 40.0
+isSuperAbility = true
+isRangedAbility = true
+RangeRequired = Vector2(300, 50)

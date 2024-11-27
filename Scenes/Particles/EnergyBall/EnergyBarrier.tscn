@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBarrier.cs" id="1_gu2x1"]
 [ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="1_yipit"]
-[ext_resource type="Resource" uid="uid://cdh5xrqtfauyv" path="res://Scenes/EnergyBarrier.tres" id="2_gblfi"]
+[ext_resource type="Resource" uid="uid://cdh5xrqtfauyv" path="res://Resources/Abilities/EnergyBarrier.tres" id="2_gblfi"]
 [ext_resource type="PackedScene" uid="uid://drjbj7f3s88v1" path="res://Scenes/Particles/EnergyBall/Explosion.tscn" id="4_s6j1m"]
 
 [sub_resource type="Curve" id="Curve_waixf"]

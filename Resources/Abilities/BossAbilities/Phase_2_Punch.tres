@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://dl7hhu2hfxv5n"]
+
+[ext_resource type="Texture2D" uid="uid://b4hrhccq4e2e0" path="res://Assets/Icons/punch.png" id="1_vauvu"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="1_wuj2k"]
+
+[resource]
+script = ExtResource("1_wuj2k")
+Name = "Punch"
+AnimationNames = Array[String](["phase_2_punch", "phase_2_default"])
+Icon = ExtResource("1_vauvu")
+Cooldown = 0.5
+CastTime = 0.3
+Value = 50.0
+Damage = 50.0
+kiRequired = 0.0
+isSuperAbility = false
+isRangedAbility = false
+RangeRequired = Vector2(50, 50)

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=3 format=3 uid="uid://cdh5xrqtfauyv"]
+
+[ext_resource type="Texture2D" uid="uid://c5a535i7rp2e" path="res://Assets/Icons/energy_barrier.png" id="1_7ypyq"]
+[ext_resource type="Script" path="res://Scripts/Resources/AbilityResource.cs" id="2_o8cko"]
+
+[resource]
+script = ExtResource("2_o8cko")
+Name = "EnergyBarrier"
+AnimationNames = Array[String](["explosion"])
+Icon = ExtResource("1_7ypyq")
+Cooldown = 2.0
+CastTime = 2.0
+Value = 80.0
+Damage = 50.0
+kiRequired = 30.0
+isSuperAbility = true
+isRangedAbility = false
+RangeRequired = Vector2(50, 50)

@@ -1,0 +1,214 @@
+[gd_scene load_steps=31 format=3 uid="uid://e0neewch4g4v"]
+
+[ext_resource type="Script" path="res://Scenes/Abilities/Laser/Kamehameha.cs" id="1_12515"]
+[ext_resource type="Resource" uid="uid://ds3r68jr65vy0" path="res://Resources/Abilities/BossAbilities/phase_2_galick_gun.tres" id="2_nfrhi"]
+[ext_resource type="Resource" uid="uid://duh47nf2yr13n" path="res://Resources/Sound/KamehamehaSound.tres" id="3_o3mmm"]
+[ext_resource type="Script" path="res://Scenes/Abilities/Laser/Laser.cs" id="4_np6l8"]
+[ext_resource type="Environment" uid="uid://b2bophusefdij" path="res://Resources/WorldEnvironments/LaserEnvironment.tres" id="5_2dt25"]
+[ext_resource type="Gradient" uid="uid://c6h3rk20m61h1" path="res://Assets/Gradients/Purple_Gradient.tres" id="6_gdatn"]
+[ext_resource type="Texture2D" uid="uid://lpo5y16lu656" path="res://Assets/glowing_effect.png" id="7_ueh7j"]
+[ext_resource type="Script" path="res://Scenes/Particles/EnergyBall/EnergyBall.cs" id="8_bqp0m"]
+[ext_resource type="PackedScene" uid="uid://nnvpi5hi8qwy" path="res://Scenes/Particles/EnergyBall/BeamLine.tscn" id="9_thcw1"]
+[ext_resource type="Gradient" uid="uid://dfpvudfglp1ti" path="res://Assets/Gradients/Blue_Gradient.tres" id="10_wvyo0"]
+
+[sub_resource type="Curve" id="Curve_330ob"]
+_data = [Vector2(0, 0.746473), 0.0, -2.31496, 0, 1, Vector2(0.251656, 0.1639), 0.0, 0.0, 0, 0, Vector2(0.750552, 0.1639), 0.0, 0.134508, 1, 0, Vector2(1, 0.74859), 2.34393, 0.0, 1, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_salrm"]
+colors = PackedColorArray(2.00224e-05, 0.534757, 0.880918, 1, 9.14484e-06, 0.624848, 0.835809, 1)
+
+[sub_resource type="Gradient" id="Gradient_b7h5w"]
+offsets = PackedFloat32Array(0, 0.503896, 1)
+colors = PackedColorArray(2.00224e-05, 0.534757, 0.880918, 1, 0.639216, 0.823529, 1, 1, 9.14484e-06, 0.624848, 0.835809, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rr5eq"]
+gradient = SubResource("Gradient_b7h5w")
+
+[sub_resource type="Curve" id="Curve_1qpjr"]
+_data = [Vector2(0, 0.568664), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ajcer"]
+curve = SubResource("Curve_1qpjr")
+
+[sub_resource type="Curve" id="Curve_fkwpo"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_3ee2s"]
+_data = [Vector2(0, 0.215207), 0.0, 0.0, 0, 0, Vector2(1, 0.209217), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_qkthg"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_pcnyw"]
+curve_x = SubResource("Curve_fkwpo")
+curve_y = SubResource("Curve_3ee2s")
+curve_z = SubResource("Curve_qkthg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ecpu8"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(250, 10, 1)
+flatness = 1.0
+gravity = Vector3(1000, 0, 0)
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = 100.0
+scale_min = 0.1
+scale_max = 0.3
+scale_curve = SubResource("CurveXYZTexture_pcnyw")
+color_ramp = SubResource("GradientTexture1D_rr5eq")
+emission_curve = SubResource("CurveTexture_ajcer")
+
+[sub_resource type="Gradient" id="Gradient_lyprm"]
+offsets = PackedFloat32Array(0, 0.503896, 1)
+colors = PackedColorArray(2.00224e-05, 0.534757, 0.880918, 1, 0.639216, 0.823529, 1, 1, 9.14484e-06, 0.624848, 0.835809, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_yqi8y"]
+gradient = SubResource("Gradient_lyprm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_erfar"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 10.0
+initial_velocity_min = 54.46
+initial_velocity_max = 120.0
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 9.49949e-08
+radial_velocity_min = -2.23517e-05
+radial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 0.2
+color_ramp = SubResource("GradientTexture1D_yqi8y")
+
+[sub_resource type="Curve" id="Curve_waixf"]
+_data = [Vector2(0, 0.27716), 0.0, -0.27716, 0, 1, Vector2(1, 0), -0.27716, 0.0, 1, 0]
+point_count = 2
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_831et"]
+gradient = SubResource("Gradient_b7h5w")
+
+[sub_resource type="Curve" id="Curve_hqc2a"]
+_data = [Vector2(0, 0.305069), 0.0, 0.0, 0, 0, Vector2(0.491525, 0.736405), 0.0, 0.0, 0, 0, Vector2(1, 0.221198), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_sga4y"]
+curve = SubResource("Curve_hqc2a")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eug2p"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 20.0
+direction = Vector3(-1, 0, 0)
+spread = 75.0
+initial_velocity_min = 125.0
+initial_velocity_max = 250.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 0.5
+scale_curve = SubResource("CurveTexture_sga4y")
+color_ramp = SubResource("GradientTexture1D_831et")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6aj0a"]
+size = Vector2(23, 20)
+
+[node name="GalickGun" type="Node2D"]
+script = ExtResource("1_12515")
+EnergyBallPosition = Vector2(-15, 0)
+EnergyBallScale = Vector2(0.3, 0.5)
+abilityResource = ExtResource("2_nfrhi")
+abilitySound = ExtResource("3_o3mmm")
+
+[node name="LaserRaycast" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(300, 0)
+script = ExtResource("4_np6l8")
+laserEnvironment = ExtResource("5_2dt25")
+laserGradient = ExtResource("6_gdatn")
+maxPosition = Vector2(400, 0)
+beamWidth = 40.0
+
+[node name="BeamLine" type="Line2D" parent="LaserRaycast"]
+unique_name_in_owner = true
+points = PackedVector2Array(0, 0, 15, 0, 30, 0, 45, 0)
+width = 27.58
+width_curve = SubResource("Curve_330ob")
+gradient = SubResource("Gradient_salrm")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="BeamParticles" type="GPUParticles2D" parent="LaserRaycast"]
+unique_name_in_owner = true
+emitting = false
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_ecpu8")
+texture = ExtResource("7_ueh7j")
+lifetime = 0.1
+
+[node name="CastingParticlesBegin" type="GPUParticles2D" parent="LaserRaycast"]
+unique_name_in_owner = true
+texture_filter = 1
+emitting = false
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_erfar")
+texture = ExtResource("7_ueh7j")
+lifetime = 0.3
+fixed_fps = 60
+local_coords = true
+
+[node name="EnergyBall" type="Node2D" parent="LaserRaycast"]
+position = Vector2(-41, 0)
+script = ExtResource("8_bqp0m")
+beamLineScene = ExtResource("9_thcw1")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="LaserRaycast/EnergyBall"]
+texture_filter = 1
+emitting = false
+amount = 2000
+lifetime = 0.3
+fixed_fps = 60
+texture = ExtResource("7_ueh7j")
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector2(1, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 90.0
+initial_velocity_max = 180.0
+angular_velocity_min = -40.0
+angular_velocity_max = 100.0
+orbit_velocity_min = -20.0
+orbit_velocity_max = 20.0
+radial_accel_min = -90.0
+radial_accel_max = 100.0
+scale_amount_min = 0.5
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_waixf")
+color_ramp = ExtResource("10_wvyo0")
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="LaserRaycast"]
+unique_name_in_owner = true
+emitting = false
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_eug2p")
+texture = ExtResource("7_ueh7j")
+lifetime = 0.2
+fixed_fps = 60
+local_coords = true
+
+[node name="LaserEnvironment" type="WorldEnvironment" parent="LaserRaycast"]
+unique_name_in_owner = true
+
+[node name="CollisionArea" type="Area2D" parent="LaserRaycast"]
+unique_name_in_owner = true
+scale = Vector2(0.97, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LaserRaycast/CollisionArea"]
+shape = SubResource("RectangleShape2D_6aj0a")
+
+[connection signal="body_entered" from="LaserRaycast/CollisionArea" to="LaserRaycast" method="OnAreaEntered"]

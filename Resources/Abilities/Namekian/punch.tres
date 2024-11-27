@@ -5,8 +5,12 @@
 [resource]
 script = ExtResource("1_s771v")
 Name = "Namek_Punch"
+AnimationNames = Array[String](["punch"])
 Cooldown = 1
+CastTime = 0.0
 Value = 10
 Damage = 30
-isSuperAbility = false
 kiRequired = 0
+isSuperAbility = false
+isRangedAbility = false
+RangeRequired = Vector2(10, 20)

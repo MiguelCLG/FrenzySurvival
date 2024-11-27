@@ -34,7 +34,7 @@ public partial class PunchTwo : Ability
       var results = spaceState.IntersectShape(query);
 
       if (AnimationPlayer.Animation == "death" || token.IsCancellationRequested) return;
-      AnimationPlayer.Play("punch_2");
+      AnimationPlayer.Play(abilityResource.AnimationNames[0]);
       audioManager?.Play(abilitySound, this);
 
       foreach (var result in results)

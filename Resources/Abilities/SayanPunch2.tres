@@ -6,11 +6,13 @@
 [resource]
 script = ExtResource("2_wu2kt")
 Name = "Punch 2"
+AnimationNames = Array[String](["punch_2"])
 Icon = ExtResource("1_kqy7s")
-Cooldown = 1
+Cooldown = 0.5
 CastTime = 0.2
-Value = 30
-Damage = 20
-kiRequired = 0
+Value = 0.0
+Damage = 6.0
+kiRequired = 0.0
 isSuperAbility = false
 isRangedAbility = false
+RangeRequired = Vector2(50, 50)

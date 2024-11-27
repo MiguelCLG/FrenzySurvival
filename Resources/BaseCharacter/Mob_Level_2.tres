@@ -11,14 +11,16 @@
 [sub_resource type="Resource" id="Resource_o34jb"]
 script = ExtResource("3_pck8v")
 Name = "Punch_boss"
+AnimationNames = null
 Icon = ExtResource("2_ksgn2")
-Cooldown = 1
+Cooldown = 0.0
 CastTime = 0.3
-Value = 30
-Damage = 25
-kiRequired = 0
+Value = 0.0
+Damage = 0.0
+kiRequired = 0.0
 isSuperAbility = false
 isRangedAbility = false
+RangeRequired = Vector2(0, 0)
 
 [resource]
 script = ExtResource("1_3pdoh")

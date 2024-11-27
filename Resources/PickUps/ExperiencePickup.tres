@@ -6,5 +6,5 @@
 resource_local_to_scene = true
 script = ExtResource("2_2nfa7")
 statChange = {
-"experience": 10
+"experience": 200
 }

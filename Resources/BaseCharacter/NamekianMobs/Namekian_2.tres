@@ -9,9 +9,9 @@
 
 [resource]
 script = ExtResource("4_6xd2l")
-HP = 70
-MaxHP = 70
-Speed = 70
+HP = 20
+MaxHP = 20
+Speed = 15
 Shield = 0
 MaxShield = 0
 KI = 100
@@ -19,7 +19,7 @@ MaxKI = 100
 MobAttacks = Array[Object]([ExtResource("2_dhmwm"), ExtResource("3_218ut"), ExtResource("4_pxja0")])
 LootTables = null
 ShowHealBar = true
-ExpDropValue = 200
+ExpDropValue = 20
 AnimatedFrames = ExtResource("2_ejqwk")
 Portrait = ExtResource("3_stxav")
 characterSounds = null

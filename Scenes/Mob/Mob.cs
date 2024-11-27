@@ -9,19 +9,19 @@ public partial class Mob : CharacterBody2D
 {
   [Export] public BaseCharacterResource mobResource;
   [Export] public AnimatedSprite2D AnimationPlayer { get; set; }
-  private Node2D target;
+  public Node2D target;
   public Healthbar healthbar;
-  private AbilityManager abilityManager;
-  private Vector2 motion = Vector2.Zero;
+  public AbilityManager abilityManager;
+  public Vector2 motion = Vector2.Zero;
 
-  private bool isDoingAction = false;
   private double timer = 0;
-  bool isGettingHurt = false;
+  protected bool isDoingAction = false;
+  protected bool isGettingHurt = false;
 
-  private AudioManager audioManager;
+  protected AudioManager audioManager;
   private float stopDistance = 50f;
 
-  private Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
+  public Array<string> lockedAnimations = new() { "hurt", "death", "beam", "beam_charge" };
 
   public override void _Ready()
   {
@@ -61,30 +61,18 @@ public partial class Mob : CharacterBody2D
 
   public override void _PhysicsProcess(double delta)
   {
-    if (AnimationPlayer.Animation == "death" || isGettingHurt) return;
+    if (AnimationPlayer.Animation == "death") return;
+    MoveAndCollide(motion, false, 1f, true);
+    if(isGettingHurt) return;
 
     if (healthbar.IsAlive)
     {
       UpdateTarget();
-      if (mobResource.Speed > 0 && !isDoingAction) // TODO: ??? Why? Must have been drunk, right? ahhh, pots.. got it
+      if (mobResource.Speed > 0 && !isDoingAction)
       {
         Movement(delta);
         MoveAndCollide(motion, false, 1f, true);
       }
-    }
-  }
-
-  private void UpdatePositions()
-  {
-    if (GlobalPosition.DistanceTo(target.GlobalPosition) > 700)
-    {
-      SetProcess(false);
-      SetPhysicsProcess(false);
-      Vector2 randomPositionPositive = target.GlobalPosition + new Vector2(Random.Shared.Next(100, 400), Random.Shared.Next(100, 400));
-      Vector2 randomPositionNegative = target.GlobalPosition + new Vector2(Random.Shared.Next(-400, -100), Random.Shared.Next(-400, -100));
-      GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
-      SetProcess(true);
-      SetPhysicsProcess(true);
     }
   }
 
@@ -99,6 +87,20 @@ public partial class Mob : CharacterBody2D
     abilityManager.SetKI(mobResource.KI);
     abilityManager.SetTargetGroup("Player");
     EventRegistry.GetEventPublisher("SetInitialKIValue").RaiseEvent(new object[] { mobResource.KI, mobResource.MaxKI, this });
+  }
+
+  private void UpdatePositions()
+  {
+    if (GlobalPosition.DistanceTo(target.GlobalPosition) > 700)
+    {
+      SetProcess(false);
+      SetPhysicsProcess(false);
+      Vector2 randomPositionPositive = target.GlobalPosition + new Vector2(Random.Shared.Next(100, 400), Random.Shared.Next(100, 400));
+      Vector2 randomPositionNegative = target.GlobalPosition + new Vector2(Random.Shared.Next(-400, -100), Random.Shared.Next(-400, -100));
+      GlobalPosition = Random.Shared.NextDouble() > 0.5 ? randomPositionPositive : randomPositionNegative;
+      SetProcess(true);
+      SetPhysicsProcess(true);
+    }
   }
 
   private void Movement(double delta)
@@ -186,7 +188,7 @@ public partial class Mob : CharacterBody2D
     target = GetTree().GetFirstNodeInGroup("Player") as Node2D;
   }
 
-  public async void TakeDamage(object sender, object[] args)
+  public virtual async void TakeDamage(object sender, object[] args)
   {
     if (AnimationPlayer.Animation == "death") return;
 
@@ -230,29 +232,34 @@ public partial class Mob : CharacterBody2D
 
   public async void KnockBack(Vector2 dir, float frc)
   {
+    GD.Print($"KnockBack: {this.Name} --- Animation: [{AnimationPlayer.Animation}]");
     if (AnimationPlayer.Animation == "death") return;
     await ToSignal(GetTree().CreateTimer(.1f), "timeout");
     motion = dir * frc;
     await ToSignal(GetTree().CreateTimer(1f), "timeout");
   }
 
-  public void OnPlayerDeath(object sender, object[] args)
+  public virtual void OnPlayerDeath(object sender, object[] args)
   {
     AnimationPlayer.Play("default");
     SetProcess(false);
     SetPhysicsProcess(false);
   }
-  public void ActionFinished(object sender, object[] args)
+  public async void ActionFinished(object sender, object[] args)
   {
     // Se nao vier do ability manager ou ability deste mob, entao retorna
-    if (AnimationPlayer.Animation == "death" || AnimationPlayer.Animation == "hurt") return;
+    if (AnimationPlayer.Animation == "hurt") await ToSignal(AnimationPlayer, "animation_finished");
+    if (AnimationPlayer.Animation == "death") return;
     if (args[0] is Node2D node)
     {
-      var isInChildren = abilityManager.GetChildren().Contains(node);
-      var isThisAbilityManager = node == abilityManager;
-      if (!isThisAbilityManager)
-        if (!isInChildren)
-          return;
+      if (abilityManager != null && !IsInstanceValid(abilityManager))
+      {
+        var isInChildren = abilityManager.GetChildren().Contains(node);
+        var isThisAbilityManager = node == abilityManager;
+        if (!isThisAbilityManager)
+          if (!isInChildren)
+            return;
+      }
       isDoingAction = false;
     }
   }
@@ -309,7 +316,7 @@ public partial class Mob : CharacterBody2D
     }
   }
 
-  public void Die()
+  public virtual void Die()
   {
     if (mobResource.characterSounds is not null)
     {
