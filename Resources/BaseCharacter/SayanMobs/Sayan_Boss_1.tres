@@ -21,6 +21,7 @@ MobAttacks = Array[Object]([ExtResource("4_w74qk"), ExtResource("5_vmpdk")])
 LootTables = Array[Resource]([ExtResource("2_4b1y1"), ExtResource("3_06jlv")])
 ShowHealBar = true
 ExpDropValue = 200
+RegenKI = 0.0
 AnimatedFrames = ExtResource("1_q8vmu")
 Portrait = ExtResource("5_b27lr")
 characterSounds = {}

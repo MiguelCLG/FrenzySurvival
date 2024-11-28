@@ -42,7 +42,10 @@ public partial class Main : Node2D
     GetTree().Paused = true;
     audioManager = GetNode<AudioManager>("/root/AudioManager");
     audioManager?.Play(mainSounds.GetValueOrDefault("music"), this);
+
     characterSelectionScreen.Visible = true;
+    characterSelectionScreen.DelayedGrabFocus(0.5f);
+
   }
 
   public override void _Process(double delta)

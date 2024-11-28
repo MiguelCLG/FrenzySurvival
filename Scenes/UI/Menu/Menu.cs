@@ -28,7 +28,7 @@ public partial class Menu : Control
     audioManager = GetNode<AudioManager>("/root/AudioManager");
     audioManager?.Play(menuSounds.GetValueOrDefault("music"), this);
     //StartButton.GrabFocus();
-    DelayedGrabFocyus(0.5f);
+    DelayedGrabFocus(0.5f);
   }
 
   private void OnInputEvent(InputEvent @event)
@@ -46,9 +46,9 @@ public partial class Menu : Control
     }
   }
 
-  private async void DelayedGrabFocyus(float waitTime)
+  private async void DelayedGrabFocus(float waitTime)
   {
-    await ToSignal(GetTree().CreateTimer(waitTime, false, true), "timeout");
+    await ToSignal(GetTree().CreateTimer(waitTime, true, true), "timeout");
     StartButton.GrabFocus();
   }
   public override void _ExitTree()

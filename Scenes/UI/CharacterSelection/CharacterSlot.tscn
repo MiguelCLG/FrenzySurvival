@@ -5,17 +5,23 @@
 [node name="Character" type="PanelContainer"]
 custom_minimum_size = Vector2(150, 150)
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Button"]
+layout_mode = 2
+offset_right = 150.0
+offset_bottom = 150.0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Button/MarginContainer"]
 layout_mode = 2
 
-[node name="IconUI" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+[node name="IconUI" type="TextureRect" parent="Button/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
@@ -23,14 +29,9 @@ texture = ExtResource("1_r2p8a")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+[node name="NameLabel" type="Label" parent="Button/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_type_variation = &"HeaderSmall"
 text = "Raditz"
 horizontal_alignment = 1
-
-[node name="Button" type="Button" parent="."]
-unique_name_in_owner = true
-layout_mode = 2
-theme_type_variation = &"FlatButton"
