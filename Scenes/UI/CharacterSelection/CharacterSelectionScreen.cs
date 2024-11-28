@@ -22,16 +22,7 @@ public partial class CharacterSelectionScreen : Control
 
   public async void DelayedGrabFocus(float waitTime)
   {
-    GD.Print("Before CharacterSelection timer");
     await ToSignal(GetTree().CreateTimer(waitTime, true, true), "timeout");
-    GD.Print("After CharacterSelection timer");
-    //CharacterSelectionContainer
-    //  .GetChildren()
-    //  .OfType<Control>()
-    //  .FirstOrDefault()
-    //  .GetNode<Button>("%Button")
-    //  .GrabFocus();
-    GD.Print(characterButtons.FirstOrDefault().Name);
     characterButtons.FirstOrDefault().GrabFocus();  // we fetch a button to select the focus.
   }
 

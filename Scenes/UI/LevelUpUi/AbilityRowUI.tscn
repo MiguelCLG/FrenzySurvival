@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dlklg2bwfao0p"]
+[gd_scene format=3 uid="uid://bk5s4o8omnj2f"]
 
 [node name="AbilityRow" type="HBoxContainer"]
 offset_right = 8.0

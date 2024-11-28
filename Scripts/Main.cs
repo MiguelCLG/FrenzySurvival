@@ -53,14 +53,8 @@ public partial class Main : Node2D
     if (!playerReference.GetNode<Healthbar>("Healthbar").IsAlive) return;
     spawnCooldown += delta;
     time += delta;
-    //if (currentEnemies < maxEnemies && spawnCooldown > 1)
-    //{
-    //  CreateMob();
-    //  spawnCooldown = 0;
-    //}
     HandleSpawnRules();
-    currentEnemies = mobContainer.GetChildren().Count;
-
+    currentEnemies = mobContainer.GetChildren().Count;   
     UI.GetNode<Label>("%EnemyCountLabel").Text = $"Enemies: {currentEnemies}";
     // Convert 'time' to minutes and seconds
     int minutes = (int)(time / 60);  // Divide by 60 to get minutes
@@ -197,20 +191,6 @@ public partial class Main : Node2D
     GetTree().Paused = false;
     audioManager.UnpauseAllSounds();
     GetTree().ChangeSceneToFile("res://Scenes/UI/Menu/Menu.tscn");
-  }
-  public override void _UnhandledKeyInput(InputEvent @event)
-  {
-    if (Input.IsActionPressed("ui_cancel"))
-    {
-      HandlePause();
-    }
-  }
-  public override void _Input(InputEvent @event)
-  {
-    if (Input.IsActionPressed("ui_cancel") && @event is InputEventJoypadButton)
-    {
-      HandlePause();
-    }
   }
   public void HandlePause()
   {
