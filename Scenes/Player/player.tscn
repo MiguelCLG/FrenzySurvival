@@ -12,6 +12,7 @@ height = 8.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("AnimationPlayer") groups=["Player"]]
 disable_mode = 2
+motion_mode = 1
 script = ExtResource("1_bia2f")
 playerResource = ExtResource("2_1em62")
 AnimationPlayer = NodePath("Portrait")
